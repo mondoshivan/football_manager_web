@@ -6,5 +6,12 @@
 
 declare namespace config {
     
+    interface PackageConfig {
+        service: ServiceConfig
+    }
 
+    interface ServiceConfig {
+        frontEndDir: string
+        port: number
+    }
 }
