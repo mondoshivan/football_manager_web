@@ -1,0 +1,38 @@
+{
+  "name": "@football_manager/server-rest-api",
+  "version": "0.0.1",
+  "description": "Server REST-API",
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "npx tsc -p tsconfig.json",
+    "start": "node .",
+    "start-server-dev": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Oliver Schmidt",
+  "license": "ISC",
+  "homepage": "https://github.com/mondoshivan/football_manager_web",
+  "dependencies": {
+    "@football_manager/log": "^0.0.1",
+    "@football_manager/front-end": "^0.0.1",
+    "convict": "^6.2.3",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "ts-convict": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/convict": "^6.1.1",
+    "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.4",
+    "@types/node": "^14.18.21"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mondoshivan/football_manager_web"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "module": "commonjs",
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "removeComments": true,
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+    "target": "es6",
+    "sourceMap": true,
+    "strict": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  }
+}
