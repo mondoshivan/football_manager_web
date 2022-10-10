@@ -1,5 +1,5 @@
 {
-  "name": "@football_manager/log",
+  "name": "@football-manager/log",
   "version": "0.0.1",
   "description": "Logging to the console providing different log level.",
   "files": [
