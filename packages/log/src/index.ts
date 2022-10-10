@@ -5,7 +5,7 @@ function logToTransport(logObject: ILogObject) {
 }
 
 const log: Logger = new Logger({ 
-    name: "SLW_LOGGER",
+    name: "FM-Logger",
     minLevel: "silly"
 });
 
