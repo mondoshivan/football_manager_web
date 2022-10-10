@@ -1,5 +1,7 @@
 {
   "name": "@football_manager/root",
+  "author": "Oliver Schmidt",
+  "license": "ISC",
   "private": true,
   "homepage": "https://github.com/mondoshivan/football_manager_web",
   "config": {
