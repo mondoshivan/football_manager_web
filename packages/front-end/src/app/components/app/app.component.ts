@@ -7,6 +7,10 @@ import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core'
 })
 export class AppComponent {
 
-  constructor() {}
+  title: string = "Football Manager"
+
+  constructor() {
+    console.log('starting');
+  }
 
 }
