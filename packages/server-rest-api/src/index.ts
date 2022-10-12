@@ -1,19 +1,22 @@
 import "reflect-metadata"; // needed for ts-convict
+import { dbInit } from "@football-manager/db-handler";
+
 import { App } from "./app";
-import { IndexController } from "./controller/index";
+import { ClubRouter } from "./routers/v1";
 
-const restApiRoute = '/rest-api';
+const run = async () => {
+    await dbInit();
 
-const controllers = [
-    {
-        route: restApiRoute,
-        version: 1,
-        controller: new IndexController()
-    }
-];
+    const apiVersion = 1;
+    const port = 8082;
 
-const port = 8082;
+    const routers = {
+        club: ClubRouter
+    };
 
-const app = new App(controllers, port);
+    const app = new App(apiVersion, routers, port);
 
-app.listen();
+    app.listen();
+}
+
+run();

@@ -10,13 +10,5 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "."
-  },
-  "references": [
-    {
-      "path": "../log"
-    },
-    {
-      "path": "../db-handler"
-    }
-  ]
+  }
 }

@@ -11,12 +11,5 @@
     "outDir": "dist",
     "rootDir": "."
   },
-  "references": [
-    {
-      "path": "../log"
-    },
-    {
-      "path": "../db-handler"
-    }
-  ]
+  "references": []
 }

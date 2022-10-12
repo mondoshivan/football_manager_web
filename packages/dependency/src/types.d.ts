@@ -1,0 +1,3 @@
+interface Hurz {
+    name: string
+}
