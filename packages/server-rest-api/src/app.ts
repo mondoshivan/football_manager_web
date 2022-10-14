@@ -20,7 +20,8 @@ export class App {
  
   private initializeMiddlewares() {
     // the front-end
-    this.app.use(express.urlencoded());
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.static(path.join(process.cwd(), config.service.frontEndDir)));
   }
  
