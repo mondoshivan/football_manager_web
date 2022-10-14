@@ -6,8 +6,7 @@ import {GetAllChampionshipsFilters} from './types'
 import {ChampionshipInput, ChampionshipOutput} from '../models/championship'
 
 export const create = async (payload: ChampionshipInput): Promise<ChampionshipOutput> => {
-    const club = await Championship.create(payload)
-    return club
+    return await Championship.create(payload);
 }
 
 export const findOrCreate = async (payload: ChampionshipInput): Promise<ChampionshipOutput> => {
@@ -16,32 +15,32 @@ export const findOrCreate = async (payload: ChampionshipInput): Promise<Champion
             name: payload.name
         },
         defaults: payload
-    })
+    });
 
     return club;
 }
 
 export const update = async (id: number, payload: Partial<ChampionshipInput>): Promise<ChampionshipOutput> => {
-    const club = await Championship.findByPk(id)
+    const club = await Championship.findByPk(id);
 
     if (!club) {
         // @todo throw custom error
-        throw new Error('not found')
+        throw new Error('not found');
     }
 
-    const updatedChampionship = await club.update(payload)
-    return updatedChampionship
+    const updatedChampionship = await club.update(payload);
+    return updatedChampionship;
 }
 
 export const getById = async (id: number): Promise<ChampionshipOutput> => {
-    const club = await Championship.findByPk(id)
+    const club = await Championship.findByPk(id);
 
     if (!club) {
         // @todo throw custom error
-        throw new Error('not found')
+        throw new Error('not found');
     }
 
-    return club
+    return club;
 }
 
 export const deleteById = async (id: number): Promise<boolean> => {
@@ -49,7 +48,7 @@ export const deleteById = async (id: number): Promise<boolean> => {
         where: {id}
     })
 
-    return !!deletedChampionshipCount
+    return !!deletedChampionshipCount;
 }
 
 export const getAll = async (filters?: GetAllChampionshipsFilters): Promise<ChampionshipOutput[]> => {
@@ -58,7 +57,7 @@ export const getAll = async (filters?: GetAllChampionshipsFilters): Promise<Cham
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
         },
         ...((filters?.isDeleted || filters?.includeDeleted) && {paranoid: true})
-    })
+    });
 }
 
 export const checkChampionshipExists = async (name: string): Promise<boolean> => {
@@ -68,5 +67,5 @@ export const checkChampionshipExists = async (name: string): Promise<boolean> =>
         }
     });
 
-    return !isEmpty(clubWithName)
+    return !isEmpty(clubWithName);
 }
