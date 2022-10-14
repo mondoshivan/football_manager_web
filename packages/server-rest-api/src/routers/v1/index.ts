@@ -1,5 +1,9 @@
-import ClubRouter from './club'
+import { Router } from 'express'
 
-export {
-  ClubRouter
-}
+import clubRouter from './club'
+
+const router = Router()
+
+router.use('/club', clubRouter)
+
+export default router

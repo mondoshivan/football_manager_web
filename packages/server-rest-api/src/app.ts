@@ -10,7 +10,7 @@ export class App {
   private port: number;
   private apiVersion: number;
  
-  constructor(apiVersion:number, routers: { [key: string]: Router }, port:number) {
+  constructor(apiVersion:number, routers: Router, port:number) {
     this.port = port;
     this.apiVersion = apiVersion;
  
@@ -19,18 +19,13 @@ export class App {
   }
  
   private initializeMiddlewares() {
-    // the front-end
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.static(path.join(process.cwd(), config.service.frontEndDir)));
   }
  
-  private initializeRouters(routers: { [key: string]: Router }) {
-    for (const route in routers) {
-        const router = routers[route];
-        const apiRoute = path.join('/api', this.apiVersion.toString(), route);
-        this.app.use(apiRoute, router);
-    }
+  private initializeRouters(routers: Router) {
+    this.app.use(`/api/${this.apiVersion}`, routers);
   }
  
   public listen() {
