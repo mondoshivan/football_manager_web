@@ -18,11 +18,12 @@
   "license": "ISC",
   "homepage": "https://github.com/mondoshivan/football_manager_web",
   "dependencies": {
-    "@football-manager/log": "^0.0.1",
-    "@football-manager/front-end": "^0.0.1",
     "@football-manager/db-handler": "^0.0.1",
+    "@football-manager/front-end": "^0.0.1",
+    "@football-manager/log": "^0.0.1",
     "convict": "^6.2.3",
     "express": "^4.18.1",
+    "express-async-handler": "^1.2.0",
     "express-session": "^1.17.3",
     "reflect-metadata": "^0.1.13",
     "ts-convict": "^1.1.0"
