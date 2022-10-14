@@ -14,6 +14,7 @@ declare namespace config {
         name: string
         user: string
         host: string
+        port: number
         dialect: string
         password: string
     }

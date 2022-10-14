@@ -24,6 +24,13 @@ export class DBConfig implements config.DBConfig {
     public host!: string;
 
     @Property({
+        doc: 'The port of the DB',
+        default: "3306",
+        env: 'FM_DB_PORT'
+    })
+    public port!: number;
+
+    @Property({
         doc: 'The driver of the DB',
         default: "sqlite",
         env: 'FM_DB_DIALECT'
