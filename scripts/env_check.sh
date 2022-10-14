@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ -z "${FM_HOME}" ]; then
+    echo "Error: FM_HOME not set"
+    exit 1
+fi
+
 if [ -z "${FM_DB_ROOT_PASSWORD}" ]; then
     echo "Error: FM_DB_ROOT_PASSWORD not set"
     exit 1

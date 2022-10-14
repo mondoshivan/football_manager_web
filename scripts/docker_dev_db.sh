@@ -7,7 +7,7 @@ source ${SCRIPTS_DIR}/env_check.sh
 
 # stop containers
 docker stop fm_dev_db
-docker stop phpmyadmin
+docker stop fm-phpmyadmin
 
 # make sure to be in the project root
 cd $(dirname "$0")/..
@@ -18,15 +18,16 @@ docker run -d --name fm_dev_db \
     -e MARIADB_USER=${FM_DB_USER} \
     -e MARIADB_PASSWORD=${FM_DB_PASSWORD} \
     -e MARIADB_DATABASE=${FM_DB_NAME} \
-    -p 3306:3306 \
+    -p 3307:3306 \
     -v ${PWD}/db/dev/mysqlconf:/etc/mysql/conf.d:delegated \
     -v ${PWD}/db/dev/initialize:/docker-entrypoint-initdb.d:delegated \
+    -v ${FM_HOME}/environments/dev/data:/var/lib/mysql:delegated \
     --rm \
     mariadb:latest
 
 # run phpmyadmin
-docker run -d --name phpmyadmin \
-    -p 9000:80 \
+docker run -d --name fm-phpmyadmin \
+    -p 9001:80 \
     --link fm_dev_db:db \
     --rm \
     phpmyadmin
