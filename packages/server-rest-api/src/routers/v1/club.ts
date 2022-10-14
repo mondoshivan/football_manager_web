@@ -1,14 +1,14 @@
 import { Request, Response, Router } from "express";
 import asyncHandler from "express-async-handler"
-
-import { CreateClubDTO } from "../../data-transfer-objects/v1/club.dto";
-
 import { clubService } from "@football-manager/db-handler"
+
+import { CreateClubDTO, FilterClubsDTO } from "../../data-transfer-objects/v1/club.dto";
 
 const clubRouter = Router();
 
 clubRouter.get('/', asyncHandler( async (req: Request, res: Response) => {
-    const result = await clubService.getAll({});
+    const filters:FilterClubsDTO = req.query;
+    const result = await clubService.getAll(filters);
     res.status(200).json(result);
 }));
 
