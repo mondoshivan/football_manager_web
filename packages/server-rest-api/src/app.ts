@@ -1,4 +1,4 @@
-import express, { Express, Router } from 'express';
+import express, { Express, Router, Request, Response, NextFunction } from 'express';
 import path from 'path';
 
 import log from '@football-manager/log';
@@ -22,6 +22,11 @@ export class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.static(path.join(process.cwd(), config.service.frontEndDir)));
+
+    this.app.use((err:Error, req:Request, res:Response, next:NextFunction) => {
+      log.error(err);
+      res.status(500).send('Internal Server Error!');
+    });
   }
  
   private initializeRouters(routers: Router) {
