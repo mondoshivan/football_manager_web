@@ -12,6 +12,9 @@
     },
     {
       "path": "./packages/db-handler/tsconfig.json"
+    },
+    {
+      "path": "./packages/initialize/tsconfig.json"
     }
   ]
 }
