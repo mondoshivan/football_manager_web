@@ -1,20 +1,25 @@
 import log from '@football-manager/log';
 
-import { Club, Championship, Team, Player } from './models/index'
+import sequelizeConnection from './config';
+
 import * as clubService from './services/club'
 import * as championshipService from './services/championship'
 import * as playerService from './services/player'
 import * as teamService from './services/team'
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'production';
+const force = true;
+const alter = false;
 
 export const dbInit = async () => {
 
   try {
-    await Championship.sync({ alter: isDev });
-    await Club.sync({ alter: isDev });
-    await Team.sync({ alter: isDev });
-    await Player.sync({ alter: isDev });
+    await sequelizeConnection.sync({ force: force, alter: alter });
+
+    // await Championship.sync({ force: force, alter: alter });
+    // await Club.sync({ force: force, alter: alter });
+    // await Team.sync({ force: force, alter: alter });
+    // await Player.sync({ force: force, alter: alter });
   } catch (error) {
     log.fatal(error);
   }

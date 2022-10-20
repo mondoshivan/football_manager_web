@@ -37,7 +37,7 @@ class Club extends Model<ClubAttributes, ClubInput> implements ClubAttributes {
   }, {
     timestamps: true,
     sequelize: sequelizeConnection,
-    paranoid: true
+    paranoid: false
   })
   
   export default Club

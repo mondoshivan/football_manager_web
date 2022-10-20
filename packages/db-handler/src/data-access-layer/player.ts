@@ -12,7 +12,8 @@ export const create = async (payload: PlayerInput): Promise<PlayerOutput> => {
 export const findOrCreate = async (payload: PlayerInput): Promise<PlayerOutput> => {
     const [player] = await Player.findOrCreate({
         where: {
-            name: payload.name
+            firstName: payload.firstName,
+            lastName: payload.lastName
         },
         defaults: payload
     })
@@ -59,14 +60,4 @@ export const getAll = async (filters?: GetAllPlayersFilters): Promise<PlayerOutp
     };
 
     return Player.findAll(options);
-}
-
-export const checkClubExists = async (name: string): Promise<boolean> => {
-    const playerWithName = await Player.findOne({
-        where: {
-            name
-        }
-    });
-
-    return !isEmpty(playerWithName);
 }

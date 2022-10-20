@@ -1,26 +1,22 @@
-import {kebabCase} from 'lodash'
+import {isNil, kebabCase} from 'lodash'
 
 import * as playerDal from '../data-access-layer/player'
+import * as teamDal from '../data-access-layer/team'
 import {GetAllPlayersFilters} from '../data-access-layer/types'
 import {PlayerInput, PlayerOutput} from '../models/player'
 
-export const create = async (payload: PlayerInput): Promise<PlayerOutput> => {
-    let name = kebabCase(payload.name)
-    const nameExists = await playerDal.checkClubExists(name)
-
-    payload.name = nameExists ? `${name}-${Math.floor(Math.random() * 1000)}` : name
+export const create = async (payload: PlayerInput): Promise<PlayerOutput> => {    
     
-    return playerDal.create(payload)
-}
+    if (!isNil(payload.teams)) {
+        const teams = await Promise.all(payload.teams.map(teamDal.findOrCreate))
 
-export const update = async (id: number, payload: Partial<PlayerInput>): Promise<PlayerOutput> => {
-    if (payload.name) {
-        let name = kebabCase(payload.name)
-        const clubExists = await playerDal.checkClubExists(name)
-
-        payload.name = clubExists ? `${name}-${Math.floor(Math.random() * 1000)}` : name
+        payload.teams = teams;
     }
     
+    return playerDal.findOrCreate(payload);
+}
+
+export const update = async (id: number, payload: Partial<PlayerInput>): Promise<PlayerOutput> => {    
     return playerDal.update(id, payload)
 }
 

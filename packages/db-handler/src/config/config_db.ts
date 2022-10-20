@@ -4,14 +4,14 @@ export class DBConfig implements config.DBConfig {
 
     @Property({
         doc: 'The DB name.',
-        default: "football-manager",
+        default: "football_manager",
         env: 'FM_DB_NAME'
     })
     public name!: string;
 
     @Property({
         doc: 'The DB user',
-        default: "football-manager",
+        default: "football_manager",
         env: 'FM_DB_USER'
     })
     public user!: string;
@@ -39,8 +39,15 @@ export class DBConfig implements config.DBConfig {
 
     @Property({
         doc: 'The password of the DB',
-        default: "football-manager",
+        default: "football_manager",
         env: 'FM_DB_PASSWORD'
     })
     public password!: string;
+
+    @Property({
+        doc: 'Enables the logging of mysql commands',
+        default: true,
+        env: 'FM_DB_LOGGING'
+    })
+    public logging!: boolean;
 }

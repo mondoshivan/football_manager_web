@@ -34,7 +34,7 @@ class Team extends Model<TeamAttributes, TeamInput> implements TeamAttributes {
   }, {
     timestamps: true,
     sequelize: sequelizeConnection,
-    paranoid: true
-  })
+    paranoid: false
+  });
   
   export default Team

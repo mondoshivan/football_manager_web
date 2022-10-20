@@ -17,5 +17,6 @@ declare namespace config {
         port: number
         dialect: string
         password: string
+        logging: boolean
     }
 }

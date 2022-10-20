@@ -52,7 +52,18 @@ class Championship extends Model<ChampionshipAttributes, ChampionshipInput> impl
   }, {
     timestamps: true,
     sequelize: sequelizeConnection,
-    paranoid: true
-  })
+    paranoid: false
+  });
+
+  Championship.hasMany(Club, {
+    foreignKey: {
+      name: 'championshipId'
+    },
+    as: 'clubs'
+  });
+  
+  Club.belongsTo(Championship, {
+    as: 'championship'
+  });
   
   export default Championship

@@ -1,19 +1,25 @@
-import { DataTypes, Model, Optional } from 'sequelize'
+import { Association, DataTypes, HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, Model, NonAttribute, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
+import Team, { TeamInput } from './team';
 
 interface PlayerAttributes {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
 }
-export interface PlayerInput extends Optional<PlayerAttributes, 'id'> {}
+export interface PlayerInput extends Optional<PlayerAttributes, 'id'> {
+  teams?: TeamInput[];
+}
+
 export interface PlayerOutput extends Required<PlayerAttributes> {}
 
 class Player extends Model<PlayerAttributes, PlayerInput> implements PlayerAttributes {
     public id!: number
-    public name!: string
+    public firstName!: string
+    public lastName!: string
   
     // timestamps!
     public readonly createdAt!: Date;
@@ -27,14 +33,18 @@ class Player extends Model<PlayerAttributes, PlayerInput> implements PlayerAttri
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
       type: DataTypes.STRING,
       allowNull: false
     }
   }, {
     timestamps: true,
     sequelize: sequelizeConnection,
-    paranoid: true
+    paranoid: false
   })
   
   export default Player
