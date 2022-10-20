@@ -1,3 +1,3 @@
-GRANT ALL PRIVILEGES ON *.* TO 'football-manager'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'football_manager'@'%';
 
 FLUSH PRIVILEGES;
