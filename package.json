@@ -11,13 +11,13 @@
     "build-tsc": "npx tsc --build",
     "lint": "npx eslint -c .eslintrc.js --ext .ts --fix",
     "lerna-bootstrap": "npx lerna bootstrap",
-    "lerna-watch": "npx tsc --build --watch",
     "lerna-start-front-end-dev": "npx lerna run start-front-end-dev",
     "lerna-start-server-dev": "npx lerna run start-server-dev",
     "lerna-build": "npm-run-all build-tsc lerna-build-front-end",
     "lerna-build-dev": "npm-run-all build-tsc lerna-build-front-end-dev",
     "lerna-build-front-end": "npx lerna run build-front-end",
-    "lerna-build-front-end-dev": "npx lerna run build-front-end-dev"
+    "lerna-build-front-end-dev": "npx lerna run build-front-end-dev",
+    "tsc-watch": "npx tsc --build --watch"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.28.0",

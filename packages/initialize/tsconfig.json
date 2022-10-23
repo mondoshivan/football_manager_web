@@ -17,6 +17,12 @@
     },
     {
       "path": "../db-handler"
-    }
+    },
+    {
+      "path": "../names"
+    },
+    {
+      "path": "../utils"
+    },
   ]
 }

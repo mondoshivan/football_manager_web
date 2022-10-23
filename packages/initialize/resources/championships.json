@@ -1,0 +1,14 @@
+[
+    {
+        "name": "1. Bundesliga",
+        "type": "league"
+    },
+    {
+        "name": "2. Bundesliga",
+        "type": "league"
+    },
+    {
+        "name": "DFB Pokal",
+        "type": "cup"
+    }
+]

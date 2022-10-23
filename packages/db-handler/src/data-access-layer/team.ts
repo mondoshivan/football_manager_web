@@ -3,14 +3,15 @@ import {isEmpty} from 'lodash'
 
 import {Team} from '../models'
 import {GetAllTeamsFilters} from './types'
-import {TeamInput, TeamOutput} from '../models/team'
+import {TeamInput} from '../models/team'
 
-export const create = async (payload: TeamInput): Promise<TeamOutput> => {
+export const create = async (payload: TeamInput): Promise<Team> => {
     return await Team.create(payload);
 }
 
-export const findOrCreate = async (payload: TeamInput): Promise<TeamOutput> => {
+export const findOrCreate = async (payload: TeamInput): Promise<Team> => {
     const [team] = await Team.findOrCreate({
+        include: Object.keys(Team.associations).map(key => Team.associations[key]),
         where: {
             name: payload.name
         },
@@ -20,7 +21,7 @@ export const findOrCreate = async (payload: TeamInput): Promise<TeamOutput> => {
     return team;
 }
 
-export const update = async (id: number, payload: Partial<TeamInput>): Promise<TeamOutput> => {
+export const update = async (id: number, payload: Partial<TeamInput>): Promise<Team> => {
     const team = await Team.findByPk(id);
 
     if (!team) {
@@ -31,8 +32,11 @@ export const update = async (id: number, payload: Partial<TeamInput>): Promise<T
     return await team.update(payload);
 }
 
-export const getById = async (id: number): Promise<TeamOutput> => {
-    const team = await Team.findByPk(id);
+export const getById = async (id: number): Promise<Team> => {
+    const options = {
+        include: Object.keys(Team.associations).map(key => Team.associations[key])
+    };
+    const team = await Team.findByPk(id, options);
 
     if (!team) {
         // @todo throw custom error
@@ -40,6 +44,15 @@ export const getById = async (id: number): Promise<TeamOutput> => {
     }
 
     return team;
+}
+
+export const getByName = async (name: string): Promise<Team[]> => {
+    return Team.findAll({
+        include: Object.keys(Team.associations).map(key => Team.associations[key]),
+        where: {
+            name
+        }
+    });
 }
 
 export const deleteById = async (id: number): Promise<boolean> => {
@@ -50,8 +63,9 @@ export const deleteById = async (id: number): Promise<boolean> => {
     return !!deletedTeamCount; // !! -> converting to boolean
 }
 
-export const getAll = async (filters?: GetAllTeamsFilters): Promise<TeamOutput[]> => {
+export const getAll = async (filters?: GetAllTeamsFilters): Promise<Team[]> => {
     const options = {
+        include: Object.keys(Team.associations).map(key => Team.associations[key]),
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
         },

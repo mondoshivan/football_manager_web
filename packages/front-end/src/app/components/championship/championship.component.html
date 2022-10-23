@@ -1,0 +1,10 @@
+<app-championship-menu [name]="championship?.name"></app-championship-menu>
+
+<div class="row">
+    <div class="col">
+
+      <div>
+        <ng2-smart-table #table [settings]="tableSettings" [source]="tableDataSource" (userRowSelect)="onUserRowSelect($event)" (rowSelect)="onSelectRow($event)" (mouseover)="onMouseOver($event)"></ng2-smart-table>
+      </div>
+    </div>
+  </div>

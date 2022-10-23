@@ -3,17 +3,18 @@ import {isEmpty} from 'lodash'
 
 import {Player} from '../models'
 import {GetAllPlayersFilters} from './types'
-import {PlayerInput, PlayerOutput} from '../models/player'
+import {PlayerInput} from '../models/player'
 
-export const create = async (payload: PlayerInput): Promise<PlayerOutput> => {
+export const create = async (payload: PlayerInput): Promise<Player> => {
     return await Player.create(payload);
 }
 
-export const findOrCreate = async (payload: PlayerInput): Promise<PlayerOutput> => {
+export const findOrCreate = async (payload: PlayerInput): Promise<Player> => {
     const [player] = await Player.findOrCreate({
+        include: Object.keys(Player.associations).map(key => Player.associations[key]),
         where: {
             firstName: payload.firstName,
-            lastName: payload.lastName
+            secondName: payload.secondName
         },
         defaults: payload
     })
@@ -21,7 +22,7 @@ export const findOrCreate = async (payload: PlayerInput): Promise<PlayerOutput> 
     return player;
 }
 
-export const update = async (id: number, payload: Partial<PlayerInput>): Promise<PlayerOutput> => {
+export const update = async (id: number, payload: Partial<PlayerInput>): Promise<Player> => {
     const player = await Player.findByPk(id);
 
     if (!player) {
@@ -29,11 +30,15 @@ export const update = async (id: number, payload: Partial<PlayerInput>): Promise
         throw new Error('not found');
     }
 
-    return await player.update(payload);
+    return player.update(payload);
 }
 
-export const getById = async (id: number): Promise<PlayerOutput> => {
-    const player = await Player.findByPk(id);
+export const getById = async (id: number): Promise<Player> => {
+    const options = {
+        include: Object.keys(Player.associations).map(key => Player.associations[key])
+    };
+
+    const player = await Player.findByPk(id, options);
 
     if (!player) {
         // @todo throw custom error
@@ -51,8 +56,10 @@ export const deleteById = async (id: number): Promise<boolean> => {
     return !!deletedPlayerCount; // !! -> converting to boolean
 }
 
-export const getAll = async (filters?: GetAllPlayersFilters): Promise<PlayerOutput[]> => {
+export const getAll = async (filters?: GetAllPlayersFilters): Promise<Player[]> => {
+
     const options = {
+        include: Object.keys(Player.associations).map(key => Player.associations[key]),
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
         },

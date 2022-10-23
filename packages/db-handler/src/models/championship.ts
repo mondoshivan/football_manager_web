@@ -1,20 +1,22 @@
 import { Association, DataTypes, HasManyAddAssociationMixin, HasManyAddAssociationsMixin, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin, HasManyHasAssociationsMixin, HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, HasManySetAssociationsMixin, Model, NonAttribute, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
-import Club from './club';
+
+export type ChampionshipTypes = 'league' | 'cup';
 
 interface ChampionshipAttributes {
   id: number;
   name: string;
+  type: ChampionshipTypes;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
 }
 export interface ChampionshipInput extends Optional<ChampionshipAttributes, 'id'> {}
-export interface ChampionshipOutput extends Required<ChampionshipAttributes> {}
 
 class Championship extends Model<ChampionshipAttributes, ChampionshipInput> implements ChampionshipAttributes {
-    public id!: number
-    public name!: string
+    public id!: number;
+    public name!: string;
+    public type!: ChampionshipTypes;
   
     // timestamps!
     public readonly createdAt!: Date;
@@ -48,22 +50,15 @@ class Championship extends Model<ChampionshipAttributes, ChampionshipInput> impl
     name: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    type: {
+      type: DataTypes.ENUM('league', 'cup'),
+      allowNull: false
     }
   }, {
     timestamps: true,
     sequelize: sequelizeConnection,
     paranoid: false
-  });
-
-  Championship.hasMany(Club, {
-    foreignKey: {
-      name: 'championshipId'
-    },
-    as: 'clubs'
-  });
-  
-  Club.belongsTo(Championship, {
-    as: 'championship'
   });
   
   export default Championship

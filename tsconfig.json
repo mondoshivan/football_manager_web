@@ -15,6 +15,15 @@
     },
     {
       "path": "./packages/initialize/tsconfig.json"
+    },
+    {
+      "path": "./packages/utils/tsconfig.json"
+    },
+    {
+      "path": "./packages/names/tsconfig.json"
+    },
+    {
+      "path": "./packages/data-transfer/tsconfig.json"
     }
   ]
 }

@@ -1,20 +1,44 @@
 [
     { 
-        "name": "FC Bayern München"
+        "name": "FC Bayern München",
+        "championships": [
+            "1. Bundesliga", 
+            "DFB Pokal"
+        ]
     },
     {
-        "name": "Borussia Dortmund"
+        "name": "Borussia Dortmund",
+        "championships": [
+            "1. Bundesliga", 
+            "DFB Pokal"
+        ]
     },
     {
-        "name": "Hamburger SV"
+        "name": "SV Werder Bremen",
+        "championships": [
+            "1. Bundesliga", 
+            "DFB Pokal"
+        ]
     },
     {
-        "name": "SV Werder Bremen"
+        "name": "1. FC Köln",
+        "championships": [
+            "1. Bundesliga", 
+            "DFB Pokal"
+        ]
     },
     {
-        "name": "1. FC Köln"    
+        "name": "Hamburger SV",
+        "championships": [
+            "2. Bundesliga", 
+            "DFB Pokal"
+        ]
     },
     {
-        "name": "FC St. Pauli"
+        "name": "FC St. Pauli",
+        "championships": [
+            "2. Bundesliga", 
+            "DFB Pokal"
+        ]
     }
 ]

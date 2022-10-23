@@ -4,7 +4,12 @@
 
 export const environment = {
   production: false,
-  webSocketUrl: "http://0.0.0.0:8082"
+  name: 'dev',
+  server: {
+    protocol: 'http',
+    host: '0.0.0.0',
+    port: 8082
+  }
 };
 
 /*

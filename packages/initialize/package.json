@@ -19,6 +19,7 @@
   "dependencies": {
     "@football-manager/db-handler": "^0.0.1",
     "@football-manager/log": "^0.0.1",
+    "@football-manager/names": "^0.0.1",
     "convict": "^6.2.3",
     "reflect-metadata": "^0.1.13",
     "ts-convict": "^1.1.0"

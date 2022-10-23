@@ -13,7 +13,6 @@ interface TeamPlayerAttributes {
 };
 
 export interface TeamPlayerInput extends Optional<TeamPlayerAttributes, 'id'> {};
-export interface TeamPlayerOutput extends TeamPlayerInput {};
 
 class TeamPlayer extends Model<TeamPlayerAttributes, TeamPlayerInput> implements TeamPlayerAttributes {
     public id!: number;
@@ -47,7 +46,9 @@ TeamPlayer.init({
         }
     }
 }, {
-  sequelize: sequelizeConnection
+    timestamps: true,
+    sequelize: sequelizeConnection,
+    paranoid: true
 })
 
 Player.belongsToMany(Team, {

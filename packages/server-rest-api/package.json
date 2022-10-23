@@ -19,6 +19,7 @@
   "homepage": "https://github.com/mondoshivan/football_manager_web",
   "dependencies": {
     "@football-manager/db-handler": "^0.0.1",
+    "@football-manager/data-transfer": "^0.0.1",
     "@football-manager/front-end": "^0.0.1",
     "@football-manager/log": "^0.0.1",
     "convict": "^6.2.3",

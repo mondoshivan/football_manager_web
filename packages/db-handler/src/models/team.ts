@@ -1,5 +1,7 @@
-import { DataTypes, Model, Optional } from 'sequelize'
+import { DataTypes, HasManyAddAssociationMixin, HasManySetAssociationsMixin, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
+import Championship, { ChampionshipInput } from './championship';
+import Player from './player';
 
 interface TeamAttributes {
   id: number;
@@ -9,7 +11,6 @@ interface TeamAttributes {
   deletedAt?: Date;
 }
 export interface TeamInput extends Optional<TeamAttributes, 'id'> {}
-export interface TeamOutput extends Required<TeamAttributes> {}
 
 class Team extends Model<TeamAttributes, TeamInput> implements TeamAttributes {
     public id!: number
@@ -19,6 +20,9 @@ class Team extends Model<TeamAttributes, TeamInput> implements TeamAttributes {
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
     public readonly deletedAt!: Date;
+
+    declare addChampionship: HasManyAddAssociationMixin<Championship, number>;
+    declare addPlayer: HasManyAddAssociationMixin<Player, number>;
   }
   
   Team.init({
@@ -34,7 +38,7 @@ class Team extends Model<TeamAttributes, TeamInput> implements TeamAttributes {
   }, {
     timestamps: true,
     sequelize: sequelizeConnection,
-    paranoid: false
+    paranoid: true
   });
   
   export default Team

@@ -1,0 +1,28 @@
+{
+  "name": "@football-manager/names",
+  "version": "0.0.1",
+  "description": "Handling of names.",
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "npx tsc -p tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Oliver Schmidt",
+  "license": "ISC",
+  "homepage": "https://github.com/mondoshivan/football_manager_web",
+  "dependencies": {
+    "@football-manager/utils": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.18.21"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mondoshivan/football_manager_web"
+  }
+}

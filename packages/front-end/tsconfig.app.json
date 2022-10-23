@@ -14,7 +14,7 @@
   ],
   "references": [
     {
-      "path": "../global-types"
+      "path": "../data-transfer"
     }
   ]
 }

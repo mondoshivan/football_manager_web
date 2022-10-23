@@ -1,0 +1,22 @@
+[
+    {
+        "championship": {
+            "name": "1. Bundesliga"
+        },
+        "teams": [
+            {
+                "name": "FC Bayern München"
+            }
+        ]
+    },
+    {
+        "championship": {
+            "name": "2. Bundesliga"
+        },
+        "teams": [
+            {
+                "name": "Hamburger SV"
+            }
+        ]
+    }
+]

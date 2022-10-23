@@ -3,44 +3,59 @@ import {isEmpty} from 'lodash'
 
 import {Championship} from '../models'
 import {GetAllChampionshipsFilters} from './types'
-import {ChampionshipInput, ChampionshipOutput} from '../models/championship'
+import {ChampionshipInput} from '../models/championship'
 
-export const create = async (payload: ChampionshipInput): Promise<ChampionshipOutput> => {
+export const create = async (payload: ChampionshipInput): Promise<Championship> => {
     return await Championship.create(payload);
 }
 
-export const findOrCreate = async (payload: ChampionshipInput): Promise<ChampionshipOutput> => {
-    const [club] = await Championship.findOrCreate({
+export const findOrCreate = async (payload: ChampionshipInput): Promise<Championship> => {
+
+    const [championship] = await Championship.findOrCreate({
+        include: Object.keys(Championship.associations).map(key => Championship.associations[key]),
         where: {
             name: payload.name
         },
         defaults: payload
     });
 
-    return club;
+    return championship;
 }
 
-export const update = async (id: number, payload: Partial<ChampionshipInput>): Promise<ChampionshipOutput> => {
-    const club = await Championship.findByPk(id);
+export const update = async (id: number, payload: Partial<ChampionshipInput>): Promise<Championship> => {
+    const championship = await Championship.findByPk(id);
 
-    if (!club) {
+    if (!championship) {
         // @todo throw custom error
         throw new Error('not found');
     }
 
-    const updatedChampionship = await club.update(payload);
+    const updatedChampionship = await championship.update(payload);
     return updatedChampionship;
 }
 
-export const getById = async (id: number): Promise<ChampionshipOutput> => {
-    const club = await Championship.findByPk(id);
+export const getById = async (id: number): Promise<Championship> => {
+    const options = {
+        include: Object.keys(Championship.associations).map(key => Championship.associations[key])
+    };
 
-    if (!club) {
+    const championship = await Championship.findByPk(id, options);
+
+    if (!championship) {
         // @todo throw custom error
         throw new Error('not found');
     }
 
-    return club;
+    return championship;
+}
+
+export const getByName = async (name: string): Promise<Championship[]> => {
+    return Championship.findAll({
+        include: Object.keys(Championship.associations).map(key => Championship.associations[key]),
+        where: {
+            name
+        }
+    });
 }
 
 export const deleteById = async (id: number): Promise<boolean> => {
@@ -51,8 +66,9 @@ export const deleteById = async (id: number): Promise<boolean> => {
     return !!deletedChampionshipCount;
 }
 
-export const getAll = async (filters?: GetAllChampionshipsFilters): Promise<ChampionshipOutput[]> => {
+export const getAll = async (filters?: GetAllChampionshipsFilters): Promise<Championship[]> => {
     return Championship.findAll({
+        include: Object.keys(Championship.associations).map(key => Championship.associations[key]),
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
         },
@@ -61,11 +77,11 @@ export const getAll = async (filters?: GetAllChampionshipsFilters): Promise<Cham
 }
 
 export const checkChampionshipExists = async (name: string): Promise<boolean> => {
-    const clubWithName = await Championship.findOne({
+    const championshipWithName = await Championship.findOne({
         where: {
             name
         }
     });
 
-    return !isEmpty(clubWithName);
+    return !isEmpty(championshipWithName);
 }
