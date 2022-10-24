@@ -6,6 +6,54 @@
         "teams": [
             {
                 "name": "FC Bayern München"
+            },
+            {
+                "name": "Borussia Dortmund"
+            },
+            {
+                "name": "SV Werder Bremen"
+            },
+            {
+                "name": "1. FC Köln"
+            },
+            {
+                "name": "FC Schalke 04"
+            },
+            {
+                "name": "TSG Hoffenheim"
+            },
+            {
+                "name": "1. FSV Mainz 05"
+            },
+            {
+                "name": "Borussia Mönchengladbach"
+            },
+            {
+                "name": "VfB Stuttgart"
+            },
+            {
+                "name": "Bayer 04 Leverkusen"
+            },
+            {
+                "name": "SC Freiburg"
+            },
+            {
+                "name": "VFL Wolfsburg"
+            },
+            {
+                "name": "Eintracht Frankfurt"
+            },
+            {
+                "name": "RB Leipzig"
+            },
+            {
+                "name": "Hertha BSC Berlin"
+            },
+            {
+                "name": "VfL Bochum"
+            },
+            {
+                "name": "1.FC Union Berlin"
             }
         ]
     },

@@ -1,4 +1,4 @@
-import {Op} from 'sequelize'
+import {Association, Op} from 'sequelize'
 import {isEmpty} from 'lodash'
 
 import {Championship} from '../models'
@@ -12,7 +12,7 @@ export const create = async (payload: ChampionshipInput): Promise<Championship> 
 export const findOrCreate = async (payload: ChampionshipInput): Promise<Championship> => {
 
     const [championship] = await Championship.findOrCreate({
-        include: Object.keys(Championship.associations).map(key => Championship.associations[key]),
+        include: { all: true, nested: true },
         where: {
             name: payload.name
         },
@@ -35,11 +35,10 @@ export const update = async (id: number, payload: Partial<ChampionshipInput>): P
 }
 
 export const getById = async (id: number): Promise<Championship> => {
-    const options = {
-        include: Object.keys(Championship.associations).map(key => Championship.associations[key])
-    };
 
-    const championship = await Championship.findByPk(id, options);
+    const championship = await Championship.findByPk(id, {
+        include: { all: true, nested: true }
+    });
 
     if (!championship) {
         // @todo throw custom error
@@ -51,7 +50,7 @@ export const getById = async (id: number): Promise<Championship> => {
 
 export const getByName = async (name: string): Promise<Championship[]> => {
     return Championship.findAll({
-        include: Object.keys(Championship.associations).map(key => Championship.associations[key]),
+        include: { all: true, nested: true },
         where: {
             name
         }
@@ -68,7 +67,7 @@ export const deleteById = async (id: number): Promise<boolean> => {
 
 export const getAll = async (filters?: GetAllChampionshipsFilters): Promise<Championship[]> => {
     return Championship.findAll({
-        include: Object.keys(Championship.associations).map(key => Championship.associations[key]),
+        include: { all: true, nested: true },
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
         },

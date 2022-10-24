@@ -11,6 +11,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ChampionshipMenuComponent } from './components/championship-menu/championship-menu.component';
+import { TeamComponent } from './components/team/team.component';
+import { PlayerComponent } from './components/player/player.component';
+import { TeamMenuComponent } from './components/team-menu/team-menu.component';
+import { PlayerMenuComponent } from './components/player-menu/player-menu.component';
 
 
 @NgModule({
@@ -21,7 +25,11 @@ import { ChampionshipMenuComponent } from './components/championship-menu/champi
     ChampionshipsComponent,
     ChampionshipComponent,
     NotFoundComponent,
-    ChampionshipMenuComponent
+    ChampionshipMenuComponent,
+    TeamComponent,
+    PlayerComponent,
+    TeamMenuComponent,
+    PlayerMenuComponent
   ],
   imports: [
     BrowserModule,

@@ -6,18 +6,22 @@ interface PlayerAttributes {
   id: number;
   firstName: string;
   secondName: string;
+  birthday: Date;
+  height: number;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
 }
 export interface PlayerInput extends Optional<PlayerAttributes, 'id'> {
-  teams?: TeamInput[];
+  // teams?: TeamInput[];
 }
 
 class Player extends Model<PlayerAttributes, PlayerInput> implements PlayerAttributes {
     public id!: number
     public firstName!: string
     public secondName!: string
+    public birthday!: Date;
+    public height!: number;
   
     // timestamps!
     public readonly createdAt!: Date;
@@ -41,6 +45,14 @@ class Player extends Model<PlayerAttributes, PlayerInput> implements PlayerAttri
     },
     secondName: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    birthday: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    height: {
+      type: DataTypes.TINYINT.UNSIGNED,
       allowNull: false
     }
   }, {

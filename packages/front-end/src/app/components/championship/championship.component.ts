@@ -71,7 +71,7 @@ export class ChampionshipComponent implements AfterViewInit {
   }
 
   onUserRowSelect(event: any) {
-
+    this.router.navigateByUrl('/team', { state: event.data });
   }
 
   onSelectRow(event: any) {

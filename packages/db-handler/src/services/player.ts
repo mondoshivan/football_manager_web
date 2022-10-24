@@ -14,11 +14,11 @@ export const findOrCreate = async (payload: PlayerInput): Promise<Player> => {
     
     const player = await playerDal.findOrCreate(payload);
 
-    if (!isNil(payload.teams)) {
-        const teams = await Promise.all(payload.teams.map(teamDal.findOrCreate));
+    // if (!isNil(payload.teams)) {
+    //     const teams = await Promise.all(payload.teams.map(teamDal.findOrCreate));
 
-        await player.setTeams(teams);
-    }
+    //     await player.setTeams(teams);
+    // }
     
     return player;
 }

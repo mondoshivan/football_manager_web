@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col">
+        <app-player-menu 
+            [firstName]="player?.firstName"
+            [secondName]="player?.secondName"
+        ></app-player-menu>
+    </div>
+</div>
+
+<div class="row my-3">
+    <div class="col">
+        <h2>Alter: {{playerAge()}}</h2>
+        <h2>Größe: {{player?.height}} cm</h2>
+    </div>
+</div>

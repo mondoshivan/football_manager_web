@@ -1,10 +1,18 @@
-export type TeamsDTO = {
-    name: string
+export type PlayerDTO = {
+    firstName: string;
+    secondName: string;
+    birthday: Date;
+    height: number;
+}
+
+export type TeamDTO = {
+    name: string;
+    Players: PlayerDTO[];
 }
 
 export type ChampionshipDTO = {
     name: string;
-    Teams: TeamsDTO[]
+    Teams: TeamDTO[];
 }
 
 export type CreateChampionShipDTO = {
@@ -12,6 +20,6 @@ export type CreateChampionShipDTO = {
 }
 
 export type FilterChampionShipDTO = {
-    isDeleted?: boolean
-    includeDeleted?: boolean
+    isDeleted?: boolean;
+    includeDeleted?: boolean;
 }

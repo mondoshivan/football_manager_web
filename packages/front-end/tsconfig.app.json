@@ -15,6 +15,9 @@
   "references": [
     {
       "path": "../data-transfer"
+    },
+    {
+      "path": "../utils"
     }
   ]
 }

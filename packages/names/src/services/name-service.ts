@@ -1,7 +1,9 @@
 import Utils from "@football-manager/utils";
 
+export type Country = 'gb' | 'de' | 'dk' | 'nl' | 'it' | 'fr' | 'es';
+
 export interface SecondNameAttributes {
-    country: 'uk' | 'de';
+    country: Country;
 }
 
 export interface FirstNameAttributes extends SecondNameAttributes {
@@ -34,11 +36,11 @@ class NameService {
             
             // filter the list
             selection = this.firstNameList.filter(name => {
-                name.gender === attributes.gender && name.country === attributes.country
+                return name.gender === attributes.gender && name.country === attributes.country;                
             });
-        }
 
-        if (selection.length === 0) throw new Error('nothing found');
+            if (selection.length === 0) throw new Error(`nothing found for: ${attributes.country} ${attributes.gender}`);
+        }
 
         // pick a random
         const index = Utils.randomIntFromInterval(0, selection.length - 1);

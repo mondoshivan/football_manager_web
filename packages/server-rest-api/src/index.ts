@@ -1,6 +1,6 @@
 import "reflect-metadata"; // needed for ts-convict
-import { dbInit } from "@football-manager/db-handler";
 import log from '@football-manager/log';
+import * as initialize from '@football-manager/initialize';
 
 import { App } from "./app";
 import routers from "./routers/v1";
@@ -12,10 +12,9 @@ export const get = () => {
 };
 
 export const start = async () => {
-    await dbInit();
-    const app = get();
-
     try {
+        await initialize.start();
+        const app = get();
         app.listen();
     } catch (error: any) {
         log.error(error)

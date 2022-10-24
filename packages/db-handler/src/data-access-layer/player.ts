@@ -11,7 +11,7 @@ export const create = async (payload: PlayerInput): Promise<Player> => {
 
 export const findOrCreate = async (payload: PlayerInput): Promise<Player> => {
     const [player] = await Player.findOrCreate({
-        include: Object.keys(Player.associations).map(key => Player.associations[key]),
+        include: { all: true, nested: true },
         where: {
             firstName: payload.firstName,
             secondName: payload.secondName
@@ -34,11 +34,10 @@ export const update = async (id: number, payload: Partial<PlayerInput>): Promise
 }
 
 export const getById = async (id: number): Promise<Player> => {
-    const options = {
-        include: Object.keys(Player.associations).map(key => Player.associations[key])
-    };
 
-    const player = await Player.findByPk(id, options);
+    const player = await Player.findByPk(id, {
+        include: { all: true, nested: true }
+    });
 
     if (!player) {
         // @todo throw custom error
@@ -57,14 +56,11 @@ export const deleteById = async (id: number): Promise<boolean> => {
 }
 
 export const getAll = async (filters?: GetAllPlayersFilters): Promise<Player[]> => {
-
-    const options = {
-        include: Object.keys(Player.associations).map(key => Player.associations[key]),
+    return Player.findAll({
+        include: { all: true, nested: true },
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
         },
         ...((filters?.isDeleted || filters?.includeDeleted) && {paranoid: true})
-    };
-
-    return Player.findAll(options);
+    });
 }

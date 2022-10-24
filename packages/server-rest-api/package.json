@@ -21,6 +21,7 @@
     "@football-manager/db-handler": "^0.0.1",
     "@football-manager/data-transfer": "^0.0.1",
     "@football-manager/front-end": "^0.0.1",
+    "@football-manager/initialize": "^0.0.1",
     "@football-manager/log": "^0.0.1",
     "convict": "^6.2.3",
     "express": "^4.18.1",
