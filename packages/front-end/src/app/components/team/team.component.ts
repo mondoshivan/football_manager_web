@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
-import { PlayerDTO, TeamDTO } from '@football-manager/data-transfer';
+import { FormationDTO, PlayerDTO, TeamDTO } from '@football-manager/data-transfer';
+import { RestApiService } from 'src/app/services/rest-api/rest-api.service';
 
 @Component({
   selector: 'app-team',
@@ -11,6 +12,7 @@ import { PlayerDTO, TeamDTO } from '@football-manager/data-transfer';
 export class TeamComponent implements AfterViewInit {
 
   team? : TeamDTO;
+  formations? : FormationDTO[];
 
   @ViewChild('table') table!: Ng2SmartTableComponent;
   tableDataSource: LocalDataSource;
@@ -49,7 +51,7 @@ export class TeamComponent implements AfterViewInit {
     }
   }
 
-  constructor(private router: Router) { 
+  constructor(private restApiService: RestApiService, private router: Router) { 
     this.tableDataSource = new LocalDataSource();
     this.tableDataSource.reset(false);
 
@@ -58,6 +60,10 @@ export class TeamComponent implements AfterViewInit {
     if (nav?.extras?.state) {
       this.team = nav.extras.state as TeamDTO;
     }
+
+    this.restApiService.formations().subscribe( async (formations: FormationDTO[]) => {
+      this.formations = formations;
+    });
   }
 
   async ngAfterViewInit() {
@@ -101,6 +107,16 @@ export class TeamComponent implements AfterViewInit {
 
   onMouseOver(event: any) {
 
+  }
+
+  changeFormation(event: MouseEvent) {
+    const button = event.currentTarget as HTMLElement;
+
+    this.restApiService.updateTeamFormation(this.team!.id, button.innerHTML).subscribe(async (team: TeamDTO) => {
+      // this.formations!.find(f => f.id === team.Formation.id);
+      this.team = team;
+      console.log(this.team);
+    });
   }
 
 }

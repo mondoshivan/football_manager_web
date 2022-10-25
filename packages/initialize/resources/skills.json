@@ -1,0 +1,82 @@
+[
+    {
+        "name": "acceleration",
+        "type": "physical",
+        "description": "The rate at which the character accelerates at the beginning of a sprint.",
+        "required": true
+    },
+    {
+        "name": "speed",
+        "type": "physical",
+        "description": "The rate at which the character responds to things and moves.",
+        "required": true
+    },
+    {
+        "name": "springiness",
+        "type": "physical",
+        "description": "The upthrow a character can reach in combination with the character height.",
+        "required": true
+    },
+    {
+        "name": "homeliness",
+        "type": "physical",
+        "description": "How attractive a person is. This may be obscured by clothing, make up, dirt ...",
+        "required": true
+    },
+    {
+        "name": "health",
+        "type": "physical",
+        "description": "The body's natural capacity to heal and cope with disease",
+        "required": true
+    },
+    {
+        "name": "reflex",
+        "type": "physical",
+        "description": "Speed in responding to an unpredictable physical situation",
+        "required": true
+    },
+    {
+        "name": "stamnia",
+        "type": "physical",
+        "description": "A measure of the body's endurance and fitness.",
+        "required": true
+    },
+    {
+        "name": "strength",
+        "type": "physical",
+        "description": "How strong the character is.",
+        "required": true
+    },
+
+
+    {
+        "name": "intelligence",
+        "type": "mental",
+        "description": "The ability to reason things through in a logical fashion.",
+        "required": true
+    },
+    {
+        "name": "intuition",
+        "type": "mental",
+        "description": "The capacity to jump to conclusions with insufficient information.",
+        "required": true
+    },
+    {
+        "name": "health",
+        "type": "mental",
+        "description": "The general mental health and ability to cope with stress.",
+        "required": true
+    },
+    {
+        "name": "speed",
+        "type": "mental",
+        "description": "Speed of thinking.",
+        "required": true
+    },
+    {
+        "name": "wisdom",
+        "type": "mental",
+        "description": "The ability to take into account how other circumstances will affects things and determine the safest course of action.",
+        "required": true
+    }
+]

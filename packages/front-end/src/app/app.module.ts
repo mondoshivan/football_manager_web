@@ -1,6 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +14,7 @@ import { TeamComponent } from './components/team/team.component';
 import { PlayerComponent } from './components/player/player.component';
 import { TeamMenuComponent } from './components/team-menu/team-menu.component';
 import { PlayerMenuComponent } from './components/player-menu/player-menu.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -35,9 +35,8 @@ import { PlayerMenuComponent } from './components/player-menu/player-menu.compon
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

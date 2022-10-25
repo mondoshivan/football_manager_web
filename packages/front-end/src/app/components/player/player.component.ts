@@ -25,6 +25,16 @@ export class PlayerComponent implements AfterViewInit {
 
   }
 
+  avg(type : string) {
+    const skills = this.player?.Skills.filter(skill => skill.type === type);
+    const total = skills?.map(skill => skill.PlayerSkill.value).reduce((a, b) => a + b, 0);
+    return skills && total ? (total / skills.length).toFixed(1) : 0;
+  }
+
+  progressWidth(value: number) : object {
+    return {'width' : `${value}%`};
+  }
+
   playerAge() : number {
     if (! this.player) return 0;
     return Utils.ageBetweenDates(new Date(this.player!.birthday), new Date(Date.now()));

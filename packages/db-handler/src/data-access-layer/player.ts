@@ -4,6 +4,7 @@ import {isEmpty} from 'lodash'
 import {Player} from '../models'
 import {GetAllPlayersFilters} from './types'
 import {PlayerInput} from '../models/player'
+import { IdNotFoundError } from '../error/error'
 
 export const create = async (payload: PlayerInput): Promise<Player> => {
     return await Player.create(payload);
@@ -26,8 +27,7 @@ export const update = async (id: number, payload: Partial<PlayerInput>): Promise
     const player = await Player.findByPk(id);
 
     if (!player) {
-        // @todo throw custom error
-        throw new Error('not found');
+        throw new IdNotFoundError(`entity with id ${id} does not exist`);
     }
 
     return player.update(payload);
@@ -40,8 +40,7 @@ export const getById = async (id: number): Promise<Player> => {
     });
 
     if (!player) {
-        // @todo throw custom error
-        throw new Error('not found');
+        throw new IdNotFoundError(`entity with id ${id} does not exist`);
     }
 
     return player;

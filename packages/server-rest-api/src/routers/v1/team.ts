@@ -1,8 +1,8 @@
 import { Request, Response, Router } from "express";
 import asyncHandler from "express-async-handler"
-import { teamService } from "@football-manager/db-handler"
+import { formationService, teamService } from "@football-manager/db-handler"
 
-import { CreateTeamDTO, FilterTeamsDTO } from "../../data-transfer-objects/v1/team.dto";
+import { FilterTeamsDTO, UpdateTeamFormationDTO } from "@football-manager/data-transfer";
 
 const teamRouter = Router();
 
@@ -12,10 +12,13 @@ teamRouter.get('/', asyncHandler( async (req: Request, res: Response) => {
     res.status(200).json(result);
 }));
 
-teamRouter.post('/', asyncHandler( async (req: Request, res: Response) => {
-    const payload:CreateTeamDTO = req.body;
-    const result = await teamService.create(payload);
-    res.status(200).send(result);
+teamRouter.post('/formation', asyncHandler( async (req: Request, res: Response) => {
+    const payload:UpdateTeamFormationDTO = req.body;
+    const team = await teamService.getById(payload.teamId);
+    const [formation] = await formationService.getByName(payload.formation);
+    await team.setFormation(formation);
+    await team.reload();
+    res.status(200).send(team);
 }));
 
 export default teamRouter;

@@ -9,7 +9,45 @@
 
 <div class="row my-3">
     <div class="col">
-        <h2>Alter: {{playerAge()}}</h2>
-        <h2>Größe: {{player?.height}} cm</h2>
+        <p>Age: {{playerAge()}}</p>
+        <p>Height: {{player?.height}} cm</p>
+    </div>
+</div>
+
+<div class="row my-3">
+    <div class="col">
+        <h2>Physical ({{avg('physical')}})</h2>
+        <table class="table">
+            <tbody>
+                <ng-container class="col" *ngFor="let skill of player?.Skills">
+                    <tr *ngIf="skill.type === 'physical'" data-toggle="tooltip" data-placement="top"title="{{skill.description}}">
+                        <td class="col-md-3">{{skill.name | titlecase }}</td>
+                        <td class="col-md-9">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" [ngStyle]="progressWidth(skill.PlayerSkill.value)" [attr.aria-valuenow]="skill.PlayerSkill.value" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>  
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="col">
+        <h2>Mental ({{avg('mental')}})</h2>
+        <table class="table">
+            <tbody>
+                <ng-container class="col" *ngFor="let skill of player?.Skills">
+                    <tr *ngIf="skill.type === 'mental'" data-toggle="tooltip" data-placement="top" title="{{skill.description}}">
+                        <td class="col-md-3">{{skill.name | titlecase}}</td>
+                        <td class="col-md-9">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" [ngStyle]="progressWidth(skill.PlayerSkill.value)" [attr.aria-valuenow]="skill.PlayerSkill.value" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>  
+            </tbody>
+        </table>
     </div>
 </div>

@@ -4,6 +4,7 @@ import {isEmpty} from 'lodash'
 import {Championship} from '../models'
 import {GetAllChampionshipsFilters} from './types'
 import {ChampionshipInput} from '../models/championship'
+import { IdNotFoundError, NameNotFoundError } from '../error/error'
 
 export const create = async (payload: ChampionshipInput): Promise<Championship> => {
     return await Championship.create(payload);
@@ -26,8 +27,7 @@ export const update = async (id: number, payload: Partial<ChampionshipInput>): P
     const championship = await Championship.findByPk(id);
 
     if (!championship) {
-        // @todo throw custom error
-        throw new Error('not found');
+        throw new IdNotFoundError(`entity with id ${id} does not exist`);
     }
 
     const updatedChampionship = await championship.update(payload);
@@ -41,20 +41,25 @@ export const getById = async (id: number): Promise<Championship> => {
     });
 
     if (!championship) {
-        // @todo throw custom error
-        throw new Error('not found');
+        throw new IdNotFoundError(`entity with id ${id} does not exist`);
     }
 
     return championship;
 }
 
 export const getByName = async (name: string): Promise<Championship[]> => {
-    return Championship.findAll({
+    const entities = await Championship.findAll({
         include: { all: true, nested: true },
         where: {
             name
         }
     });
+
+    if (!entities) {
+        throw new NameNotFoundError(`entity with name '${name}' does not exist`);
+    }
+
+    return entities;
 }
 
 export const deleteById = async (id: number): Promise<boolean> => {

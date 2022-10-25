@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 
-import { playerService, teamService } from "@football-manager/db-handler";
+import { playerService, teamService, skillService, formationService } from "@football-manager/db-handler";
 import { TeamInput } from "@football-manager/db-handler/src/models/team";
 import { nameService } from "@football-manager/names";
 import config from "./config/config";
@@ -23,6 +23,9 @@ export const initTeams = async (resource: string) => {
     for (const teamConfig of list) {
         const team = await teamService.create(teamConfig);
 
+        const defaultFormation = await formationService.getById(1);
+        await team.setFormation(defaultFormation);
+
         for (let i=0; i<config.teams.initPlayerCount; i++) {
             const firstName = nameService().firstName({ 
                 gender: 'male', 
@@ -40,6 +43,20 @@ export const initTeams = async (resource: string) => {
                 birthday: birthday,
                 height: size
             });
+
+            const skills = await skillService.getAll();
+
+            await Promise.all( 
+                skills.filter( skill => 
+                    skill.required 
+                ).map( skill => 
+                    player.addSkill(skill, { 
+                        through: { 
+                            value: Utils.randomIntFromInterval(0, 100)
+                        } 
+                    })
+                ) 
+            );
 
             team.addPlayer(player);
         }

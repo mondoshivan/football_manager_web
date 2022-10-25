@@ -1,17 +1,17 @@
 import {Op} from 'sequelize'
 import {isEmpty} from 'lodash'
 
-import {Team} from '../models'
-import {GetAllTeamsFilters} from './types'
-import {TeamInput} from '../models/team'
+import {Formation} from '../models'
+import {GetAllFormationFilters} from './types'
+import {FormationInput} from '../models/formation'
 import { IdNotFoundError, NameNotFoundError } from '../error/error'
 
-export const create = async (payload: TeamInput): Promise<Team> => {
-    return await Team.create(payload);
+export const create = async (payload: FormationInput): Promise<Formation> => {
+    return await Formation.create(payload);
 }
 
-export const findOrCreate = async (payload: TeamInput): Promise<Team> => {
-    const [team] = await Team.findOrCreate({
+export const findOrCreate = async (payload: FormationInput): Promise<Formation> => {
+    const [one] = await Formation.findOrCreate({
         include: { all: true, nested: true },
         where: {
             name: payload.name
@@ -19,33 +19,33 @@ export const findOrCreate = async (payload: TeamInput): Promise<Team> => {
         defaults: payload
     })
 
-    return team;
+    return one;
 }
 
-export const update = async (id: number, payload: Partial<TeamInput>): Promise<Team> => {
-    const team = await Team.findByPk(id);
+export const update = async (id: number, payload: Partial<FormationInput>): Promise<Formation> => {
+    const one = await Formation.findByPk(id);
 
-    if (!team) {
+    if (!one) {
         throw new IdNotFoundError(`entity with id ${id} does not exist`);
     }
 
-    return await team.update(payload);
+    return await one.update(payload);
 }
 
-export const getById = async (id: number): Promise<Team> => {
-    const team = await Team.findByPk(id, {
+export const getById = async (id: number): Promise<Formation> => {
+    const one = await Formation.findByPk(id, {
         include: { all: true, nested: true },
     });
 
-    if (!team) {
+    if (!one) {
         throw new IdNotFoundError(`entity with id ${id} does not exist`);
     }
 
-    return team;
+    return one;
 }
 
-export const getByName = async (name: string): Promise<Team[]> => {
-    const entities = await Team.findAll({
+export const getByName = async (name: string): Promise<Formation[]> => {
+    const entities = await Formation.findAll({
         include: { all: true, nested: true },
         where: {
             name
@@ -60,15 +60,15 @@ export const getByName = async (name: string): Promise<Team[]> => {
 }
 
 export const deleteById = async (id: number): Promise<boolean> => {
-    const deletedTeamCount = await Team.destroy({
+    const deletedCount = await Formation.destroy({
         where: {id}
     });
 
-    return !!deletedTeamCount; // !! -> converting to boolean
+    return !!deletedCount; // !! -> converting to boolean
 }
 
-export const getAll = async (filters?: GetAllTeamsFilters): Promise<Team[]> => {
-    return Team.findAll({
+export const getAll = async (filters?: GetAllFormationFilters): Promise<Formation[]> => {
+    return Formation.findAll({
         include: { all: true, nested: true },
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
@@ -78,12 +78,12 @@ export const getAll = async (filters?: GetAllTeamsFilters): Promise<Team[]> => {
 }
 
 export const checkClubExists = async (name: string): Promise<boolean> => {
-    const teamWithName = await Team.findOne({
+    const one = await Formation.findOne({
         include: { all: true, nested: true },
         where: {
             name
         }
     });
 
-    return !isEmpty(teamWithName);
+    return !isEmpty(one);
 }
