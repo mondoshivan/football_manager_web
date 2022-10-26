@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
-import { ChampionshipDTO } from '@football-manager/data-transfer';
+import { ChampionshipDTO, FilterDTO, IncludesDTO } from '@football-manager/data-transfer';
 import { RestApiService } from "../../services/rest-api/rest-api.service";
 import { Router } from '@angular/router';
 
@@ -47,7 +47,9 @@ export class ChampionshipsComponent implements AfterViewInit {
     this.tableDataSource = new LocalDataSource();
     this.tableDataSource.reset(false);
 
-    this.restApiService.championships().subscribe( async (championships: ChampionshipDTO[]) => {
+    const filters : FilterDTO = {};
+    const includes : IncludesDTO = { };
+    this.restApiService.championships(filters, includes).subscribe( async (championships: ChampionshipDTO[]) => {
       this.championships = championships;
 
       await Promise.all(championships.map(championship => {
@@ -66,7 +68,8 @@ export class ChampionshipsComponent implements AfterViewInit {
   }
 
   onUserRowSelect(event: any) {
-    this.router.navigateByUrl('/championship', { state: event.data });
+    const championship = event.data as ChampionshipDTO;
+    this.router.navigate(['/championship', championship.id]);
   }
 
   onSelectRow(event: any) {

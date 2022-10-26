@@ -1,13 +1,21 @@
 import { Request, Response, Router } from "express";
 import asyncHandler from "express-async-handler"
 import { championshipService } from "@football-manager/db-handler"
-import { FilterChampionShipDTO } from "@football-manager/data-transfer";
+import { FilterChampionShipDTO, GetByIdDTO, IncludesDTO } from "@football-manager/data-transfer";
 
 const championshipRouter = Router();
 
 championshipRouter.get('/', asyncHandler( async (req: Request, res: Response) => {
-    const filters:FilterChampionShipDTO = req.query;
-    const result = await championshipService.getAll(filters);
+    const filters : FilterChampionShipDTO = req.query;
+    const includes : IncludesDTO = req.query;
+    const result = await championshipService.getAll(filters, includes);
+    res.status(200).json(result);
+}));
+
+championshipRouter.get('/:id', asyncHandler( async (req: Request, res: Response) => {
+    const query = req.params as GetByIdDTO;
+    const includes : IncludesDTO = req.query;
+    const result = await championshipService.getById(query.id!, includes);
     res.status(200).json(result);
 }));
 

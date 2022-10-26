@@ -2,17 +2,18 @@ import {Op} from 'sequelize'
 import {isEmpty} from 'lodash'
 
 import {Formation} from '../models'
-import {GetAllFormationFilters} from './types'
+import {GetAllFormationFilters, IncludesFilters} from './types'
 import {FormationInput} from '../models/formation'
-import { IdNotFoundError, NameNotFoundError } from '../error/error'
+import { GetAllNotFoundError, IdNotFoundError, NameNotFoundError } from '../error/error'
+import { getIncludes } from './data-access-layer'
 
 export const create = async (payload: FormationInput): Promise<Formation> => {
     return await Formation.create(payload);
 }
 
-export const findOrCreate = async (payload: FormationInput): Promise<Formation> => {
+export const findOrCreate = async (payload: FormationInput, includes?: IncludesFilters): Promise<Formation> => {
     const [one] = await Formation.findOrCreate({
-        include: { all: true, nested: true },
+        include: getIncludes(includes),
         where: {
             name: payload.name
         },
@@ -32,9 +33,9 @@ export const update = async (id: number, payload: Partial<FormationInput>): Prom
     return await one.update(payload);
 }
 
-export const getById = async (id: number): Promise<Formation> => {
+export const getById = async (id: number, includes?: IncludesFilters): Promise<Formation> => {
     const one = await Formation.findByPk(id, {
-        include: { all: true, nested: true },
+        include: getIncludes(includes),
     });
 
     if (!one) {
@@ -44,9 +45,9 @@ export const getById = async (id: number): Promise<Formation> => {
     return one;
 }
 
-export const getByName = async (name: string): Promise<Formation[]> => {
+export const getByName = async (name: string, includes?: IncludesFilters): Promise<Formation[]> => {
     const entities = await Formation.findAll({
-        include: { all: true, nested: true },
+        include: getIncludes(includes),
         where: {
             name
         }
@@ -67,19 +68,26 @@ export const deleteById = async (id: number): Promise<boolean> => {
     return !!deletedCount; // !! -> converting to boolean
 }
 
-export const getAll = async (filters?: GetAllFormationFilters): Promise<Formation[]> => {
-    return Formation.findAll({
-        include: { all: true, nested: true },
+export const getAll = async (filters?: GetAllFormationFilters, includes?: IncludesFilters): Promise<Formation[]> => {
+
+    const entities = await Formation.findAll({
+        include: getIncludes(includes),
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
         },
         ...((filters?.isDeleted || filters?.includeDeleted) && {paranoid: true})
     });
+    
+    if (!entities) {
+        throw new GetAllNotFoundError(`nothing found`);
+    }
+
+    return entities;
 }
 
-export const checkClubExists = async (name: string): Promise<boolean> => {
+export const checkClubExists = async (name: string, includes?: IncludesFilters): Promise<boolean> => {
     const one = await Formation.findOne({
-        include: { all: true, nested: true },
+        include: getIncludes(includes),
         where: {
             name
         }

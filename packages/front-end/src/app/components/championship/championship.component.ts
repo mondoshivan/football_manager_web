@@ -1,17 +1,20 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
-import { ChampionshipDTO } from '@football-manager/data-transfer';
+import { ChampionshipDTO, FilterDTO, IncludesDTO, TeamDTO } from '@football-manager/data-transfer';
 import { RestApiService } from "../../services/rest-api/rest-api.service";
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-championship',
   templateUrl: './championship.component.html',
   styleUrls: ['./championship.component.sass']
 })
-export class ChampionshipComponent implements AfterViewInit {
+export class ChampionshipComponent implements OnInit, OnDestroy, AfterViewInit {
 
   championship? : ChampionshipDTO;
+
+  routeSubscription? : Subscription;
 
   @ViewChild('table') table!: Ng2SmartTableComponent;
   tableDataSource: LocalDataSource;
@@ -39,18 +42,54 @@ export class ChampionshipComponent implements AfterViewInit {
     }
   }
 
-  constructor(private restApiService: RestApiService, private router: Router) {
+  constructor(
+    private restApiService: RestApiService, 
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.tableDataSource = new LocalDataSource();
     this.tableDataSource.reset(false);
+  }
 
-    const nav = this.router.getCurrentNavigation();
+  async ngOnInit() {
+    this.getChampionship();
+  }
 
-    if (nav?.extras?.state) {
-      this.championship = nav.extras.state as ChampionshipDTO;
-    }
+  ngAfterViewInit(): void {
+    this.tableDataSource.onChanged().subscribe(async (change) => {
+      this.table.grid.dataSet.deselectAll();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routeSubscription?.unsubscribe();
+  }
+
+  getChampionship() {
+
+    // get the url parameters
+    this.routeSubscription = this.route.params.subscribe(params => {
+
+      // get the data via id
+      const includes : IncludesDTO = { includeByName: 'Team' };
+      this.restApiService.championship(params['id'], includes).subscribe(
+
+        // success response
+        async (championship) => {
+          this.championship = championship;
+          await this.loadTable(this.championship);
+        },
+
+        // error response
+        (error) => {
+          console.error(error);
+        }
+      );
+    });
   }
 
   async loadTable(championship: ChampionshipDTO) {
+    if (!championship.Teams) return; 
 
     await Promise.all(championship.Teams.map(team => {
       this.tableDataSource.add(team);
@@ -60,18 +99,9 @@ export class ChampionshipComponent implements AfterViewInit {
     this.table.grid.dataSet.deselectAll();
   }
 
-  async ngAfterViewInit() {
-    this.tableDataSource.onChanged().subscribe(async (change) => {
-      this.table.grid.dataSet.deselectAll();
-    });
-
-    if (this.championship) {
-      await this.loadTable(this.championship);
-    }
-  }
-
   onUserRowSelect(event: any) {
-    this.router.navigateByUrl('/team', { state: event.data });
+    const team = event.data as TeamDTO;
+    this.router.navigate(['/team', team.id]);
   }
 
   onSelectRow(event: any) {

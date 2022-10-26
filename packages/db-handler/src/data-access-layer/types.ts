@@ -9,3 +9,9 @@ export interface GetAllSkillsFilters extends ListFilters {}
 export interface GetAllTeamsFilters extends ListFilters {}
 export interface GetAllPlayersFilters extends ListFilters {}
 export interface GetAllChampionshipsFilters extends ListFilters {}
+
+export interface IncludesFilters {
+    includeAll?: boolean
+    includeNested?: boolean
+    includeByName?: string
+}

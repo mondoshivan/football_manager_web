@@ -1,3 +1,14 @@
+export type IncludesDTO = {
+    includeAll?: boolean;
+    includeNested?: boolean;
+    includeByName?: string;
+}
+
+export type FilterDTO = {
+    isDeleted?: boolean;
+    includeDeleted?: boolean;
+}
+
 export type PlayerSkill = {
     value: number
 }
@@ -6,15 +17,16 @@ export type SkillDTO = {
     name: string;
     type: string;
     description: string;
-    PlayerSkill: PlayerSkill
+    PlayerSkill?: PlayerSkill
 }
 
 export type PlayerDTO = {
+    id: number;
     firstName: string;
     secondName: string;
     birthday: Date;
     height: number;
-    Skills: SkillDTO[];
+    Skills?: SkillDTO[];
 }
 
 export type FormationDTO = {
@@ -34,31 +46,33 @@ export type CreateFormationDTO = {
     forward: number;
 }
 
-export type FilterFormationDTO = {
-    isDeleted?: boolean;
-    includeDeleted?: boolean;
-}
-
 export type TeamDTO = {
     id: number;
-    Formation: FormationDTO;
+    Formation?: FormationDTO;
     name: string;
-    Players: PlayerDTO[];
+    Players?: PlayerDTO[];
 }
 
 export type ChampionshipDTO = {
     id: number;
     name: string;
-    Teams: TeamDTO[];
+    Teams?: TeamDTO[];
 }
 
 export type CreateChampionShipDTO = {
     name: string;
 }
 
-export type FilterChampionShipDTO = {
-    isDeleted?: boolean;
-    includeDeleted?: boolean;
+export type FilterFormationDTO = FilterDTO & {
+    
+}
+
+export type FilterChampionShipDTO = FilterDTO & {
+    id?: number;
+}
+
+export type GetByIdDTO = {
+    id?: number;
 }
 
 export type UpdateTeamFormationDTO = {
@@ -66,7 +80,6 @@ export type UpdateTeamFormationDTO = {
     formation: string;
 }
 
-export type FilterTeamsDTO = {
-    isDeleted?: boolean
-    includeDeleted?: boolean
-}
+export type FilterTeamsDTO = FilterDTO & {}
+
+export type FilterPlayerDTO = FilterDTO & {}

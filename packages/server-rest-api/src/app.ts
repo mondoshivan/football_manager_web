@@ -1,4 +1,5 @@
 import express, { Express, Router, Request, Response, NextFunction } from 'express';
+import boolParser from 'express-query-boolean';
 import path from 'path';
 
 import log from '@football-manager/log';
@@ -21,6 +22,7 @@ export class App {
   private initializeMiddlewares() {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(boolParser());
     this.app.use(express.static(path.join(process.cwd(), config.service.frontEndDir)));
 
     this.app.use((err:Error, req:Request, res:Response, next:NextFunction) => {

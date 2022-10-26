@@ -16,15 +16,16 @@
 
 <div class="row my-3">
     <div class="col">
-        <h2>Physical ({{avg('physical')}})</h2>
+        <h2>Physical <small class="text-muted">({{avg('physical') | number: '1.0-0'}})</small></h2>
         <table class="table">
             <tbody>
                 <ng-container class="col" *ngFor="let skill of player?.Skills">
                     <tr *ngIf="skill.type === 'physical'" data-toggle="tooltip" data-placement="top"title="{{skill.description}}">
                         <td class="col-md-3">{{skill.name | titlecase }}</td>
-                        <td class="col-md-9">
+                        <td class="col-md-1"><small class="text-muted">{{ skill.PlayerSkill!.value }}</small></td>
+                        <td class="col-md-8">
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" [ngStyle]="progressWidth(skill.PlayerSkill.value)" [attr.aria-valuenow]="skill.PlayerSkill.value" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar" role="progressbar" [ngStyle]="progressWidth(skill.PlayerSkill!.value)" [attr.aria-valuenow]="skill.PlayerSkill!.value" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </td>
                     </tr>
@@ -34,15 +35,16 @@
     </div>
     
     <div class="col">
-        <h2>Mental ({{avg('mental')}})</h2>
+        <h2>Mental <small class="text-muted">({{avg('mental') | number: '1.0-0'}})</small></h2>
         <table class="table">
             <tbody>
                 <ng-container class="col" *ngFor="let skill of player?.Skills">
                     <tr *ngIf="skill.type === 'mental'" data-toggle="tooltip" data-placement="top" title="{{skill.description}}">
                         <td class="col-md-3">{{skill.name | titlecase}}</td>
+                        <td class="col-md-1"><small class="text-muted">{{ skill.PlayerSkill!.value }}</small></td>
                         <td class="col-md-9">
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" [ngStyle]="progressWidth(skill.PlayerSkill.value)" [attr.aria-valuenow]="skill.PlayerSkill.value" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar" role="progressbar" [ngStyle]="progressWidth(skill.PlayerSkill!.value)" [attr.aria-valuenow]="skill.PlayerSkill!.value" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </td>
                     </tr>

@@ -2,17 +2,18 @@ import {Op} from 'sequelize'
 import {isEmpty} from 'lodash'
 
 import {Skill} from '../models'
-import {GetAllSkillsFilters} from './types'
+import {GetAllSkillsFilters, IncludesFilters} from './types'
 import {SkillInput} from '../models/skill'
-import { IdNotFoundError } from '../error/error'
+import { GetAllNotFoundError, IdNotFoundError } from '../error/error'
+import { getIncludes } from './data-access-layer'
 
 export const create = async (payload: SkillInput): Promise<Skill> => {
     return await Skill.create(payload);
 }
 
-export const findOrCreate = async (payload: SkillInput): Promise<Skill> => {
+export const findOrCreate = async (payload: SkillInput, includes?: IncludesFilters): Promise<Skill> => {
     const [skill] = await Skill.findOrCreate({
-        include: { all: true, nested: true },
+        include: getIncludes(includes),
         where: {
             name: payload.name,
             type: payload.type
@@ -33,10 +34,10 @@ export const update = async (id: number, payload: Partial<SkillInput>): Promise<
     return skill.update(payload);
 }
 
-export const getById = async (id: number): Promise<Skill> => {
+export const getById = async (id: number, includes?: IncludesFilters): Promise<Skill> => {
 
     const skill = await Skill.findByPk(id, {
-        include: { all: true, nested: true }
+        include: getIncludes(includes)
     });
 
     if (!skill) {
@@ -54,12 +55,19 @@ export const deleteById = async (id: number): Promise<boolean> => {
     return !!deletedSkillCount; // !! -> converting to boolean
 }
 
-export const getAll = async (filters?: GetAllSkillsFilters): Promise<Skill[]> => {
-    return Skill.findAll({
-        include: { all: true, nested: true },
+export const getAll = async (filters?: GetAllSkillsFilters, includes?: IncludesFilters): Promise<Skill[]> => {
+    const entities = await Skill.findAll({
+        include: getIncludes(includes),
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
         },
         ...((filters?.isDeleted || filters?.includeDeleted) && {paranoid: true})
     });
+    
+    if (!entities) {
+        throw new GetAllNotFoundError(`nothing found`);
+    }
+
+    return entities;
+
 }

@@ -1,19 +1,20 @@
-import {Association, Op} from 'sequelize'
+import {Association, Includeable, Op} from 'sequelize'
 import {isEmpty} from 'lodash'
 
 import {Championship} from '../models'
-import {GetAllChampionshipsFilters} from './types'
+import {GetAllChampionshipsFilters, IncludesFilters} from './types'
 import {ChampionshipInput} from '../models/championship'
-import { IdNotFoundError, NameNotFoundError } from '../error/error'
+import { GetAllNotFoundError, IdNotFoundError, NameNotFoundError } from '../error/error'
+import { getIncludes } from './data-access-layer'
 
 export const create = async (payload: ChampionshipInput): Promise<Championship> => {
     return await Championship.create(payload);
 }
 
-export const findOrCreate = async (payload: ChampionshipInput): Promise<Championship> => {
+export const findOrCreate = async (payload: ChampionshipInput, includes?: IncludesFilters): Promise<Championship> => {
 
     const [championship] = await Championship.findOrCreate({
-        include: { all: true, nested: true },
+        include: getIncludes(includes),
         where: {
             name: payload.name
         },
@@ -34,10 +35,10 @@ export const update = async (id: number, payload: Partial<ChampionshipInput>): P
     return updatedChampionship;
 }
 
-export const getById = async (id: number): Promise<Championship> => {
+export const getById = async (id: number, includes?: IncludesFilters): Promise<Championship> => {
 
     const championship = await Championship.findByPk(id, {
-        include: { all: true, nested: true }
+        include: getIncludes(includes)
     });
 
     if (!championship) {
@@ -47,9 +48,9 @@ export const getById = async (id: number): Promise<Championship> => {
     return championship;
 }
 
-export const getByName = async (name: string): Promise<Championship[]> => {
+export const getByName = async (name: string, includes?: IncludesFilters): Promise<Championship[]> => {
     const entities = await Championship.findAll({
-        include: { all: true, nested: true },
+        include: getIncludes(includes),
         where: {
             name
         }
@@ -70,14 +71,21 @@ export const deleteById = async (id: number): Promise<boolean> => {
     return !!deletedChampionshipCount;
 }
 
-export const getAll = async (filters?: GetAllChampionshipsFilters): Promise<Championship[]> => {
-    return Championship.findAll({
-        include: { all: true, nested: true },
+export const getAll = async (filters?: GetAllChampionshipsFilters, includes?: IncludesFilters): Promise<Championship[]> => {
+
+    const entities = await Championship.findAll({
+        include: getIncludes(includes),
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
         },
         ...((filters?.isDeleted || filters?.includeDeleted) && {paranoid: true})
     });
+
+    if (!entities) {
+        throw new GetAllNotFoundError(`nothing found`);
+    }
+
+    return entities;
 }
 
 export const checkChampionshipExists = async (name: string): Promise<boolean> => {

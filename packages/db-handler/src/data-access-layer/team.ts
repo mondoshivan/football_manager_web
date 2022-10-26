@@ -2,17 +2,18 @@ import {Op} from 'sequelize'
 import {isEmpty} from 'lodash'
 
 import {Team} from '../models'
-import {GetAllTeamsFilters} from './types'
+import {GetAllTeamsFilters, IncludesFilters} from './types'
 import {TeamInput} from '../models/team'
-import { IdNotFoundError, NameNotFoundError } from '../error/error'
+import { GetAllNotFoundError, IdNotFoundError, NameNotFoundError } from '../error/error'
+import { getIncludes } from './data-access-layer'
 
 export const create = async (payload: TeamInput): Promise<Team> => {
     return await Team.create(payload);
 }
 
-export const findOrCreate = async (payload: TeamInput): Promise<Team> => {
+export const findOrCreate = async (payload: TeamInput, includes?: IncludesFilters): Promise<Team> => {
     const [team] = await Team.findOrCreate({
-        include: { all: true, nested: true },
+        include: getIncludes(includes),
         where: {
             name: payload.name
         },
@@ -32,9 +33,9 @@ export const update = async (id: number, payload: Partial<TeamInput>): Promise<T
     return await team.update(payload);
 }
 
-export const getById = async (id: number): Promise<Team> => {
+export const getById = async (id: number, includes?: IncludesFilters): Promise<Team> => {
     const team = await Team.findByPk(id, {
-        include: { all: true, nested: true },
+        include: getIncludes(includes),
     });
 
     if (!team) {
@@ -44,9 +45,9 @@ export const getById = async (id: number): Promise<Team> => {
     return team;
 }
 
-export const getByName = async (name: string): Promise<Team[]> => {
+export const getByName = async (name: string, includes?: IncludesFilters): Promise<Team[]> => {
     const entities = await Team.findAll({
-        include: { all: true, nested: true },
+        include: getIncludes(includes),
         where: {
             name
         }
@@ -67,19 +68,25 @@ export const deleteById = async (id: number): Promise<boolean> => {
     return !!deletedTeamCount; // !! -> converting to boolean
 }
 
-export const getAll = async (filters?: GetAllTeamsFilters): Promise<Team[]> => {
-    return Team.findAll({
-        include: { all: true, nested: true },
+export const getAll = async (filters?: GetAllTeamsFilters, includes?: IncludesFilters): Promise<Team[]> => {
+
+    const entities = await Team.findAll({
+        include: getIncludes(includes),
         where: {
             ...(filters?.isDeleted && {deletedAt: {[Op.not]: null}})
         },
         ...((filters?.isDeleted || filters?.includeDeleted) && {paranoid: true})
     });
+
+    if (!entities) {
+        throw new GetAllNotFoundError(`nothing found`);
+    }
+
+    return entities;
 }
 
 export const checkClubExists = async (name: string): Promise<boolean> => {
     const teamWithName = await Team.findOne({
-        include: { all: true, nested: true },
         where: {
             name
         }

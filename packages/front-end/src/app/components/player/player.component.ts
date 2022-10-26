@@ -1,34 +1,60 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
-import { PlayerDTO, TeamDTO } from '@football-manager/data-transfer';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IncludesDTO, PlayerDTO, TeamDTO } from '@football-manager/data-transfer';
 import Utils from '@football-manager/utils';
+import { RestApiService } from 'src/app/services/rest-api/rest-api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.sass']
 })
-export class PlayerComponent implements AfterViewInit {
+export class PlayerComponent implements OnInit, OnDestroy {
 
   player? : PlayerDTO;
 
-  constructor(private router: Router) { 
-    const nav = this.router.getCurrentNavigation();
+  routeSubscription? : Subscription;
 
-    if (nav?.extras?.state) {
-      this.player = nav.extras.state as PlayerDTO;
-    }
+  constructor(
+    private restApiService: RestApiService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.getPlayer();
   }
 
-  async ngAfterViewInit() {
-
+  ngOnDestroy(): void {
+    this.routeSubscription?.unsubscribe();
   }
 
-  avg(type : string) {
-    const skills = this.player?.Skills.filter(skill => skill.type === type);
-    const total = skills?.map(skill => skill.PlayerSkill.value).reduce((a, b) => a + b, 0);
-    return skills && total ? (total / skills.length).toFixed(1) : 0;
+  getPlayer() {
+    // get the url parameters
+    this.routeSubscription = this.route.params.subscribe(params => {
+
+      // get the data via id
+      const includes : IncludesDTO = { includeByName: 'Skill'};
+      this.restApiService.player(params['id'], includes).subscribe(
+
+        // success response
+        async (player) => {
+          this.player = player;
+        },
+
+        // error response
+        (error) => {
+          console.error(error);
+        }
+      );
+    });
+  }
+
+  avg(type : string) : number{
+    const skills = this.player?.Skills?.filter(skill => skill.type === type);
+    if (!skills) return 0;
+    const total = skills.map(skill => skill.PlayerSkill!.value).reduce((a, b) => a + b, 0);
+    return skills && total ? (total / skills.length) : 0;
   }
 
   progressWidth(value: number) : object {

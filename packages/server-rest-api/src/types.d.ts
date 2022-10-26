@@ -15,3 +15,6 @@ declare namespace config {
         port: number
     }
 }
+
+// no types available from express-query-boolean package -> package.json
+declare module "express-query-boolean"

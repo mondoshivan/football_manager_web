@@ -12,5 +12,6 @@ declare namespace config {
 
     interface TeamsConfig {
         initPlayerCount: number
+        initEnabled: boolean
     }
 }

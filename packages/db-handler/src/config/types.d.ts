@@ -18,5 +18,6 @@ declare namespace config {
         dialect: string
         password: string
         logging: boolean
+        force: boolean
     }
 }

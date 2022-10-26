@@ -7,10 +7,13 @@ import * as formation from './formation';
 import * as skills from './skill';
 import * as teams from './teams';
 import path from "path";
+import config from "./config/config";
 
 export const start = async () => {
     try {
         await dbInit();
+
+        if (! config.teams.initEnabled) return;
 
         await formation.initFormations(path.join(__dirname, '../../resources/formations.json'));
         await skills.initSkills(path.join(__dirname, '../../resources/skills.json'));

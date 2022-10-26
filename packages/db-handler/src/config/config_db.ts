@@ -3,6 +3,13 @@ import { Property } from 'ts-convict';
 export class DBConfig implements config.DBConfig {
 
     @Property({
+        doc: 'Recreate the tables.',
+        default: false,
+        env: 'FM_DB_FORCE'
+    })
+    public force!: boolean;
+
+    @Property({
         doc: 'The DB name.',
         default: "football_manager",
         env: 'FM_DB_NAME'
