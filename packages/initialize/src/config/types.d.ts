@@ -15,7 +15,7 @@ declare namespace config {
         initEnabled: boolean
     }
 
-    interface CalenderConfig {
-        initCalenderStart: string
+    interface CalendarConfig {
+        initCalendarStart: string
     }
 }

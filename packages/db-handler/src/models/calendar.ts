@@ -2,16 +2,16 @@ import { BelongsToCreateAssociationMixin, DataTypes, Model, Optional } from 'seq
 import sequelizeConnection from '../config'
 import Team from './team';
 
-interface CalenderAttributes {
+interface CalendarAttributes {
     id: number;
     start: Date;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
 }
-export interface CalenderInput extends Optional<CalenderAttributes, 'id'> { }
+export interface CalendarInput extends Optional<CalendarAttributes, 'id'> { }
 
-class Calender extends Model<CalenderAttributes, CalenderInput> implements CalenderAttributes {
+class Calendar extends Model<CalendarAttributes, CalendarInput> implements CalendarAttributes {
     public id!: number;
     public start!: Date;
 
@@ -23,7 +23,7 @@ class Calender extends Model<CalenderAttributes, CalenderInput> implements Calen
     declare setTeam: BelongsToCreateAssociationMixin<Team>;
 }
 
-Calender.init({
+Calendar.init({
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
@@ -39,4 +39,4 @@ Calender.init({
     paranoid: true
 });
 
-export default Calender;
+export default Calendar;

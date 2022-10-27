@@ -1,4 +1,4 @@
-import Calender from './calendar';
+import Calendar from './calendar';
 import Championship from './championship';
 import Formation from './formation';
 import Team from './team';
@@ -7,8 +7,8 @@ import Skill from './skill';
 import PlayerSkill from './player_skill';
 import TeamPlayer from './team_player';
 
-Team.belongsTo(Calender);
-Calender.belongsTo(Team);
+Team.belongsTo(Calendar);
+Calendar.belongsTo(Team);
 
 Formation.hasMany(Team);
 Team.belongsTo(Formation);
@@ -22,7 +22,7 @@ Team.belongsToMany(Championship, {
 });
 
 export {
-  Calender,
+  Calendar,
   Championship,
   Formation,
   Player,

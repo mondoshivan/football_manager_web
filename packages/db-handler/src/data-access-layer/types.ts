@@ -5,7 +5,7 @@ interface ListFilters {
 
 export interface GetAllClubsFilters extends ListFilters {}
 export interface GetAllFormationFilters extends ListFilters {}
-export interface GetAllCalenderFilters extends ListFilters {}
+export interface GetAllCalendarFilters extends ListFilters {}
 export interface GetAllSkillsFilters extends ListFilters {}
 export interface GetAllTeamsFilters extends ListFilters {}
 export interface GetAllPlayersFilters extends ListFilters {}

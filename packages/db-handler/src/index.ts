@@ -3,7 +3,7 @@ import log from '@football-manager/log';
 import config from "./config/config";
 import sequelizeConnection from './config';
 
-import * as calenderService from './services/calendar'
+import * as calendarService from './services/calendar'
 import * as championshipService from './services/championship'
 import * as formationService from './services/formation'
 import * as playerService from './services/player'
@@ -22,7 +22,7 @@ export const dbInit = async () => {
 }
 
 export { 
-  calenderService,
+  calendarService,
   championshipService,
   formationService,
   skillService,

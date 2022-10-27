@@ -1,23 +1,23 @@
-import * as calenderDal from '../data-access-layer/calendar'
-import {GetAllCalenderFilters, IncludesFilters} from '../data-access-layer/types'
-import Calender, {CalenderInput} from '../models/calendar'
+import * as calendarDal from '../data-access-layer/calendar'
+import {GetAllCalendarFilters, IncludesFilters} from '../data-access-layer/types'
+import Calendar, {CalendarInput} from '../models/calendar'
 
-export const create = async (payload: CalenderInput): Promise<Calender> => {    
-    return calenderDal.create(payload);
+export const create = async (payload: CalendarInput): Promise<Calendar> => {    
+    return calendarDal.create(payload);
 }
 
-export const update = async (id: number, payload: Partial<CalenderInput>): Promise<Calender> => {    
-    return calenderDal.update(id, payload)
+export const update = async (id: number, payload: Partial<CalendarInput>): Promise<Calendar> => {    
+    return calendarDal.update(id, payload)
 }
 
-export const getById = (id: number, includes?: IncludesFilters): Promise<Calender> => {
-    return calenderDal.getById(id, includes)
+export const getById = (id: number, includes?: IncludesFilters): Promise<Calendar> => {
+    return calendarDal.getById(id, includes)
 }
 
 export const deleteById = (id: number): Promise<boolean> => {
-    return calenderDal.deleteById(id)
+    return calendarDal.deleteById(id)
 }
 
-export const getAll = (filters?: GetAllCalenderFilters, includes?: IncludesFilters): Promise<Calender[]> => {
-    return calenderDal.getAll(filters, includes)
+export const getAll = (filters?: GetAllCalendarFilters, includes?: IncludesFilters): Promise<Calendar[]> => {
+    return calendarDal.getAll(filters, includes)
 }
