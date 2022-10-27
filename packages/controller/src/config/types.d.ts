@@ -7,15 +7,11 @@
 declare namespace config {
     
     interface PackageConfig {
-        teams: TeamsConfig
+        service: ControllerConfig
     }
 
-    interface TeamsConfig {
-        initPlayerCount: number
-        initEnabled: boolean
-    }
-
-    interface CalenderConfig {
-        initCalenderStart: string
+    interface ControllerConfig {
+        // frontEndDir: string
+        // port: number
     }
 }

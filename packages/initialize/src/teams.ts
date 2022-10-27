@@ -58,7 +58,7 @@ export const initTeams = async (resource: string) => {
                 ) 
             );
 
-            team.addPlayer(player);
+            await team.addPlayer(player);
         }
     }
 };

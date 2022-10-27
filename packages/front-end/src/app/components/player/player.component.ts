@@ -4,6 +4,7 @@ import { IncludesDTO, PlayerDTO, TeamDTO } from '@football-manager/data-transfer
 import Utils from '@football-manager/utils';
 import { RestApiService } from 'src/app/services/rest-api/rest-api.service';
 import { Subscription } from 'rxjs';
+import { playerHelper } from '@football-manager/controller';
 
 @Component({
   selector: 'app-player',
@@ -51,10 +52,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   avg(type : string) : number{
-    const skills = this.player?.Skills?.filter(skill => skill.type === type);
-    if (!skills) return 0;
-    const total = skills.map(skill => skill.PlayerSkill!.value).reduce((a, b) => a + b, 0);
-    return skills && total ? (total / skills.length) : 0;
+    return playerHelper.getSkillAvg(this.player!, type);
   }
 
   progressWidth(value: number) : object {
@@ -63,7 +61,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   playerAge() : number {
     if (! this.player) return 0;
-    return Utils.ageBetweenDates(new Date(this.player!.birthday), new Date(Date.now()));
+
+    return playerHelper.getAge(this.player, Date.now());
   }
 
 }

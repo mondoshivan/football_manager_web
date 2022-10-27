@@ -5,6 +5,7 @@ import { FormationDTO, IncludesDTO, PlayerDTO, TeamDTO } from '@football-manager
 import { RestApiService } from 'src/app/services/rest-api/rest-api.service';
 import Utils from '@football-manager/utils';
 import { Subscription } from 'rxjs';
+import { playerHelper } from '@football-manager/controller';
 
 @Component({
   selector: 'app-team',
@@ -39,11 +40,19 @@ export class TeamComponent implements AfterViewInit, OnInit, OnDestroy {
         filter: false
       },
       age: {
-        title: 'Alter',
+        title: 'Age',
         filter: false,
       },
       height: {
-        title: 'Größe',
+        title: 'Height',
+        filter: false
+      },
+      physicalAvg: {
+        title: 'Physical',
+        filter: false
+      },
+      mentalAvg: {
+        title: 'Mental',
         filter: false
       }
     },
@@ -81,7 +90,7 @@ export class TeamComponent implements AfterViewInit, OnInit, OnDestroy {
     this.routeSubscription = this.route.params.subscribe(params => {
 
       // get the data via id
-      const includes : IncludesDTO = { includeAll: true};
+      const includes : IncludesDTO = { includeAll: true, includeNested: true };
       this.restApiService.team(params['id'], includes).subscribe(
 
         // success response
@@ -116,8 +125,12 @@ export class TeamComponent implements AfterViewInit, OnInit, OnDestroy {
 
   convertPlayerForTable(player: PlayerDTO): any {
     const result = player as any;
+
     result.name = player.firstName + ' ' + player.secondName;
-    result.age = Utils.ageBetweenDates(new Date(player.birthday), new Date(Date.now()));
+    result.age = playerHelper.getAge(player, Date.now());
+    result.physicalAvg = playerHelper.getSkillAvg(player, 'physical').toFixed(0);
+    result.mentalAvg = playerHelper.getSkillAvg(player, 'mental').toFixed(0);
+
     return result;
   }
 

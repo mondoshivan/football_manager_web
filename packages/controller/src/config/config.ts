@@ -1,7 +1,5 @@
-import { config } from 'process';
 import { Property, Config, TSConvict } from 'ts-convict';
-import { TeamsConfig } from './config_teams';
-import { CalenderConfig } from './config_calendars';
+import { ControllerConfig } from './config_controller';
 
 @Config({
     
@@ -24,14 +22,10 @@ import { CalenderConfig } from './config_calendars';
     // }
     
 })
-
 class PackageConfig implements config.PackageConfig {
 
-    @Property(TeamsConfig)
-    public teams!: config.TeamsConfig;
-
-    @Property(CalenderConfig)
-    public calenders!: config.CalenderConfig;
+    @Property(ControllerConfig)
+    public service!: config.ControllerConfig;
 
 }
 

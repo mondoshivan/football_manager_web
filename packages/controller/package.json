@@ -1,0 +1,34 @@
+{
+  "name": "@football-manager/controller",
+  "version": "0.0.1",
+  "description": "Logging to the console providing different log level.",
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "npx tsc -p tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Oliver Schmidt",
+  "license": "ISC",
+  "homepage": "https://github.com/mondoshivan/football_manager_web",
+  "dependencies": {
+    "@football-manager/data-transfer": "^0.0.1",
+    "@football-manager/db-handler": "^0.0.1",
+    "@football-manager/log": "^0.0.1",
+    "@football-manager/utils": "^0.0.1",
+    "convict": "^6.2.3",
+    "ts-convict": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.18.21",
+    "@types/convict": "^6.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mondoshivan/football_manager_web"
+  }
+}

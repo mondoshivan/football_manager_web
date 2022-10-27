@@ -1,5 +1,6 @@
-import { DataTypes, HasManyAddAssociationMixin, HasManySetAssociationsMixin, HasOneSetAssociationMixin, Model, Optional } from 'sequelize'
+import { BelongsToCreateAssociationMixin, DataTypes, HasManyAddAssociationMixin, HasManySetAssociationsMixin, HasOneSetAssociationMixin, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
+import Calender from './calendar';
 import Championship, { ChampionshipInput } from './championship';
 import Formation from './formation';
 import Player from './player';
@@ -25,6 +26,7 @@ class Team extends Model<TeamAttributes, TeamInput> implements TeamAttributes {
     declare addChampionship: HasManyAddAssociationMixin<Championship, Championship['id']>;
     declare addPlayer: HasManyAddAssociationMixin<Player, Player['id']>;
     declare setFormation: HasManyAddAssociationMixin<Formation, Formation['id']>;
+    declare setCalender: BelongsToCreateAssociationMixin<Calender>;
   }
   
   Team.init({

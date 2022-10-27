@@ -21,6 +21,9 @@
     },
     {
       "path": "./packages/data-transfer/tsconfig.json"
+    },
+    {
+      "path": "./packages/controller/tsconfig.json"
     }
   ]
 }
