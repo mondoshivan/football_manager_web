@@ -8,9 +8,6 @@
       "path": "./packages/log/tsconfig.json"
     },
     {
-      "path": "./packages/dependency/tsconfig.json"
-    },
-    {
       "path": "./packages/db-handler/tsconfig.json"
     },
     {

@@ -16,8 +16,7 @@
   "license": "ISC",
   "homepage": "https://github.com/mondoshivan/football_manager_web",
   "dependencies": {
-    "tslog": "^3.3.3",
-    "@football-manager/dependency": "^0.0.1"
+    "tslog": "^3.3.3"
   },
   "devDependencies": {
     "@types/node": "^14.18.21"
