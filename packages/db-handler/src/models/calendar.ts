@@ -22,7 +22,7 @@ class Calendar extends Model<CalendarAttributes, CalendarInput> implements Calen
     public readonly updatedAt!: Date;
     public readonly deletedAt!: Date;
 
-    declare addOccurrence: BelongsToManyAddAssociationMixin<Occurrence, Occurrence['id']>;
+    declare addOccurrence: HasManyAddAssociationMixin<Occurrence, Occurrence['id']>;
 }
 
 Calendar.init({

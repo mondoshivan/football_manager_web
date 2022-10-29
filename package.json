@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build-tsc": "npx tsc --build",
+    "erm": "npx lerna run erm",
     "lint": "npx eslint -c .eslintrc.js --ext .ts --fix",
     "lerna-bootstrap": "npx lerna bootstrap",
     "lerna-start-front-end-dev": "npx lerna run start-front-end-dev",

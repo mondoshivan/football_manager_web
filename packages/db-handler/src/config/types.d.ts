@@ -19,5 +19,6 @@ declare namespace config {
         password: string
         logging: boolean
         force: boolean
+        ermName: string
     }
 }

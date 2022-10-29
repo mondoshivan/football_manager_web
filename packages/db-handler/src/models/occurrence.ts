@@ -8,7 +8,7 @@ export type OccurrenceTypes = 'game' | 'training' | 'payday';
 interface OccurrenceAttributes {
     id: number;
     type: OccurrenceTypes;
-    visible: boolean;
+    date: Date;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
@@ -18,7 +18,7 @@ export interface OccurrenceInput extends Optional<OccurrenceAttributes, 'id'> {}
 class Occurrence extends Model<OccurrenceAttributes, OccurrenceInput> implements OccurrenceAttributes {
     public id!: number
     public type!: OccurrenceTypes
-    public visible!: boolean;
+    public date!: Date;
 
     // timestamps!
     public readonly createdAt!: Date;
@@ -36,8 +36,8 @@ Occurrence.init({
         type: DataTypes.ENUM('game', 'training', 'payday'),
         allowNull: false
     },
-    visible: {
-        type: DataTypes.BOOLEAN,
+    date: {
+        type: DataTypes.DATE,
         allowNull: false
     }
 }, {

@@ -1,5 +1,4 @@
 import Calendar from './calendar';
-import CalendarOccurrence from './calendar_occurrence';
 import Championship from './championship';
 import Occurrence from './occurrence';
 import Formation from './formation';
@@ -9,6 +8,9 @@ import Player from './player';
 import Skill from './skill';
 import PlayerSkill from './player_skill';
 import TeamPlayer from './team_player';
+
+Calendar.hasMany(Occurrence);
+Occurrence.belongsTo(Calendar);
 
 Team.belongsToMany(Calendar, {
   through: 'TeamCalandar'
@@ -38,7 +40,6 @@ Team.belongsToMany(Championship, {
 
 export {
   Calendar,
-  CalendarOccurrence as CalendarEvent,
   Championship,
   Occurrence,
   Formation,

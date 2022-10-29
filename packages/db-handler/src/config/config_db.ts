@@ -3,6 +3,13 @@ import { Property } from 'ts-convict';
 export class DBConfig implements config.DBConfig {
 
     @Property({
+        doc: 'Name of the generated ERM-Diagram.',
+        default: "football_manager.svg",
+        env: 'FM_DB_ERM_DIAGRAM_NAME'
+    })
+    public ermName!: string;
+
+    @Property({
         doc: 'Recreate the tables.',
         default: false,
         env: 'FM_DB_FORCE'

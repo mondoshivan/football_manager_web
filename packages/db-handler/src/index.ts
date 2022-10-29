@@ -18,6 +18,8 @@ export const dbInit = async () => {
 
   try {
     await sequelizeConnection.sync({ force: config.db.force, alter: alter });
+    const models = sequelizeConnection.models;
+
   } catch (error) {
     log.fatal(error);
   }
