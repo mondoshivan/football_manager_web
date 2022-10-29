@@ -5,7 +5,9 @@ import sequelizeConnection from './config';
 
 import * as calendarService from './services/calendar'
 import * as championshipService from './services/championship'
+import * as occurrenceService from './services/occurrence'
 import * as formationService from './services/formation'
+import * as gameService from './services/game'
 import * as playerService from './services/player'
 import * as skillService from './services/skill'
 import * as teamService from './services/team'
@@ -24,7 +26,9 @@ export const dbInit = async () => {
 export { 
   calendarService,
   championshipService,
+  occurrenceService,
   formationService,
+  gameService,
   skillService,
   playerService,
   teamService

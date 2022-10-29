@@ -1,0 +1,14 @@
+[
+    {
+        "type": "game",
+        "visible": true
+    },
+    {
+        "type": "training",
+        "visible": true
+    },
+    {
+        "type": "payday",
+        "visible": false
+    }
+]

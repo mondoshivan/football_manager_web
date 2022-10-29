@@ -21,11 +21,13 @@
     "@football-manager/log": "^0.0.1",
     "@football-manager/utils": "^0.0.1",
     "convict": "^6.2.3",
+    "lodash": "^4.17.21",
     "ts-convict": "^1.1.0"
   },
   "devDependencies": {
-    "@types/node": "^14.18.21",
-    "@types/convict": "^6.1.1"
+    "@types/convict": "^6.1.1",
+    "@types/lodash": "^4.14.186",
+    "@types/node": "^14.18.21"
   },
   "repository": {
     "type": "git",

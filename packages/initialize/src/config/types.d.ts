@@ -15,7 +15,7 @@ declare namespace config {
         initEnabled: boolean
     }
 
-    interface CalendarConfig {
-        initCalendarStart: string
+    interface GameConfig {
+        initGameDay: string
     }
 }

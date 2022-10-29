@@ -1,5 +1,4 @@
 import {Op} from 'sequelize'
-import {isEmpty} from 'lodash'
 
 import {Player} from '../models'
 import {GetAllPlayersFilters, IncludesFilters} from './types'

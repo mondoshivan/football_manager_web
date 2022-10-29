@@ -1,7 +1,7 @@
 import { config } from 'process';
 import { Property, Config, TSConvict } from 'ts-convict';
 import { TeamsConfig } from './config_teams';
-import { CalendarConfig } from './config_calendars';
+import { GameConfig } from './config_game';
 
 @Config({
     
@@ -30,8 +30,8 @@ class PackageConfig implements config.PackageConfig {
     @Property(TeamsConfig)
     public teams!: config.TeamsConfig;
 
-    @Property(CalendarConfig)
-    public calendars!: config.CalendarConfig;
+    @Property(GameConfig)
+    public game!: config.GameConfig;
 
 }
 

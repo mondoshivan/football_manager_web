@@ -8,7 +8,8 @@ export const initChampionships = async (resource: string) => {
     const list : ChampionshipInput[] = JSON.parse(raw.toString());
     
     for (const championship of list) {
-        await championshipService.create(championship);
+        const model = await championshipService.create(championship);
+        
     }
 
 };

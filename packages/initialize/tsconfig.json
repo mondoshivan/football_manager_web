@@ -13,10 +13,13 @@
   },
   "references": [
     {
-      "path": "../log"
+      "path": "../controller"
     },
     {
       "path": "../db-handler"
+    },
+    {
+      "path": "../log"
     },
     {
       "path": "../names"

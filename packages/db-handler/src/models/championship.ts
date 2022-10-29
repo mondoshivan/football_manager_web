@@ -1,5 +1,7 @@
-import { Association, DataTypes, HasManyAddAssociationMixin, HasManyAddAssociationsMixin, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin, HasManyHasAssociationsMixin, HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, HasManySetAssociationsMixin, Model, NonAttribute, Optional } from 'sequelize'
+import { Association, BelongsToManyAddAssociationMixin, BelongsToManyGetAssociationsMixin, DataTypes, HasManyAddAssociationMixin, HasManyAddAssociationsMixin, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin, HasManyHasAssociationsMixin, HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, HasManySetAssociationsMixin, Model, NonAttribute, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
+import Calendar from './calendar';
+import Team from './team';
 
 export type ChampionshipTypes = 'league' | 'cup';
 
@@ -23,7 +25,11 @@ class Championship extends Model<ChampionshipAttributes, ChampionshipInput> impl
     public readonly updatedAt!: Date;
     public readonly deletedAt!: Date;
 
-    // declare getClubs: HasManyGetAssociationsMixin<Club>;
+    declare getTeams: HasManyGetAssociationsMixin<Team>;
+
+    declare getCalendars: BelongsToManyGetAssociationsMixin<Calendar>;
+    declare addCalendar: BelongsToManyAddAssociationMixin<Calendar, Calendar['id']>;
+    
     // declare addClub: HasManyAddAssociationMixin<Club, number>;
     // declare addClubs: HasManyAddAssociationsMixin<Club, number>;
     // declare setClubs: HasManySetAssociationsMixin<Club, number>;

@@ -1,10 +1,12 @@
-import { BelongsToCreateAssociationMixin, DataTypes, Model, Optional } from 'sequelize'
+import { BelongsToCreateAssociationMixin, BelongsToManyAddAssociationMixin, DataTypes, HasManyAddAssociationMixin, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
-import Team from './team';
+import Occurrence from './occurrence';
+
+export type CalendarTypes = 'championship' | 'team' | 'player';
 
 interface CalendarAttributes {
     id: number;
-    start: Date;
+    type: CalendarTypes;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
@@ -13,14 +15,14 @@ export interface CalendarInput extends Optional<CalendarAttributes, 'id'> { }
 
 class Calendar extends Model<CalendarAttributes, CalendarInput> implements CalendarAttributes {
     public id!: number;
-    public start!: Date;
+    public type!: CalendarTypes;
 
     // timestamps!
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
     public readonly deletedAt!: Date;
 
-    declare setTeam: BelongsToCreateAssociationMixin<Team>;
+    declare addOccurrence: BelongsToManyAddAssociationMixin<Occurrence, Occurrence['id']>;
 }
 
 Calendar.init({
@@ -29,8 +31,8 @@ Calendar.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    start: {
-        type: DataTypes.DATE,
+    type: {
+        type: DataTypes.ENUM('championship', 'team', 'player'),
         allowNull: false
     }
 }, {

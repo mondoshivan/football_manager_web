@@ -85,7 +85,7 @@ export const getAll = async (filters?: GetAllTeamsFilters, includes?: IncludesFi
     return entities;
 }
 
-export const checkClubExists = async (name: string): Promise<boolean> => {
+export const checkTeamExists = async (name: string): Promise<boolean> => {
     const teamWithName = await Team.findOne({
         where: {
             name
