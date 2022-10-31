@@ -20,5 +20,6 @@ declare namespace config {
         logging: boolean
         force: boolean
         ermName: string
+        docDir: string
     }
 }
