@@ -8,6 +8,7 @@ import * as formation from './formation';
 import * as game from './game';
 import * as skills from './skill';
 import * as teams from './teams';
+import * as users from './users';
 import path from "path";
 import config from "./config/config";
 
@@ -18,6 +19,7 @@ export const start = async () => {
         if (! config.teams.initEnabled) return;
 
         await game.initGame();
+        await users.initUsers(path.join(__dirname, '../../resources/users.json'));
         await formation.initFormations(path.join(__dirname, '../../resources/formations.json'));
         await skills.initSkills(path.join(__dirname, '../../resources/skills.json'));
         await championships.initChampionships(path.join(__dirname, '../../resources/championships.json'));

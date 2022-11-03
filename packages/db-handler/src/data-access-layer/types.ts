@@ -13,6 +13,11 @@ export interface GetAllPlayersFilters extends ListFilters {}
 export interface GetAllChampionshipsFilters extends ListFilters {}
 export interface GetAllOccurrenceFilters extends ListFilters {}
 
+export interface GetAllUsersFilters extends ListFilters {
+    email?: string
+    password?: string
+}
+
 export interface IncludesFilters {
     includeAll?: boolean
     includeNested?: boolean

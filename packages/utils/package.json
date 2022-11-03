@@ -16,10 +16,13 @@
   "license": "ISC",
   "homepage": "https://github.com/mondoshivan/football_manager_web",
   "dependencies": {
-
+    "uuid": "^9.0.0",
+    "crypto-js": "^4.1.1"
   },
   "devDependencies": {
-    "@types/node": "^14.18.21"
+    "@types/crypto-js": "^4.1.1",
+    "@types/node": "^14.18.21",
+    "@types/uuid": "^8.3.4"
   },
   "repository": {
     "type": "git",

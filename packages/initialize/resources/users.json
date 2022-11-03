@@ -1,0 +1,8 @@
+[
+    {
+        "name": "Admin",
+        "email": "Admin@Admin.com",
+        "password": "admin",
+        "confirmed": true
+    }
+]

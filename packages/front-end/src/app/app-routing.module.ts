@@ -5,16 +5,47 @@ import { ChampionshipsComponent } from './components/championships/championships
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PlayerComponent } from './components/player/player.component';
 import { TeamComponent } from './components/team/team.component';
+import { AccountComponent } from './components/account/account.component';
+import { AppGuard } from './auth/guards/app.guard';
+import { IndexComponent } from './components/index/index.component';
 
 const routes: Routes = [
-  {path: '', component: ChampionshipsComponent},
-  {path: 'championships', component: ChampionshipsComponent},
-  {path: 'championship/:id', component: ChampionshipComponent},
-  {path: 'team/:id', component: TeamComponent},
-  {path: 'player/:id', component: PlayerComponent},
+  {
+    path: '', 
+    component: IndexComponent
+  },
+  {
+    path: 'championships', 
+    component: ChampionshipsComponent,
+    canActivate: [AppGuard]
+  },
+  { 
+    path: 'championship/:id', 
+    component: ChampionshipComponent,
+    canActivate: [AppGuard]
+  },
+  {
+    path: 'team/:id', 
+    component: TeamComponent,
+    canActivate: [AppGuard]
+  },
+  {
+    path: 'player/:id', 
+    component: PlayerComponent,
+    canActivate: [AppGuard]
+  },
+  {
+    path: 'account', 
+    component: AccountComponent,
+    canActivate: [AppGuard]
+  },
 
   /** Redirect Konfigurationen **/
-  {path: '**', component: NotFoundComponent}, // immer als letztes konfigurieren - erste Route die matched wird angesteuert
+  // needs to be at the bottem
+  {
+    path: '**', 
+    component: NotFoundComponent
+  },
 ];
 
 @NgModule({

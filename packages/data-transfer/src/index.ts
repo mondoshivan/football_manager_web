@@ -83,3 +83,18 @@ export type UpdateTeamFormationDTO = {
 export type FilterTeamsDTO = FilterDTO & {}
 
 export type FilterPlayerDTO = FilterDTO & {}
+
+export type UserDTO = FilterDTO & {
+    email?: string
+}
+
+export type LoginAuthDTO = {
+    email: string
+    password: string
+}
+
+export type RegisterAuthDTO = {
+    name: string
+    email: string
+    password: string
+}

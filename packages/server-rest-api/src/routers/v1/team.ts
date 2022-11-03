@@ -3,8 +3,11 @@ import asyncHandler from "express-async-handler"
 import { formationService, teamService } from "@football-manager/db-handler"
 
 import { FilterTeamsDTO, GetByIdDTO, IncludesDTO, UpdateTeamFormationDTO } from "@football-manager/data-transfer";
+import { jwtValidation } from "../../middlewares/jwt-validation";
 
 const teamRouter = Router();
+
+teamRouter.use(jwtValidation);
 
 teamRouter.get('/', asyncHandler( async (req: Request, res: Response) => {
     const filters : FilterTeamsDTO = req.query;

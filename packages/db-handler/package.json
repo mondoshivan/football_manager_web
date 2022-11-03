@@ -18,6 +18,7 @@
   "homepage": "https://github.com/mondoshivan/football_manager_web",
   "dependencies": {
     "@football-manager/log": "^0.0.1",
+    "@football-manager/utils": "^0.0.1",
     "convict": "^6.2.3",
     "lodash": "^4.17.21",
     "mariadb": "^3.0.1",

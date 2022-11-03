@@ -18,6 +18,7 @@
   "dependencies": {
     "@football-manager/data-transfer": "^0.0.1",
     "@football-manager/db-handler": "^0.0.1",
+    "@football-manager/helper": "^0.0.1",
     "@football-manager/log": "^0.0.1",
     "@football-manager/utils": "^0.0.1",
     "convict": "^6.2.3",

@@ -12,5 +12,8 @@ declare namespace config {
     interface ServiceConfig {
         frontEndDir: string
         port: number
+        sessionSecret: string
+        sessionCookieSecure: boolean
+        jwtSecret: string
     }
 }

@@ -3,9 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { FormationDTO, IncludesDTO, PlayerDTO, TeamDTO } from '@football-manager/data-transfer';
 import { RestApiService } from 'src/app/services/rest-api/rest-api.service';
-import Utils from '@football-manager/utils';
 import { Subscription } from 'rxjs';
-import { playerHelper } from '@football-manager/controller';
+import { playerHelper } from '@football-manager/helper';
 
 @Component({
   selector: 'app-team',

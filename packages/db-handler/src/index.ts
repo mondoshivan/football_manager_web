@@ -11,6 +11,7 @@ import * as gameService from './services/game'
 import * as playerService from './services/player'
 import * as skillService from './services/skill'
 import * as teamService from './services/team'
+import * as userService from './services/user'
 
 const alter = false;
 
@@ -33,5 +34,6 @@ export {
   gameService,
   skillService,
   playerService,
-  teamService
+  teamService,
+  userService
 }

@@ -24,6 +24,9 @@
     },
     {
       "path": "./packages/controller/tsconfig.json"
+    },
+    {
+      "path": "./packages/helper/tsconfig.json"
     }
   ]
 }

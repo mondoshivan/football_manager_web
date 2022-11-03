@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { ChampionshipDTO, FilterDTO, FormationDTO, IncludesDTO, PlayerDTO, TeamDTO } from '@football-manager/data-transfer';
+import { ChampionshipDTO, FilterDTO, FormationDTO, IncludesDTO, PlayerDTO, TeamDTO, UserDTO } from '@football-manager/data-transfer';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 
 export interface HTTPParams { 
@@ -17,6 +17,27 @@ export class RestApiService {
   restApiVersion = 1;
   retryAmount = 3;
   rootURL = `/api/${this.restApiVersion}`;
+
+  login(email: string, password: string) : Observable<string> {
+    const url = `${this.rootURL}/users/login`;
+    const body = { username: email, password: password };
+    return this.http.post<string>(url, body)
+      .pipe(
+        retry(this.retryAmount), // retry a failed request
+        catchError(this.handleError)
+      );
+  }
+
+  users(includes? : IncludesDTO) : Observable<UserDTO> {
+    const url = this.rootURL + '/users';
+    let httpParams = new HttpParams();
+    if (includes) httpParams = httpParams.appendAll(includes);
+    return this.http.get<UserDTO>(url, { params: httpParams })
+      .pipe(
+        retry(this.retryAmount), // retry a failed request
+        catchError(this.handleError)
+      );
+  }
 
   championship(id : number, includes? : IncludesDTO) : Observable<ChampionshipDTO> {
     const url = this.rootURL + '/championships/' + id.toString();

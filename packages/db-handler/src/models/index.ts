@@ -8,6 +8,7 @@ import Player from './player';
 import Skill from './skill';
 import PlayerSkill from './player_skill';
 import TeamPlayer from './team_player';
+import User from './user'
 
 Calendar.hasMany(Occurrence);
 Occurrence.belongsTo(Calendar);
@@ -48,5 +49,6 @@ export {
   PlayerSkill,
   Skill,
   Team,
-  TeamPlayer
+  TeamPlayer,
+  User
 }

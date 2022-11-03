@@ -2,10 +2,16 @@ import { Request, Response, Router } from "express";
 import asyncHandler from "express-async-handler"
 import { championshipService } from "@football-manager/db-handler"
 import { FilterChampionShipDTO, GetByIdDTO, IncludesDTO } from "@football-manager/data-transfer";
+import log from "@football-manager/log";
+import { jwtValidation } from "../../middlewares/jwt-validation";
 
 const championshipRouter = Router();
 
+championshipRouter.use(jwtValidation);
+
 championshipRouter.get('/', asyncHandler( async (req: Request, res: Response) => {
+    const sessionId = req.sessionID;
+    log.debug(`sessionId route: ${sessionId}`);
     const filters : FilterChampionShipDTO = req.query;
     const includes : IncludesDTO = req.query;
     const result = await championshipService.getAll(filters, includes);

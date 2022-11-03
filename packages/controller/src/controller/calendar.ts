@@ -1,5 +1,5 @@
 import { Calendar, Championship } from "@football-manager/db-handler/src/models/index";
-import * as calendarHelper from "../helper/calendar";
+import { calendarHelper } from "@football-manager/helper";
 import { occurrenceService, gameService } from "@football-manager/db-handler";
 import { isEmpty } from "lodash";
 import { OccurrenceTypes } from "@football-manager/db-handler/src/models/occurrence";

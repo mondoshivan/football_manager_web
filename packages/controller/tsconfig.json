@@ -19,6 +19,9 @@
       "path": "../db-handler"
     },
     {
+      "path": "../helper"
+    },
+    {
       "path": "../log"
     }
   ]

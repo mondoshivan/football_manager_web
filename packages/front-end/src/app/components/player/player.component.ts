@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IncludesDTO, PlayerDTO, TeamDTO } from '@football-manager/data-transfer';
-import Utils from '@football-manager/utils';
 import { RestApiService } from 'src/app/services/rest-api/rest-api.service';
 import { Subscription } from 'rxjs';
-import { playerHelper } from '@football-manager/controller';
+import { playerHelper } from '@football-manager/helper';
 
 @Component({
   selector: 'app-player',

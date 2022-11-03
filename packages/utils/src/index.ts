@@ -1,6 +1,15 @@
-
+import CryptoJS from 'crypto-js';
+import { v4 as uuidv4 } from "uuid";
 
 class Utils {
+
+  static uuid() : string {
+    return uuidv4();
+  }
+
+  static passwordHash(password: string, salt: string) : string {
+    return CryptoJS.SHA256(`${password}${salt}`).toString();
+  }
 
   static randomIntFromInterval(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1) + min)

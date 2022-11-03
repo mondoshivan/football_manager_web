@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,26 @@ import { PlayerComponent } from './components/player/player.component';
 import { TeamMenuComponent } from './components/team-menu/team-menu.component';
 import { PlayerMenuComponent } from './components/player-menu/player-menu.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AccountComponent } from './components/account/account.component';
+import { AuthModule } from './auth/auth.module';
+import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
+import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
+import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { MdbPopoverModule } from 'mdb-angular-ui-kit/popover';
+import { MdbRadioModule } from 'mdb-angular-ui-kit/radio';
+import { MdbRangeModule } from 'mdb-angular-ui-kit/range';
+import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
+import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
+import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
+import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
+import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IndexComponent } from './components/index/index.component';
+
 
 
 @NgModule({
@@ -29,14 +50,34 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     TeamComponent,
     PlayerComponent,
     TeamMenuComponent,
-    PlayerMenuComponent
+    PlayerMenuComponent,
+    AccountComponent,
+    IndexComponent
   ],
   imports: [
+    AuthModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     Ng2SmartTableModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
+    MdbAccordionModule,
+    MdbCarouselModule,
+    MdbCheckboxModule,
+    MdbCollapseModule,
+    MdbDropdownModule,
+    MdbFormsModule,
+    MdbModalModule,
+    MdbPopoverModule,
+    MdbRadioModule,
+    MdbRangeModule,
+    MdbRippleModule,
+    MdbScrollspyModule,
+    MdbTabsModule,
+    MdbTooltipModule,
+    MdbValidationModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
