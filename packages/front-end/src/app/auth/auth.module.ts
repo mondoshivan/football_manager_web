@@ -11,13 +11,17 @@ import { LogoutComponent } from './containers/logout/logout.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { authStrategyProvider } from './services/auth.strategy';
 import { RegisterComponent } from './containers/register/register.component';
+import { LoginPageComponent } from './containers/login-page/login-page.component';
+import { RegisterPageComponent } from './containers/register-page/register-page.component';
 
 @NgModule({
   declarations: [
     ConfirmComponent,
     LoginComponent,
     LogoutComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginPageComponent,
+    RegisterPageComponent
   ],
   imports: [
     AuthRoutingModule,

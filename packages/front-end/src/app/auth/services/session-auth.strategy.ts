@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable, of, tap } from "rxjs";
-import { config } from "src/app/core/config";
+import { authConfig } from "src/app/core/routeConfig";
 import { AuthStrategy } from "./auth.strategy";
 import { User } from "../../models/user";
 
@@ -22,7 +22,7 @@ export class SessionAuthStrategy implements AuthStrategy<User> {
       if (this.loggedUser) {
         return of(this.loggedUser);
       } else {
-        return this.http.get<User>(`${config["authUrl"]}/user`)
+        return this.http.get<User>(`${authConfig["authUrl"]}/user`)
           .pipe(tap(user => this.loggedUser = user));
       }
     }

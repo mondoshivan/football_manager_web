@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { InjectionToken } from "@angular/core";
 import { Observable } from "rxjs";
-import { config } from "src/app/core/config";
+import { authConfig } from "src/app/core/routeConfig";
 import { JwtAuthStrategy } from "./jwt-auth.strategy";
 import { SessionAuthStrategy } from "./session-auth.strategy";
 import { User } from "../../models/user";
@@ -22,7 +22,7 @@ export interface AuthStrategy<T> {
     provide: AUTH_STRATEGY,
     deps: [HttpClient],
     useFactory: (http: HttpClient) => {
-      switch (config.auth) {
+      switch (authConfig.auth) {
           case 'session':
             return new SessionAuthStrategy(http);
           case 'token':

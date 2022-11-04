@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { LoginRequest } from 'src/app/models/login-request';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { formConfig } from '../../config/form';
 
 @Component({
   selector: 'app-login',
@@ -22,8 +23,20 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.email],
-      password: ['']
+      email: [
+        '', 
+        [
+          Validators.required,
+          Validators.email
+        ]
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(formConfig.password.minLength)
+        ]
+      ]
     });
   }
 
@@ -42,13 +55,5 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
-  // login() {
-  //   this.restApiService.login(this.emailInput.value, this.passwordInput.value).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //     }
-  //   );
-  // }
 
 }

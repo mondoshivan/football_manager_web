@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { ChampionshipDTO, FilterDTO, FormationDTO, IncludesDTO, PlayerDTO, TeamDTO, UserDTO } from '@football-manager/data-transfer';
 import { catchError, Observable, retry, throwError } from 'rxjs';
+import { apiConfig } from 'src/app/core/routeConfig';
 
 export interface HTTPParams { 
   [param: string]: string | number | boolean | readonly (string | number | boolean)[]; 
@@ -14,12 +15,10 @@ export class RestApiService {
 
   constructor(private http: HttpClient) { }
 
-  restApiVersion = 1;
   retryAmount = 3;
-  rootURL = `/api/${this.restApiVersion}`;
 
   login(email: string, password: string) : Observable<string> {
-    const url = `${this.rootURL}/users/login`;
+    const url = `${apiConfig}/users/login`;
     const body = { username: email, password: password };
     return this.http.post<string>(url, body)
       .pipe(
@@ -29,7 +28,7 @@ export class RestApiService {
   }
 
   users(includes? : IncludesDTO) : Observable<UserDTO> {
-    const url = this.rootURL + '/users';
+    const url = apiConfig+ '/users';
     let httpParams = new HttpParams();
     if (includes) httpParams = httpParams.appendAll(includes);
     return this.http.get<UserDTO>(url, { params: httpParams })
@@ -40,7 +39,7 @@ export class RestApiService {
   }
 
   championship(id : number, includes? : IncludesDTO) : Observable<ChampionshipDTO> {
-    const url = this.rootURL + '/championships/' + id.toString();
+    const url = apiConfig + '/championships/' + id.toString();
     let httpParams = new HttpParams();
     if (includes) httpParams = httpParams.appendAll(includes);
     return this.http.get<ChampionshipDTO>(url, { params: httpParams })
@@ -51,7 +50,7 @@ export class RestApiService {
   }
 
   team(id : number, includes? : IncludesDTO) : Observable<TeamDTO> {
-    const url = this.rootURL + '/teams/' + id.toString();
+    const url = apiConfig + '/teams/' + id.toString();
     let httpParams = new HttpParams();
     if (includes) httpParams = httpParams.appendAll(includes);
     return this.http.get<TeamDTO>(url, { params: httpParams })
@@ -62,7 +61,7 @@ export class RestApiService {
   }
 
   player(id : number, includes? : IncludesDTO) : Observable<PlayerDTO> {
-    const url = this.rootURL + '/players/' + id.toString();
+    const url = apiConfig + '/players/' + id.toString();
     let httpParams = new HttpParams();
     if (includes) httpParams = httpParams.appendAll(includes);
     return this.http.get<PlayerDTO>(url, { params: httpParams })
@@ -73,7 +72,7 @@ export class RestApiService {
   }
 
   championships(filters? : FilterDTO, includes? : IncludesDTO) : Observable<ChampionshipDTO[]> {
-    const url = this.rootURL + '/championships';
+    const url = apiConfig + '/championships';
     let httpParams = new HttpParams();
     if (filters) httpParams = httpParams.appendAll(filters);
     if (includes) httpParams = httpParams.appendAll(includes);
@@ -85,7 +84,7 @@ export class RestApiService {
   }
 
   formations(params? : FilterDTO, includes? : IncludesDTO) : Observable<FormationDTO[]> {
-    const url = this.rootURL + '/formations';
+    const url = apiConfig + '/formations';
     let httpParams = new HttpParams();
     if (params) httpParams = httpParams.appendAll(params);
     if (includes) httpParams = httpParams.appendAll(includes);
@@ -97,7 +96,7 @@ export class RestApiService {
   }
 
   updateTeamFormation(teamId: number, formation: string) : Observable<TeamDTO> {
-    const url = `${this.rootURL}/teams/formation`;
+    const url = `${apiConfig}/teams/formation`;
     const body = { teamId: teamId, formation: formation };
     return this.http.post<TeamDTO>(url, body)
       .pipe(

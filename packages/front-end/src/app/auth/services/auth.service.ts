@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, Observable, of, Subject, tap } from 'rxjs';
-import { config } from 'src/app/core/config';
+import { authConfig } from 'src/app/core/routeConfig';
 import { LoginRequest } from 'src/app/models/login-request';
 import { AuthStrategy, AUTH_STRATEGY } from './auth.strategy';
 import { User } from '../../models/user';
@@ -34,15 +34,15 @@ export class AuthService {
   }
 
   register(user: User): Observable<void> {
-    return this.http.post<any>(`${config['authUrl']}/register`, user);
+    return this.http.post<any>(`${authConfig['authUrl']}/register`, user);
   }
 
   confirm(email: string, code: string): Observable<void> {
-    return this.http.post<any>(`${config['authUrl']}/confirm?`, {email, code});
+    return this.http.post<any>(`${authConfig['authUrl']}/confirm?`, {email, code});
   }
 
   login(loginRequest: LoginRequest): Observable<User> {
-    return this.http.post<any>(`${config['authUrl']}/login`, loginRequest)
+    return this.http.post<any>(`${authConfig['authUrl']}/login`, loginRequest)
       .pipe(tap(data => this.doLoginUser(data)));
   }
 
@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.get<any>(`${config['authUrl']}/logout`)
+    return this.http.get<any>(`${authConfig['authUrl']}/logout`)
       .pipe(tap(() => this.doLogoutUser()));
   }
 

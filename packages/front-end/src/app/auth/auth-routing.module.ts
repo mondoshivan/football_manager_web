@@ -3,15 +3,16 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { AuthGuard } from "./guards/auth.guard";
 import { ConfirmComponent } from "./containers/confirm/confirm.component";
-import { LoginComponent } from './containers/login/login.component';
 import { LogoutComponent } from "./containers/logout/logout.component";
 import { AppGuard } from "./guards/app.guard";
 import { RegisterComponent } from "./containers/register/register.component";
+import { LoginPageComponent } from "./containers/login-page/login-page.component";
+import { RegisterPageComponent } from "./containers/register-page/register-page.component";
 
 const routes: Routes = [
   {
     path: 'login', 
-    component: LoginComponent,
+    component: LoginPageComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'register', 
-    component: RegisterComponent,
+    component: RegisterPageComponent,
     canActivate: [AuthGuard]
   },
 ];
