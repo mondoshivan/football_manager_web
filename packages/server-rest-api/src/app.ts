@@ -12,7 +12,6 @@ import log from '@football-manager/log';
 import config from "./config/config";
 import AppHelper from './helpers/app';
 import User, { UserInput } from '@football-manager/db-handler/src/models/user';
-import { jwtValidation } from './middlewares/jwt-validation';
 
 const FileStore = SessionFileStore(expressSession);
 
@@ -48,8 +47,6 @@ export class App {
     this.app.use(express.static(path.join(process.cwd(), config.service.frontEndDir)));
     // this.app.use(passport.initialize());
     // this.app.use(passport.session());
-
-    // this.app.use(jwtValidation);
 
     this.app.use((err:Error, req:Request, res:Response, next:NextFunction) => {
       log.error(err);

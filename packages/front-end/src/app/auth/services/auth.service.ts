@@ -6,6 +6,7 @@ import { authConfig } from 'src/app/core/routeConfig';
 import { LoginRequest } from 'src/app/models/login-request';
 import { AuthStrategy, AUTH_STRATEGY } from './auth.strategy';
 import { User } from '../../models/user';
+import { TokenDTO } from '@football-manager/data-transfer'
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,15 @@ export class AuthService {
   login(loginRequest: LoginRequest): Observable<User> {
     return this.http.post<any>(`${authConfig['authUrl']}/login`, loginRequest)
       .pipe(tap(data => this.doLoginUser(data)));
+  }
+
+  refresh(): Observable<User> {    
+    return this.http.post<any>(`${authConfig['authUrl']}/refresh`, this.auth.getRefreshData())
+    .pipe(
+      tap( data => { 
+        this.doLoginUser(data) 
+      })
+    );
   }
 
   private doLoginUser(data: User) {

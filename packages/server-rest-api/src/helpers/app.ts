@@ -4,6 +4,7 @@ import CryptoJS from 'crypto-js';
 import jwt from "jsonwebtoken";
 import User from '@football-manager/db-handler/src/models/user';
 import config from "../config/config";
+import { IRefreshToken } from '../interfaces/refresh-token';
 
 
 class AppHelper {
@@ -49,16 +50,45 @@ class AppHelper {
         });
     }
 
+    static accessToken(body: any, options?: jwt.SignOptions) {
+        return AppHelper.jwt( { ...body, ...{ type: 'access'} }, options);
+    }
+
+    static refreshToken(body: IRefreshToken, options?: jwt.SignOptions) {
+        return AppHelper.jwt( { ...body, ...{ type: 'refresh'} }, options);
+    }
+
     static jwt(body: any, options?: jwt.SignOptions) {
         return jwt.sign(body, 
             config.service.jwtSecret,
             {
                 ...{ 
-                    expiresIn: 60 * 15 // seconds 
+                    expiresIn: 60 * 1 // seconds 
                 },
                 ...options
             }
         );
+    }
+
+    static jwtResponseData(user: User) {
+        return { 
+            accessToken: AppHelper.accessToken({
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                id: user.id,
+                confirmed: user.confirmed
+            }),
+            refreshToken: AppHelper.refreshToken({
+                id: user.id
+            }, { 
+                expiresIn: 60 * 60 * 24 * 30 
+            }) // 30 days
+        };
+    }
+
+    static jwtVerify(token: string) : string | jwt.JwtPayload {
+        return jwt.verify(token, config.service.jwtSecret);
     }
 
     static jwtValid(token: string) : boolean{

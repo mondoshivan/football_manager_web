@@ -93,8 +93,15 @@ export type LoginAuthDTO = {
     password: string
 }
 
+export type RefreshAuthDTO = TokenDTO & {}
+
 export type RegisterAuthDTO = {
     name: string
     email: string
     password: string
 }
+
+export type TokenDTO = {
+    accessToken: string
+    refreshToken: string
+  }

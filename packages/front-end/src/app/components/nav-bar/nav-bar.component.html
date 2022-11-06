@@ -2,10 +2,12 @@
   <div class="container justify-content-between">
     <div>
       <div class="collapse navbar-collapse">
-        <a class="navbar-brand" href="#">Football Manager</a>
+        <a *ngIf="!isLoggedIn" class="navbar-brand" href="/">Football Manager</a>
+        <a *ngIf="isLoggedIn" class="navbar-brand" href="/dashboard">Football Manager</a>
+
         <ul *ngIf="isLoggedIn" class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" ngbTooltip="Championships" routerLink="/championships">Championships</a>
+            <!-- <a class="nav-link" ngbTooltip="Championships" routerLink="/championships">Championships</a> -->
           </li>
         </ul>
       </div>
@@ -30,9 +32,6 @@
           </li>
         </ul>
       </div>
-
-      
-
     </div>
   </div>
 </nav>

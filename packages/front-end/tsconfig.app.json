@@ -17,6 +17,9 @@
       "path": "../data-transfer"
     },
     {
+      "path": "../log"
+    },
+    {
       "path": "../utils"
     },
     {

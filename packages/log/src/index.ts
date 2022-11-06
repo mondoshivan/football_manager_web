@@ -21,4 +21,4 @@ log.attachTransport({
     "debug"
 );
 
-export = log;
+export default log;

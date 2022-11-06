@@ -10,9 +10,9 @@ export const jwtValidation = (req: express.Request, res: express.Response, next:
             req.authorized = true;
             next();
         } catch (error) {
-            res.send(401).send('token is invalid');
+            res.status(401).send('token is invalid');
         }
     } else {
-        res.send(401).send('token is invalid');
+        res.status(401).send('token is invalid');
     }
 }

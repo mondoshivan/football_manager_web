@@ -1,22 +1,25 @@
 import { Observable, of } from "rxjs";
-import { Token } from "src/app/models/token";
+import { TokenDTO } from '@football-manager/data-transfer'
 import { AuthStrategy } from "./auth.strategy";
 import { User } from "../../models/user";
 
-export class JwtAuthStrategy implements AuthStrategy<Token> {
+export class JwtAuthStrategy implements AuthStrategy<TokenDTO> {
 
-  private readonly JWT_TOKEN = 'JWT_TOKEN';
+  private readonly JWT_ACCESS_TOKEN = 'JWT_ACCESS_TOKEN';
+  private readonly JWT_REFRESH_TOKEN = 'JWT_REFRESH_TOKEN';
 
-  doLoginUser(token: Token): void {
-    localStorage.setItem(this.JWT_TOKEN, token.jwt);
+  doLoginUser(tokens: TokenDTO): void {
+    localStorage.setItem(this.JWT_ACCESS_TOKEN, tokens.accessToken);
+    localStorage.setItem(this.JWT_REFRESH_TOKEN, tokens.refreshToken);
   }
 
   doLogoutUser(): void {
-    localStorage.removeItem(this.JWT_TOKEN);
+    localStorage.removeItem(this.JWT_ACCESS_TOKEN);
+    localStorage.removeItem(this.JWT_REFRESH_TOKEN);
   }
 
   getCurrentUser(): Observable<User | undefined> {
-    const token = this.getToken();
+    const token = this.getAccessToken();
     if (token) {
       const encodedPayload = token.split('.')[1];
       const payload = window.atob(encodedPayload);
@@ -26,7 +29,25 @@ export class JwtAuthStrategy implements AuthStrategy<Token> {
     }
   }
 
-  getToken() {
-    return localStorage.getItem(this.JWT_TOKEN);
+  getAccessToken() {
+    return localStorage.getItem(this.JWT_ACCESS_TOKEN);
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem(this.JWT_REFRESH_TOKEN);
+  }
+
+  getRefreshData(): TokenDTO | undefined {
+    const access = this.getAccessToken();
+    const refresh = this.getRefreshToken();
+
+    if (access && refresh) {
+      return {
+        accessToken: access,
+        refreshToken: refresh
+      }
+    }
+
+    return;
   }
 }

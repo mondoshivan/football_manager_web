@@ -18,6 +18,7 @@ import { PlayerMenuComponent } from './components/player-menu/player-menu.compon
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AccountComponent } from './components/account/account.component';
 import { AuthModule } from './auth/auth.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -35,8 +36,6 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IndexComponent } from './components/index/index.component';
-
-
 
 
 @NgModule({
@@ -57,6 +56,7 @@ import { IndexComponent } from './components/index/index.component';
   ],
   imports: [
     AuthModule,
+    DashboardModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

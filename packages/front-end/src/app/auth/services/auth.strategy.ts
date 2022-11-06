@@ -8,12 +8,13 @@ import { User } from "../../models/user";
 
 export interface AuthStrategy<T> {
 
-    doLoginUser(data: T): void;
+    doLoginUser(data: T, optional?: T): void;
   
     doLogoutUser(): void;
   
     getCurrentUser(): Observable<User | undefined>;
-  
+
+    getRefreshData(): T | undefined;
   }
   
   export const AUTH_STRATEGY = new InjectionToken<AuthStrategy<any>>('AuthStrategy');

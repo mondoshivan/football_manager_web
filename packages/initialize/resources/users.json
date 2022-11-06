@@ -2,7 +2,7 @@
     {
         "name": "Admin",
         "email": "Admin@Admin.com",
-        "password": "admin",
+        "password": "adminadmin",
         "confirmed": true
     }
 ]
