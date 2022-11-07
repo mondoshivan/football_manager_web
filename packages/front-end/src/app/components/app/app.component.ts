@@ -1,4 +1,5 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { LogService } from 'src/app/services/log/log.service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,8 @@ export class AppComponent {
 
   title: string = "Football Manager"
 
-  constructor() {
-    console.log('starting');
+  constructor(private log: LogService) {
+    this.log.log('loading app');
   }
 
 }

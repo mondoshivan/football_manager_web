@@ -24,3 +24,4 @@ https://medium.com/@evangow/server-authentication-basics-express-sessions-passpo
 https://dev-academy.com/angular-user-login-and-registration-guide-cookies-and-jwt/
 https://dev-academy.com/angular-jwt/
 https://github.com/bartosz-io/budget-angular
+https://www.codemag.com/article/1711021/Logging-in-Angular-Applications

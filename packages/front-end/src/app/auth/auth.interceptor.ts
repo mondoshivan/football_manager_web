@@ -12,6 +12,7 @@ import { authConfig } from "../core/routeConfig";
 import { AuthService } from "./services/auth.service";
 import { JwtAuthStrategy } from "./services/jwt-auth.strategy";
 import { AUTH_STRATEGY } from "./services/auth.strategy";
+import { LogService } from "../services/log/log.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -21,6 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
+    private log: LogService,
     @Inject(AUTH_STRATEGY) private jwt: JwtAuthStrategy
   ) { }
 
@@ -44,26 +46,26 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-    console.log('401 Error');
+    this.log.log('401 Error');
     if (!this.isRefreshing) {
-      console.log('Need to refresh');
+      this.log.log('Need to refresh');
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
 
       return this.authService.refresh().pipe(
         switchMap((tokens: any) => {
-          console.log('New set of tokens received', tokens);
+          this.log.log('New set of tokens received');
           this.isRefreshing = false;
           this.refreshTokenSubject.next(tokens);
           return next.handle(this.addToken(request, tokens.accessToken));
         }));
     } else {
-      console.log('Refreshing is already in progress');
+      this.log.log('Refreshing is already in progress');
       return this.refreshTokenSubject.pipe(
         filter(tokens => tokens != null),
         take(1),
         switchMap(tokens => {
-          console.log("waiting done");
+          this.log.log("waiting done");
           return next.handle(this.addToken(request, tokens.accessToken));
         }));
     }
