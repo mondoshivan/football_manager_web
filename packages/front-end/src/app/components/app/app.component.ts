@@ -11,7 +11,7 @@ export class AppComponent {
   title: string = "Football Manager"
 
   constructor(private log: LogService) {
-    this.log.log('loading app');
+    this.log.warn('loading app', { some: 'object'});
   }
 
 }

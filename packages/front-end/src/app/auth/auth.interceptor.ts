@@ -46,26 +46,26 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-    this.log.log('401 Error');
+    this.log.debug('401 Error');
     if (!this.isRefreshing) {
-      this.log.log('Need to refresh');
+      this.log.debug('Need to refresh');
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
 
       return this.authService.refresh().pipe(
         switchMap((tokens: any) => {
-          this.log.log('New set of tokens received');
+          this.log.debug('New set of tokens received');
           this.isRefreshing = false;
           this.refreshTokenSubject.next(tokens);
           return next.handle(this.addToken(request, tokens.accessToken));
         }));
     } else {
-      this.log.log('Refreshing is already in progress');
+      this.log.debug('Refreshing is already in progress');
       return this.refreshTokenSubject.pipe(
         filter(tokens => tokens != null),
         take(1),
         switchMap(tokens => {
-          this.log.log("waiting done");
+          this.log.debug("waiting done");
           return next.handle(this.addToken(request, tokens.accessToken));
         }));
     }
