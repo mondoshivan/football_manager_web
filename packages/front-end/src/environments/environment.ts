@@ -13,7 +13,7 @@ export const environment : IEnvironment = {
     protocol: 'http',
     host: '0.0.0.0',
     port: 8082,
-    logLevel: LogLevel.Warn
+    logLevel: LogLevel.Debug
   }
 };
 
