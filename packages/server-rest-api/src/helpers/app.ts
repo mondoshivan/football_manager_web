@@ -70,6 +70,10 @@ class AppHelper {
         );
     }
 
+    static jwtSignature(token: string): string {
+        return token.split('.')[2];
+    }
+
     static jwtResponseData(user: User) {
         return { 
             accessToken: AppHelper.accessToken({
@@ -80,10 +84,10 @@ class AppHelper {
                 confirmed: user.confirmed
             }),
             refreshToken: AppHelper.refreshToken({
-                id: user.id
+                userId: user.id
             }, { 
-                expiresIn: 60 * 60 * 24 * 30 
-            }) // 30 days
+                expiresIn: 60 * 60 * 24
+            }) // 1 day
         };
     }
 

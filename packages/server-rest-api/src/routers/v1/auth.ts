@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import asyncHandler from "express-async-handler"
 import { LoginAuthDTO, RegisterAuthDTO, TokenDTO } from "@football-manager/data-transfer";
-import { userService } from "@football-manager/db-handler";
+import { tokenService, tokenFamilyService, userService } from "@football-manager/db-handler";
 import AppHelper from "../../helpers/app";
 import log from "@football-manager/log";
 import { IRefreshToken } from "../../interfaces/refresh-token";
@@ -31,14 +31,21 @@ authRouter.post('/refresh', asyncHandler( async (req: Request, res: Response) =>
 
     try {
         tokenPayload = AppHelper.jwtVerify(payload.refreshToken) as IRefreshToken;
+        const refreshToken = await refreshTokenService.getById(tokenPayload.refreshTokenId);
+        if (!refreshToken.valid) throw new Error('refresh token is invalid');
     } catch (error) {
         log.debug('refresh token is invalid', error);
         res.send(401).send('refresh token is invalid');
         return;
     }   
 
-    const user = await userService.getById(tokenPayload.id);
-    res.status(200).json(AppHelper.jwtResponseData(user));
+    const user = await userService.getById(tokenPayload.userId);
+    const oldRefreshToken = await refreshTokenService.getById(tokenPayload.refreshTokenId);
+    oldRefreshToken.valid = false;
+    const newRefreshToken = await refreshTokenService.create({});
+    const [tokenFamily] = await oldRefreshToken.getTokenFamily();
+    newRefreshToken.setTokenFamily(tokenFamily);
+    res.status(200).json(AppHelper.jwtResponseData(user, newRefreshToken.id));
 }))
 
 authRouter.post('/login', asyncHandler( async (req: Request, res: Response, next: NextFunction) => {
@@ -52,7 +59,25 @@ authRouter.post('/login', asyncHandler( async (req: Request, res: Response, next
         res.status(401).json("The user exists, but is not confirmed.");
     } 
     else {
-        res.status(200).json(AppHelper.jwtResponseData(user));
+        // generate the response data
+        const data = AppHelper.jwtResponseData(user);
+
+        // get the token signatures
+        const refreshTokenSignature = AppHelper.jwtSignature(data.refreshToken);
+        const accessTokenSignature = AppHelper.jwtSignature(data.accessToken);
+
+        // create the token family in db 
+        const tokenFamily = await tokenFamilyService.create({});
+
+        // create the tokens in db
+        const dbRefreshToken = await tokenService.create({ signature: refreshTokenSignature, type: 'refresh' });
+        const dbAccessToken = await tokenService.create({ signature: accessTokenSignature, type: 'access' });
+
+        // add the tokens to the family
+        dbRefreshToken.setTokenFamily(tokenFamily);
+        dbAccessToken.setTokenFamily(tokenFamily);
+
+        res.status(200).json(data);
     }
 }));
 

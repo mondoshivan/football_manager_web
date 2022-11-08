@@ -7,8 +7,10 @@ import Team from './team';
 import Player from './player';
 import Skill from './skill';
 import PlayerSkill from './player_skill';
-import TeamPlayer from './team_player';
+import TeamPlayer from './team-player';
 import User from './user'
+import TokenFamily from './token-family';
+import Token from './token';
 
 Calendar.hasMany(Occurrence);
 Occurrence.belongsTo(Calendar);
@@ -22,6 +24,9 @@ Calendar.belongsToMany(Team, {
 
 Formation.hasMany(Team);
 Team.belongsTo(Formation);
+
+TokenFamily.hasMany(Token);
+Token.belongsTo(TokenFamily);
 
 Championship.belongsToMany(Calendar, {
   through: 'ChampionshipCalendar'
@@ -47,8 +52,10 @@ export {
   Game,
   Player,
   PlayerSkill,
+  Token,
   Skill,
   Team,
   TeamPlayer,
+  TokenFamily,
   User
 }

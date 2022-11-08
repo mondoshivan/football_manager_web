@@ -12,6 +12,8 @@ export interface GetAllTeamsFilters extends ListFilters {}
 export interface GetAllPlayersFilters extends ListFilters {}
 export interface GetAllChampionshipsFilters extends ListFilters {}
 export interface GetAllOccurrenceFilters extends ListFilters {}
+export interface GetAllTokensFilters extends ListFilters {}
+export interface GetAllTokenFamiliesFilters extends ListFilters {}
 
 export interface GetAllUsersFilters extends ListFilters {
     email?: string

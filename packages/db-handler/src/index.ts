@@ -9,7 +9,9 @@ import * as occurrenceService from './services/occurrence'
 import * as formationService from './services/formation'
 import * as gameService from './services/game'
 import * as playerService from './services/player'
+import * as tokenService from './services/token'
 import * as skillService from './services/skill'
+import * as tokenFamilyService from './services/token-family'
 import * as teamService from './services/team'
 import * as userService from './services/user'
 
@@ -34,6 +36,8 @@ export {
   gameService,
   skillService,
   playerService,
+  tokenService,
   teamService,
+  tokenFamilyService,
   userService
 }

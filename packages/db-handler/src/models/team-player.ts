@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
 
-import { Team, Player } from '.';
+import { Team, Player } from './index';
 
 interface TeamPlayerAttributes {
     id: number;
