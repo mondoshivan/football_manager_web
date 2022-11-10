@@ -15,6 +15,10 @@ export const getById = (id: number, includes?: IncludesFilters): Promise<Token> 
     return dal.getById(id, includes);
 }
 
+export const getBySignature = (signature: string, includes?: IncludesFilters): Promise<Token[]> => {
+    return dal.getBySignature(signature, includes);
+}
+
 export const deleteById = (id: number): Promise<boolean> => {
     return dal.deleteById(id);
 }

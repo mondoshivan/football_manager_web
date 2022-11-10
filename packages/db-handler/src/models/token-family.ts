@@ -1,5 +1,6 @@
-import { DataTypes, Model, Optional } from 'sequelize'
+import { DataTypes, HasManyGetAssociationsMixin, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
+import Token from './token';
 
 interface TokenFamilyAttributes {
   id: number;
@@ -14,6 +15,8 @@ class TokenFamily extends Model<TokenFamilyAttributes, TokenFamilyInput> impleme
     // timestamps!
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
+
+    declare getTokens: HasManyGetAssociationsMixin<Token>;
   }
   
   TokenFamily.init({

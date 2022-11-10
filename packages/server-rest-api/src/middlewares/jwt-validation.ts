@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import AppHelper from '../helpers/app';
 
 export const jwtValidation = (req: express.Request, res: express.Response, next: NextFunction) => {
-    const token = AppHelper.jwtFromHeader(req.headers["authorization"]);
+    const token = AppHelper.jwtFromHeader(req);
 
     if (token) {
         try {

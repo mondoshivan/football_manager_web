@@ -1,4 +1,4 @@
 
-export interface IRefreshToken {
+export interface IRefreshTokenPayload {
     userId: number
 }

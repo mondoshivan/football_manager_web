@@ -2,7 +2,7 @@ import { Op } from 'sequelize';
 import { Token } from '../models/index';
 import { GetAllTokensFilters, IncludesFilters } from './types';
 import { TokenInput } from '../models/token';
-import { GetAllNotFoundError, IdNotFoundError } from '../error/error';
+import { GetAllNotFoundError, IdNotFoundError, NameNotFoundError } from '../error/error';
 import { getIncludes } from './data-access-layer';
 
 export const create = async (payload: TokenInput): Promise<Token> => {
@@ -30,6 +30,21 @@ export const getById = async (id: number, includes?: IncludesFilters): Promise<T
     }
 
     return entity;
+}
+
+export const getBySignature = async (signature: string, includes?: IncludesFilters): Promise<Token[]> => {
+    const entities = await Token.findAll({
+        include: getIncludes(includes),
+        where: {
+            signature
+        }
+    });
+
+    if (!entities) {
+        throw new NameNotFoundError(`entity with signature '${signature}' does not exist`);
+    }
+
+    return entities;
 }
 
 export const deleteById = async (id: number): Promise<boolean> => {

@@ -1,11 +1,18 @@
 import LocalStrategy from 'passport-local';
-import { userService } from '@football-manager/db-handler';
+import { tokenFamilyService, tokenService, userService } from '@football-manager/db-handler';
 import CryptoJS from 'crypto-js';
 import jwt from "jsonwebtoken";
 import User from '@football-manager/db-handler/src/models/user';
 import config from "../config/config";
-import { IRefreshToken } from '../interfaces/refresh-token';
+import { IRefreshTokenPayload } from '../interfaces/refresh-token';
+import { Request } from 'express';
+import Token from '@football-manager/db-handler/src/models/token';
+import { TokensDTO } from '@football-manager/data-transfer';
+import TokenFamily from '@football-manager/db-handler/src/models/token-family';
 
+export type JWTInvalidateFamilyOptions = {
+    delete: boolean       
+}
 
 class AppHelper {
 
@@ -54,7 +61,7 @@ class AppHelper {
         return AppHelper.jwt( { ...body, ...{ type: 'access'} }, options);
     }
 
-    static refreshToken(body: IRefreshToken, options?: jwt.SignOptions) {
+    static refreshToken(body: IRefreshTokenPayload, options?: jwt.SignOptions) {
         return AppHelper.jwt( { ...body, ...{ type: 'refresh'} }, options);
     }
 
@@ -74,7 +81,48 @@ class AppHelper {
         return token.split('.')[2];
     }
 
-    static jwtResponseData(user: User) {
+    static async jwtInvalidateFamily(dbToken: Token, options?: JWTInvalidateFamilyOptions): Promise<void> {
+        const tokenFamily = await dbToken.getTokenFamily();
+        const tokens = await tokenFamily.getTokens();
+
+        if (tokens) {
+            for (const token of tokens) {
+                if (options?.delete) {
+                    await tokenService.deleteById(token.id);
+                } else {
+                    token.valid = false;
+                }
+            }
+
+            if (options?.delete) {
+                tokenFamilyService.deleteById(tokenFamily.id);
+            }
+        }
+    }
+
+    static async jwtGenerateTokens(user: User, tokenFamily?: TokenFamily) {
+        // generate the response data
+        const data = AppHelper.jwtResponseData(user);
+
+        // get the token signatures
+        const refreshTokenSignature = AppHelper.jwtSignature(data.refreshToken);
+        const accessTokenSignature = AppHelper.jwtSignature(data.accessToken);
+
+        // create the token family in db 
+        if (!tokenFamily) tokenFamily = await tokenFamilyService.create({});
+
+        // create the tokens in db
+        const dbRefreshToken = await tokenService.create({ signature: refreshTokenSignature, type: 'refresh' });
+        const dbAccessToken = await tokenService.create({ signature: accessTokenSignature, type: 'access' });
+
+        // add the tokens to the family
+        dbRefreshToken.setTokenFamily(tokenFamily);
+        dbAccessToken.setTokenFamily(tokenFamily);
+
+        return data;
+    }
+
+    static jwtResponseData(user: User): TokensDTO {
         return { 
             accessToken: AppHelper.accessToken({
                 name: user.name,
@@ -99,13 +147,14 @@ class AppHelper {
         return !!jwt.verify(token, config.service.jwtSecret);
     }
 
-    static jwtFromHeader(header: string | undefined) : string | undefined{
+    static jwtFromHeader(req: Request) : string | undefined{
+        const header = req.headers["authorization"];
         if (!header) return undefined;
 
         if (/^Bearer\s+[\w-]+\.[\w-]+\.[\w-]+$/.test(header)) {
             return header.replace(/Bearer\s+/, '');
         }
-        return undefined;
+        return;
     }
 }
 

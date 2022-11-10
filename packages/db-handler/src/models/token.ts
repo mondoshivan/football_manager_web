@@ -1,4 +1,4 @@
-import { DataTypes, HasManyAddAssociationMixin, HasManyGetAssociationsMixin, Model, Optional } from 'sequelize'
+import { BelongsToGetAssociationMixin, BelongsToSetAssociationMixin, DataTypes, HasManyAddAssociationMixin, HasManyGetAssociationsMixin, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
 import TokenFamily from './token-family';
 
@@ -8,22 +8,24 @@ interface TokenAttributes {
   id: number;
   signature: string;
   type: TokenTypes;
+  valid: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
-export interface TokenInput extends Optional<TokenAttributes, 'id'> { }
+export interface TokenInput extends Optional<TokenAttributes, 'id' | 'valid'> { }
 
 class Token extends Model<TokenAttributes, TokenInput> implements TokenAttributes {
   public id!: number
   public signature!: string
   public type!: TokenTypes
+  public valid!: boolean;
 
   // timestamps!
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  declare setTokenFamily: HasManyAddAssociationMixin<TokenFamily, TokenFamily['id']>;
-  declare getTokenFamily: HasManyGetAssociationsMixin<TokenFamily>;
+  declare setTokenFamily: BelongsToSetAssociationMixin<TokenFamily, TokenFamily['id']>;
+  declare getTokenFamily: BelongsToGetAssociationMixin<TokenFamily>;
 }
 
 Token.init({
@@ -39,6 +41,11 @@ Token.init({
   type: {
     type: DataTypes.ENUM('access', 'refresh'),
     allowNull: false
+  },
+  valid: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   },
 }, {
   timestamps: true,

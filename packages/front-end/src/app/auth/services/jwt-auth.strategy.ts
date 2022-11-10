@@ -1,14 +1,14 @@
 import { Observable, of } from "rxjs";
-import { TokenDTO } from '@football-manager/data-transfer'
+import { TokensDTO } from '@football-manager/data-transfer'
 import { AuthStrategy } from "./auth.strategy";
 import { User } from "../../models/user";
 
-export class JwtAuthStrategy implements AuthStrategy<TokenDTO> {
+export class JwtAuthStrategy implements AuthStrategy<TokensDTO> {
 
   private readonly JWT_ACCESS_TOKEN = 'JWT_ACCESS_TOKEN';
   private readonly JWT_REFRESH_TOKEN = 'JWT_REFRESH_TOKEN';
 
-  doLoginUser(tokens: TokenDTO): void {
+  doLoginUser(tokens: TokensDTO): void {
     localStorage.setItem(this.JWT_ACCESS_TOKEN, tokens.accessToken);
     localStorage.setItem(this.JWT_REFRESH_TOKEN, tokens.refreshToken);
   }
@@ -37,7 +37,7 @@ export class JwtAuthStrategy implements AuthStrategy<TokenDTO> {
     return localStorage.getItem(this.JWT_REFRESH_TOKEN);
   }
 
-  getRefreshData(): TokenDTO | undefined {
+  getRefreshData(): TokensDTO | undefined {
     const access = this.getAccessToken();
     const refresh = this.getRefreshToken();
 
