@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map, Observable, of, Subject, tap } from 'rxjs';
+import { catchError, map, Observable, of, Subject, tap, throwError } from 'rxjs';
 import { authConfig } from 'src/app/core/routeConfig';
 import { LoginRequest } from 'src/app/models/login-request';
 import { AuthStrategy, AUTH_STRATEGY } from './auth.strategy';
@@ -43,12 +43,14 @@ export class AuthService {
   }
 
   login(loginRequest: LoginRequest): Observable<User> {
-    return this.http.post<any>(`${authConfig['authUrl']}/login`, loginRequest)
-      .pipe(tap(data => this.doLoginUser(data)));
+    return this.http.post(`${authConfig['authUrl']}/login`, loginRequest)
+      .pipe(tap(data => { 
+        this.doLoginUser(data) 
+      }));
   }
 
   refresh(): Observable<User> {    
-    return this.http.post<any>(`${authConfig['authUrl']}/refresh`, this.auth.getRefreshData())
+    return this.http.post(`${authConfig['authUrl']}/refresh`, this.auth.getRefreshData())
     .pipe(
       tap( data => { 
         this.doLoginUser(data) 
@@ -62,8 +64,10 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.get<any>(`${authConfig['authUrl']}/logout`)
-      .pipe(tap(() => this.doLogoutUser()));
+    return this.http.get(`${authConfig['authUrl']}/logout`)
+      .pipe(tap(() => { 
+        this.doLogoutUser()
+    }));
   }
 
   doLogoutAndRedirectToLogin() {

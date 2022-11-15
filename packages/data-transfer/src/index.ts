@@ -108,3 +108,8 @@ export type RefreshTokenDTO = {
 export type TokensDTO = RefreshTokenDTO & {
     accessToken: string
 }
+
+export type AuthResponseDTO = {
+    message: string
+    logout: boolean
+}

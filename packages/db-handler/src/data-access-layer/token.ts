@@ -40,10 +40,6 @@ export const getBySignature = async (signature: string, includes?: IncludesFilte
         }
     });
 
-    if (!entities) {
-        throw new NameNotFoundError(`entity with signature '${signature}' does not exist`);
-    }
-
     return entities;
 }
 

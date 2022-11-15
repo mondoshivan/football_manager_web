@@ -10,8 +10,6 @@ const championshipRouter = Router();
 championshipRouter.use(jwtValidation);
 
 championshipRouter.get('/', asyncHandler( async (req: Request, res: Response) => {
-    const sessionId = req.sessionID;
-    log.debug(`sessionId route: ${sessionId}`);
     const filters : FilterChampionShipDTO = req.query;
     const includes : IncludesDTO = req.query;
     const result = await championshipService.getAll(filters, includes);

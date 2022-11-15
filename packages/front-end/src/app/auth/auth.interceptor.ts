@@ -13,6 +13,7 @@ import { AuthService } from "./services/auth.service";
 import { JwtAuthStrategy } from "./services/jwt-auth.strategy";
 import { AUTH_STRATEGY } from "./services/auth.strategy";
 import { LogService } from "../services/log/log.service";
+import { AuthResponseDTO } from "@football-manager/data-transfer"
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -38,13 +39,21 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error) => {
         if (error.status === 401) {
-          return this.handle401Error(request, next);
+          const authRes = error.error as AuthResponseDTO;
+          if (authRes.logout) {
+            if (this.authService.loggedIn) {
+              this.authService.doLogoutAndRedirectToLogin();
+            }
+          } else {
+            return this.handle401Error(request, next);
+          }
         }
-        return throwError(error);
+        return throwError(() => { return error });
       })
     );
   }
 
+  // try to refresh the tokens
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     this.log.debug('401 Error');
     if (!this.isRefreshing) {
@@ -58,7 +67,8 @@ export class AuthInterceptor implements HttpInterceptor {
           this.isRefreshing = false;
           this.refreshTokenSubject.next(tokens);
           return next.handle(this.addToken(request, tokens.accessToken));
-        }));
+        })
+      );
     } else {
       this.log.debug('Refreshing is already in progress');
       return this.refreshTokenSubject.pipe(
@@ -67,7 +77,8 @@ export class AuthInterceptor implements HttpInterceptor {
         switchMap(tokens => {
           this.log.debug("waiting done");
           return next.handle(this.addToken(request, tokens.accessToken));
-        }));
+        })
+      );
     }
   }
 

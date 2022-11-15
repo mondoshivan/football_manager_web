@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { LoginRequest } from 'src/app/models/login-request';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { formConfig } from '../../config/form';
+import { AuthResponseDTO } from '@football-manager/data-transfer';
+import { catchError, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +27,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: [
-        '', 
+        '',
         [
           Validators.required,
           Validators.email
@@ -40,20 +43,23 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  get f() { return this.loginForm.controls; }
+  get loginFormControls() { return this.loginForm.controls; }
 
   login() {
     const loginRequest: LoginRequest = {
-      email: this.f['email'].value,
-      password: this.f['password'].value
+      email: this.loginFormControls['email'].value,
+      password: this.loginFormControls['password'].value
     };
 
-    this.authService.login(loginRequest).subscribe(
-      (user) => this.router.navigate([this.authService.INITIAL_PATH]),
-      (error) => {
-        this.errorMessage = error.error;
-      }
-    );
+    this.authService.login(loginRequest).subscribe({
+      error: (error: HttpErrorResponse) => {
+        const authResponse = error.error as AuthResponseDTO;
+        this.errorMessage = authResponse.message;
+      },
+      complete: () => { 
+        this.router.navigate([this.authService.INITIAL_PATH]) 
+      },
+    });
   }
 
 }

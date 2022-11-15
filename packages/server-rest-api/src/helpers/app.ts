@@ -1,67 +1,28 @@
-import LocalStrategy from 'passport-local';
-import { tokenFamilyService, tokenService, userService } from '@football-manager/db-handler';
-import CryptoJS from 'crypto-js';
+import { tokenFamilyService, tokenService } from '@football-manager/db-handler';
 import jwt from "jsonwebtoken";
 import User from '@football-manager/db-handler/src/models/user';
 import config from "../config/config";
 import { IRefreshTokenPayload } from '../interfaces/refresh-token';
 import { Request } from 'express';
 import Token from '@football-manager/db-handler/src/models/token';
-import { TokensDTO } from '@football-manager/data-transfer';
+import { AuthResponseDTO, TokensDTO } from '@football-manager/data-transfer';
 import TokenFamily from '@football-manager/db-handler/src/models/token-family';
 
 export type JWTInvalidateFamilyOptions = {
     delete: boolean       
 }
 
+export type JWTAuthErrorOptions = {
+    logout: boolean
+}
+
 class AppHelper {
 
-    static serializeUser(user: User, done: (err: any, id?: unknown) => void) {
-        done(null, user.id); 
-    }
-
-    static deserializeUser(
-        id: number, 
-        done: (err: any, user?: false | Express.User | null | undefined) => void
-    ) {
-        userService.getById(id).then((user) => {
-            if (!user) done(new Error('could not find user'));
-
-            done(null, user);
-        }).catch((error) => {
-            done(error, false);
-        });
-    }
-
-    static passportStrategy(
-        email: string,
-        password: string,
-        cb: (error: any, user?: any, options?: LocalStrategy.IVerifyOptions | undefined) => void
-    ) {
-        userService.getAll({ email: email}).then((users) => {
-            if (users.length !== 1) return cb(new Error('Multiple occurrences'));
-
-            const user = users[0];
-
-            if (!user) return cb(new Error('Incorrect email or password'));
-
-            const hash = CryptoJS.SHA256(`${password}${user.salt}`).toString();
-
-            if (user.password !== hash) return cb(null, false, { 
-                message: 'Incorrect username or password.' 
-            });
-
-            return cb(null, user);
-        }).catch((error) => {
-            return cb(error);
-        });
-    }
-
-    static accessToken(body: any, options?: jwt.SignOptions) {
+    static jwtAccessToken(body: any, options?: jwt.SignOptions) {
         return AppHelper.jwt( { ...body, ...{ type: 'access'} }, options);
     }
 
-    static refreshToken(body: IRefreshTokenPayload, options?: jwt.SignOptions) {
+    static jwtRefreshToken(body: IRefreshTokenPayload, options?: jwt.SignOptions) {
         return AppHelper.jwt( { ...body, ...{ type: 'refresh'} }, options);
     }
 
@@ -77,8 +38,10 @@ class AppHelper {
         );
     }
 
-    static jwtSignature(token: string): string {
-        return token.split('.')[2];
+    static jwtSignature(token: string): string | undefined {
+        if (!token) return;
+        const splitted = token.split('.');
+        return splitted[2];
     }
 
     static async jwtInvalidateFamily(dbToken: Token, options?: JWTInvalidateFamilyOptions): Promise<void> {
@@ -91,6 +54,7 @@ class AppHelper {
                     await tokenService.deleteById(token.id);
                 } else {
                     token.valid = false;
+                    token.save();
                 }
             }
 
@@ -112,8 +76,8 @@ class AppHelper {
         if (!tokenFamily) tokenFamily = await tokenFamilyService.create({});
 
         // create the tokens in db
-        const dbRefreshToken = await tokenService.create({ signature: refreshTokenSignature, type: 'refresh' });
-        const dbAccessToken = await tokenService.create({ signature: accessTokenSignature, type: 'access' });
+        const dbRefreshToken = await tokenService.create({ signature: refreshTokenSignature!, type: 'refresh' });
+        const dbAccessToken = await tokenService.create({ signature: accessTokenSignature!, type: 'access' });
 
         // add the tokens to the family
         dbRefreshToken.setTokenFamily(tokenFamily);
@@ -124,14 +88,14 @@ class AppHelper {
 
     static jwtResponseData(user: User): TokensDTO {
         return { 
-            accessToken: AppHelper.accessToken({
+            accessToken: AppHelper.jwtAccessToken({
                 name: user.name,
                 email: user.email,
                 role: user.role,
                 id: user.id,
                 confirmed: user.confirmed
             }),
-            refreshToken: AppHelper.refreshToken({
+            refreshToken: AppHelper.jwtRefreshToken({
                 userId: user.id
             }, { 
                 expiresIn: 60 * 60 * 24
@@ -155,6 +119,13 @@ class AppHelper {
             return header.replace(/Bearer\s+/, '');
         }
         return;
+    }
+
+    static jwtAuthResponse(message: string, options?: JWTAuthErrorOptions ): AuthResponseDTO {
+        return {
+            message: message,
+            logout: !!options?.logout
+        };
     }
 }
 
