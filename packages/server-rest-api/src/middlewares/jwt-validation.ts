@@ -15,7 +15,7 @@ export const jwtValidation = async (req: express.Request, res: express.Response,
 
         if (!signature) {
             log.debug('jwtValidation: could not find refresh token via signature');
-            res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid', { logout: true }));
+            res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid'));
             return;
         }
 
@@ -25,7 +25,7 @@ export const jwtValidation = async (req: express.Request, res: express.Response,
         // token does not exist
         if (!dbToken) {
             log.debug('jwtValidation: could not find refresh token via signature');
-            res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid', { logout: true }));
+            res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid'));
             return;
         }
 
@@ -33,7 +33,7 @@ export const jwtValidation = async (req: express.Request, res: express.Response,
         if (!dbToken.valid) {
             log.debug('jwtValidation: access token is invalid. removing the whole family now.');
             await AppHelper.jwtInvalidateFamily(dbToken, { delete: true });
-            res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid', { logout: true }));
+            res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid'));
             return;
         }
 
@@ -41,9 +41,9 @@ export const jwtValidation = async (req: express.Request, res: express.Response,
             AppHelper.jwtValid(jwt);
             next();
         } catch (error) {
-            res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid', { logout: true }));
+            res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid'));
         }
     } else {
-        res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid', { logout: true }));
+        res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid'));
     }
 }

@@ -12,10 +12,6 @@ export type JWTInvalidateFamilyOptions = {
     delete: boolean       
 }
 
-export type JWTAuthErrorOptions = {
-    logout: boolean
-}
-
 class AppHelper {
 
     static jwtAccessToken(body: any, options?: jwt.SignOptions) {
@@ -121,10 +117,9 @@ class AppHelper {
         return;
     }
 
-    static jwtAuthResponse(message: string, options?: JWTAuthErrorOptions ): AuthResponseDTO {
+    static jwtAuthResponse(message: string ): AuthResponseDTO {
         return {
-            message: message,
-            logout: !!options?.logout
+            message: message
         };
     }
 }

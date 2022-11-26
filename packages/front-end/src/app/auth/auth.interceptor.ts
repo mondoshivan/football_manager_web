@@ -39,14 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error) => {
         if (error.status === 401) {
-          const authRes = error.error as AuthResponseDTO;
-          if (authRes.logout) {
-            if (this.authService.loggedIn) {
-              this.authService.doLogoutAndRedirectToLogin();
-            }
-          } else {
-            return this.handle401Error(request, next);
-          }
+          return this.handle401Error(request, next);
         }
         return throwError(() => { return error });
       })
@@ -62,6 +55,12 @@ export class AuthInterceptor implements HttpInterceptor {
       this.refreshTokenSubject.next(null);
 
       return this.authService.refresh().pipe(
+        catchError((error, caught) => {
+          if (this.authService.loggedIn) {
+            this.authService.doLogoutAndRedirectToLogin();
+          }
+          return caught;
+        }),
         switchMap((tokens: any) => {
           this.log.debug('New set of tokens received');
           this.isRefreshing = false;

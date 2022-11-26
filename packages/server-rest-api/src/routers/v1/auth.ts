@@ -57,7 +57,7 @@ authRouter.post('/refresh', asyncHandler( async (req: Request, res: Response) =>
 
     if (!signature) {
         log.debug('/refresh: could not find refresh token via signature');
-        res.status(401).json( AppHelper.jwtAuthResponse('refresh token is invalid', { logout: true }));
+        res.status(401).json( AppHelper.jwtAuthResponse('refresh token is invalid'));
         return;
     }
 
@@ -66,7 +66,7 @@ authRouter.post('/refresh', asyncHandler( async (req: Request, res: Response) =>
     // token does not exist
     if (!dbRefreshToken) {
         log.debug('/refresh: could not find refresh token via signature');
-        res.status(401).json( AppHelper.jwtAuthResponse('refresh token is invalid', { logout: true }));
+        res.status(401).json( AppHelper.jwtAuthResponse('refresh token is invalid'));
         return;
     }
 
@@ -74,7 +74,7 @@ authRouter.post('/refresh', asyncHandler( async (req: Request, res: Response) =>
     if (!dbRefreshToken.valid) {
         log.debug('/refresh: refresh token is invalid. removing the whole family now.');
         await AppHelper.jwtInvalidateFamily(dbRefreshToken, { delete: true });
-        res.status(401).json( AppHelper.jwtAuthResponse('refresh token is invalid', { logout: true }));
+        res.status(401).json( AppHelper.jwtAuthResponse('refresh token is invalid'));
         return;
     }
 
@@ -85,7 +85,7 @@ authRouter.post('/refresh', asyncHandler( async (req: Request, res: Response) =>
     } catch (error) {
         log.debug('/refresh: refresh token could not be verified: ', error);
         await AppHelper.jwtInvalidateFamily(dbRefreshToken);
-        res.status(401).json( AppHelper.jwtAuthResponse('refresh token is invalid', { logout: true }));
+        res.status(401).json( AppHelper.jwtAuthResponse('refresh token is invalid'));
         return;
     }
 

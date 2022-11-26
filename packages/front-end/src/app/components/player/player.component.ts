@@ -13,6 +13,8 @@ import { playerHelper } from '@football-manager/helper';
 export class PlayerComponent implements OnInit, OnDestroy {
 
   player? : PlayerDTO;
+  avgPhysical = 0;
+  avgMental = 0;
 
   routeSubscription? : Subscription;
 
@@ -40,6 +42,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
         // success response
         async (player) => {
           this.player = player;
+          this.avgMental = this.avg('mental');
+          this.avgPhysical = this.avg('physical');
         },
 
         // error response

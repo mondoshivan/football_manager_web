@@ -1,22 +1,22 @@
-<div class="row">
+<div *ngIf="player" class="row">
     <div class="col">
         <app-player-menu 
-            [firstName]="player?.firstName"
-            [secondName]="player?.secondName"
+            [firstName]="player.firstName"
+            [secondName]="player.secondName"
         ></app-player-menu>
     </div>
 </div>
 
-<div class="row my-3">
+<div *ngIf="player" class="row my-3">
     <div class="col">
         <p>Age: {{playerAge()}}</p>
-        <p>Height: {{player?.height}} cm</p>
+        <p>Height: {{player.height}} cm</p>
     </div>
 </div>
 
-<div class="row my-3">
+<div *ngIf="player" class="row my-3">
     <div class="col">
-        <h2>Physical <small class="text-muted">({{avg('physical') | number: '1.0-0'}})</small></h2>
+        <h2>Physical <small class="text-muted">({{avgPhysical | number: '1.0-0'}})</small></h2>
         <table class="table">
             <tbody>
                 <ng-container class="col" *ngFor="let skill of player?.Skills">
@@ -35,7 +35,7 @@
     </div>
     
     <div class="col">
-        <h2>Mental <small class="text-muted">({{avg('mental') | number: '1.0-0'}})</small></h2>
+        <h2>Mental <small class="text-muted">({{avgMental | number: '1.0-0'}})</small></h2>
         <table class="table">
             <tbody>
                 <ng-container class="col" *ngFor="let skill of player?.Skills">
