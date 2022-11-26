@@ -11,6 +11,7 @@
           aria-describedby="emailHelp" 
           placeholder="Email" 
           formControlName="email"
+          (keydown.enter)="login()"
           required
         >
       </div>
@@ -22,6 +23,7 @@
           id="password" 
           placeholder="Password" 
           formControlName="password"
+          (keydown.enter)="login()"
           required
         >
       </div>
