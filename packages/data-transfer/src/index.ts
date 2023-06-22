@@ -1,3 +1,4 @@
+
 export type IncludesDTO = {
     includeAll?: boolean;
     includeNested?: boolean;
@@ -38,6 +39,18 @@ export type FormationDTO = {
     forward: number;
 }
 
+export type OccurrenceDTO = {
+    id: number;
+    type: string;
+    date: Date;
+}
+
+export type CalendarDTO = {
+    id: number;
+    type: string;
+    Occurrences: OccurrenceDTO[];
+}
+
 export type CreateFormationDTO = {
     name: string;
     description: string;
@@ -48,6 +61,7 @@ export type CreateFormationDTO = {
 
 export type TeamDTO = {
     id: number;
+    Calendars?: CalendarDTO[];
     Formation?: FormationDTO;
     name: string;
     Players?: PlayerDTO[];
@@ -59,12 +73,22 @@ export type ChampionshipDTO = {
     Teams?: TeamDTO[];
 }
 
+export type AppDTO = {
+    id: number;
+    start: Date;
+    day: Date;
+}
+
 export type CreateChampionShipDTO = {
     name: string;
 }
 
 export type FilterFormationDTO = FilterDTO & {
     
+}
+
+export type FilterAppDTO = FilterDTO & {
+    id?: number;
 }
 
 export type FilterChampionShipDTO = FilterDTO & {

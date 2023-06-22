@@ -1,16 +1,16 @@
 import * as formationDal from '../data-access-layer/formation'
 import {GetAllFormationFilters, IncludesFilters} from '../data-access-layer/types'
-import Formation, {FormationInput} from '../models/formation'
+import Formation, {FormationCreationAttributes} from '../models/formation'
 
-export const create = async (payload: FormationInput): Promise<Formation> => {    
+export const create = async (payload: FormationCreationAttributes): Promise<Formation> => {    
     return formationDal.create(payload);
 }
 
-export const findOrCreate = async (payload: FormationInput, includes?: IncludesFilters): Promise<Formation> => {    
+export const findOrCreate = async (payload: FormationCreationAttributes, includes?: IncludesFilters): Promise<Formation> => {    
     return formationDal.findOrCreate(payload, includes);
 }
 
-export const update = async (id: number, payload: Partial<FormationInput>): Promise<Formation> => {    
+export const update = async (id: number, payload: Partial<FormationCreationAttributes>): Promise<Formation> => {    
     return formationDal.update(id, payload)
 }
 

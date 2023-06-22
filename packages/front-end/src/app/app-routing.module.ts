@@ -8,11 +8,17 @@ import { TeamComponent } from './components/team/team.component';
 import { AccountComponent } from './components/account/account.component';
 import { AppGuard } from './auth/guards/app.guard';
 import { IndexComponent } from './components/index/index.component';
+import { RechenschieberComponent } from './components/rechenschieber/rechenschieber.component';
 
 const routes: Routes = [
   {
     path: '', 
     component: IndexComponent
+  },
+  {
+    path: 'rechenschieber', 
+    component: RechenschieberComponent,
+    canActivate: []
   },
   {
     path: 'championships', 

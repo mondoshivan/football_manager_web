@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col">
+        {{ app!.day | date: 'mediumDate'}}
+    </div>
+    <div class="col">
+        <div class="d-flex flex-row-reverse">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary">{{calendar}}</button>
+                <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                        <button ngbDropdownItem (click)="onCalendarChange('all')">All</button>
+                        <button ngbDropdownItem *ngFor="let c of calendarList" (click)="onCalendarChange(c.type)">{{c.type | titlecase}}</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group mx-3" role="group" aria-label="Calendar View">
+                <input 
+                    id="view-week" 
+                    class="btn-check" 
+                    type="radio" 
+                    name="view" 
+                    autocomplete="off" 
+                    value="week" 
+                    (change)="onViewChange($event)" 
+                    checked 
+                />
+                <label class="btn btn-outline-primary" for="view-week">Week</label>
+    
+                <input 
+                    id="view-month" 
+                    class="btn-check" 
+                    type="radio" 
+                    name="view" 
+                    autocomplete="off" 
+                    value="month" 
+                    (change)="onViewChange($event)"  
+                />
+                <label class="btn btn-outline-primary" for="view-month">Month</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="my-3">
+    <div *ngIf="view === 'week'" class="row">
+
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">Mon</th>
+                  <th scope="col">Tue</th>
+                  <th scope="col">Wec</th>
+                  <th scope="col">Thu</th>
+                  <th scope="col">Fri</th>
+                  <th scope="col">Sat</th>
+                  <th scope="col">Sun</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr></tr>
+            </tbody>
+        </table>
+    
+    </div>
+    
+    <div *ngIf="view === 'month'"  class="row">
+    
+    </div>
+</div>

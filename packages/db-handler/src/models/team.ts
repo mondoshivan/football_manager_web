@@ -1,7 +1,7 @@
 import { BelongsToCreateAssociationMixin, BelongsToManyAddAssociationMixin, DataTypes, HasManyAddAssociationMixin, HasManySetAssociationsMixin, HasOneSetAssociationMixin, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import sequelizeConnection from '../connection'
 import Calendar from './calendar';
-import Championship, { ChampionshipInput } from './championship';
+import Championship, { ChampionshipCreationAttributes } from './championship';
 import Formation from './formation';
 import Player from './player';
 

@@ -34,8 +34,10 @@ export const update = async (id: number, payload: Partial<TeamInput>): Promise<T
 }
 
 export const getById = async (id: number, includes?: IncludesFilters): Promise<Team> => {
+    const includeList = getIncludes(includes);
+
     const team = await Team.findByPk(id, {
-        include: getIncludes(includes),
+        include: includeList,
     });
 
     if (!team) {

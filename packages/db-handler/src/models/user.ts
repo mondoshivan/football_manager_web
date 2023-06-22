@@ -1,6 +1,6 @@
 import Utils from '@football-manager/utils';
 import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import sequelizeConnection from '../connection'
 
 export type RoleTypes = 'user' | 'admin';
 

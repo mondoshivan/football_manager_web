@@ -1,5 +1,5 @@
 import { DataTypes, HasManyGetAssociationsMixin, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import sequelizeConnection from '../connection'
 import Token from './token';
 
 interface TokenFamilyAttributes {

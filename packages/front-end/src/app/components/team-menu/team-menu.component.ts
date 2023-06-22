@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-team-menu',
@@ -8,10 +8,18 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TeamMenuComponent implements OnInit {
 
   @Input() name: any;
+
+  selectedMenuItem = 'players';
+  @Output() selected = new EventEmitter<string>();
   
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onSelection(selected: string) {
+    this.selectedMenuItem = selected;
+    this.selected.emit(selected);
   }
 
 }

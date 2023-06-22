@@ -1,5 +1,5 @@
 import { Association, DataTypes, HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManySetAssociationsMixin, Model, NonAttribute, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import sequelizeConnection from '../connection'
 
 export type SkillTypes = 'physical' | 'mental';
 

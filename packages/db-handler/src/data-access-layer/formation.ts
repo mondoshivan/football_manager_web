@@ -3,15 +3,15 @@ import {isEmpty} from 'lodash'
 
 import {Formation} from '../models'
 import {GetAllFormationFilters, IncludesFilters} from './types'
-import {FormationInput} from '../models/formation'
+import {FormationCreationAttributes} from '../models/formation'
 import { GetAllNotFoundError, IdNotFoundError, NameNotFoundError } from '../error/error'
 import { getIncludes } from './data-access-layer'
 
-export const create = async (payload: FormationInput): Promise<Formation> => {
+export const create = async (payload: FormationCreationAttributes): Promise<Formation> => {
     return await Formation.create(payload);
 }
 
-export const findOrCreate = async (payload: FormationInput, includes?: IncludesFilters): Promise<Formation> => {
+export const findOrCreate = async (payload: FormationCreationAttributes, includes?: IncludesFilters): Promise<Formation> => {
     const [one] = await Formation.findOrCreate({
         include: getIncludes(includes),
         where: {
@@ -23,7 +23,7 @@ export const findOrCreate = async (payload: FormationInput, includes?: IncludesF
     return one;
 }
 
-export const update = async (id: number, payload: Partial<FormationInput>): Promise<Formation> => {
+export const update = async (id: number, payload: Partial<FormationCreationAttributes>): Promise<Formation> => {
     const one = await Formation.findByPk(id);
 
     if (!one) {

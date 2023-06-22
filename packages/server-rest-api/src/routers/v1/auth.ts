@@ -56,7 +56,7 @@ authRouter.post('/refresh', asyncHandler( async (req: Request, res: Response) =>
     const signature = AppHelper.jwtSignature(payload.refreshToken);
 
     if (!signature) {
-        log.debug('/refresh: could not find refresh token via signature');
+        log.debug('/refresh: could not extract signature from refresh troken');
         res.status(401).json( AppHelper.jwtAuthResponse('refresh token is invalid'));
         return;
     }

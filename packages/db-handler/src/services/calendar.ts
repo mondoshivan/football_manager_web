@@ -1,12 +1,12 @@
 import * as calendarDal from '../data-access-layer/calendar'
 import {GetAllCalendarFilters, IncludesFilters} from '../data-access-layer/types'
-import Calendar, {CalendarInput} from '../models/calendar'
+import Calendar, {CalendarCreationAttributes} from '../models/calendar'
 
-export const create = async (payload: CalendarInput): Promise<Calendar> => {    
+export const create = async (payload: CalendarCreationAttributes): Promise<Calendar> => {    
     return calendarDal.create(payload);
 }
 
-export const update = async (id: number, payload: Partial<CalendarInput>): Promise<Calendar> => {    
+export const update = async (id: number, payload: Partial<CalendarCreationAttributes>): Promise<Calendar> => {    
     return calendarDal.update(id, payload)
 }
 

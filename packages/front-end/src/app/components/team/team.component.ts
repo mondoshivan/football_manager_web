@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
-import { FormationDTO, IncludesDTO, PlayerDTO, TeamDTO } from '@football-manager/data-transfer';
+import { CalendarDTO, FormationDTO, IncludesDTO, PlayerDTO, TeamDTO } from '@football-manager/data-transfer';
 import { RestApiService } from 'src/app/services/rest-api/rest-api.service';
 import { Subscription } from 'rxjs';
 import { playerHelper } from '@football-manager/helper';
@@ -15,6 +15,9 @@ export class TeamComponent implements AfterViewInit, OnInit, OnDestroy {
 
   team?: TeamDTO;
   formations?: FormationDTO[];
+  loaded = true;
+  menuSelection = 'players';
+  calendarList: CalendarDTO[] = [];
 
   routeSubscription? : Subscription;
 
@@ -71,13 +74,13 @@ export class TeamComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getFormations();
-    this.getTeam();
   }
 
   async ngAfterViewInit() {
     this.tableDataSource.onChanged().subscribe(async (change) => {
       this.table.grid.dataSet.deselectAll();
     });
+    this.getTeam();
   }
 
   ngOnDestroy(): void {
@@ -89,12 +92,12 @@ export class TeamComponent implements AfterViewInit, OnInit, OnDestroy {
     this.routeSubscription = this.route.params.subscribe(params => {
 
       // get the data via id
-      const includes : IncludesDTO = { includeAll: true, includeNested: true };
-      this.restApiService.team(params['id'], includes).subscribe(
+      this.restApiService.teamPlayersSkills(params['id']).subscribe(
 
         // success response
         async (team) => {
           this.team = team;
+          this.loaded = true;
           await this.loadTable(team);
         },
 
@@ -155,5 +158,21 @@ export class TeamComponent implements AfterViewInit, OnInit, OnDestroy {
 
   onMouseOver(event: any) {
 
+  }
+
+  onMenuSelection(selected: string) {
+    this.menuSelection = selected;
+
+    if (selected === 'calendar') {
+      this.getCalendars();
+    }
+  }
+
+  getCalendars() {
+    this.restApiService.teamCalendars(this.team!.id).subscribe({
+      next: (team) => {
+        this.calendarList = team.Calendars!;
+      }
+    });
   }
 }

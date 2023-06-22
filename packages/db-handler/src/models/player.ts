@@ -1,5 +1,5 @@
 import { Association, BelongsToManyAddAssociationMixin, DataTypes, HasManyAddAssociationMixin, HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManySetAssociationsMixin, Model, NonAttribute, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import sequelizeConnection from '../connection'
 import { PlayerSkillAttributes } from './player_skill';
 import Skill from './skill';
 import Team, { TeamInput } from './team';

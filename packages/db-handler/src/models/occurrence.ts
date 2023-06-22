@@ -1,49 +1,29 @@
-import { BelongsToManyAddAssociationMixin, DataTypes, HasManySetAssociationsMixin, Model, NonAttribute, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
-import Skill from './skill';
-import Team, { TeamInput } from './team';
+import { Optional } from 'sequelize';
+import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
 export type OccurrenceTypes = 'game' | 'training' | 'payday';
 
-interface OccurrenceAttributes {
-    id: number;
-    type: OccurrenceTypes;
-    date: Date;
-    createdAt?: Date;
-    updatedAt?: Date;
-    deletedAt?: Date;
+type OccurrenceAttributes = {
+  id: number
+  type: OccurrenceTypes
+  date: Date
 }
-export interface OccurrenceInput extends Optional<OccurrenceAttributes, 'id'> {}
+export type OccurrenceCreationAttributes = Optional<OccurrenceAttributes, 'id'>
 
-class Occurrence extends Model<OccurrenceAttributes, OccurrenceInput> implements OccurrenceAttributes {
-    public id!: number
-    public type!: OccurrenceTypes
-    public date!: Date;
+@Table({ timestamps: true })
+export class Occurrence extends Model<OccurrenceAttributes, OccurrenceCreationAttributes> implements OccurrenceAttributes {
 
-    // timestamps!
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-    public readonly deletedAt!: Date;
+  @PrimaryKey
+  @AutoIncrement
+  @Unique
+  @Column
+  override id!: number
+
+  @Column
+  @AllowNull(false)
+  public type!: OccurrenceTypes
+
+  @Column
+  @AllowNull(false)
+  public date!: Date;
 }
-
-Occurrence.init({
-    id: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    type: {
-        type: DataTypes.ENUM('game', 'training', 'payday'),
-        allowNull: false
-    },
-    date: {
-        type: DataTypes.DATE,
-        allowNull: false
-    }
-}, {
-    timestamps: true,
-    sequelize: sequelizeConnection,
-    paranoid: true
-})
-
-export default Occurrence

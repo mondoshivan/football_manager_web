@@ -1,5 +1,5 @@
 import { championshipService, teamService } from "@football-manager/db-handler";
-import { ChampionshipInput } from "@football-manager/db-handler/src/models/championship";
+import { ChampionshipCreationAttributes } from "@football-manager/db-handler/src/models/championship";
 import { readFileSync } from "fs";
 
 export const initChampionchipTeams = async (resource: string) => {

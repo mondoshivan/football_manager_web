@@ -14,7 +14,7 @@ export const jwtValidation = async (req: express.Request, res: express.Response,
         const signature = AppHelper.jwtSignature(jwt);
 
         if (!signature) {
-            log.debug('jwtValidation: could not find refresh token via signature');
+            log.debug('jwtValidation: could not extract signature from access token');
             res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid'));
             return;
         }
@@ -24,7 +24,7 @@ export const jwtValidation = async (req: express.Request, res: express.Response,
 
         // token does not exist
         if (!dbToken) {
-            log.debug('jwtValidation: could not find refresh token via signature');
+            log.debug('jwtValidation: could not find access token via signature');
             res.status(401).json( AppHelper.jwtAuthResponse('access token is invalid'));
             return;
         }

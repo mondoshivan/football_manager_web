@@ -1,5 +1,5 @@
 import { BelongsToGetAssociationMixin, BelongsToSetAssociationMixin, DataTypes, HasManyAddAssociationMixin, HasManyGetAssociationsMixin, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import sequelizeConnection from '../connection'
 import TokenFamily from './token-family';
 
 export type TokenTypes = 'access' | 'refresh';

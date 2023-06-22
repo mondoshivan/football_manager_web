@@ -1,44 +1,27 @@
-import { BelongsToCreateAssociationMixin, BelongsToManyAddAssociationMixin, DataTypes, HasManyAddAssociationMixin, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
-import Occurrence from './occurrence';
+import { Optional } from 'sequelize'
+import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
 export type CalendarTypes = 'championship' | 'team' | 'player';
 
-interface CalendarAttributes {
-    id: number;
-    type: CalendarTypes;
-    createdAt?: Date;
-    updatedAt?: Date;
-    deletedAt?: Date;
-}
-export interface CalendarInput extends Optional<CalendarAttributes, 'id'> { }
-
-class Calendar extends Model<CalendarAttributes, CalendarInput> implements CalendarAttributes {
-    public id!: number;
-    public type!: CalendarTypes;
-
-    // timestamps!
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-    public readonly deletedAt!: Date;
-
-    declare addOccurrence: HasManyAddAssociationMixin<Occurrence, Occurrence['id']>;
+type CalendarAttributes = {
+  id: number
+  type: CalendarTypes
 }
 
-Calendar.init({
-    id: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    type: {
-        type: DataTypes.ENUM('championship', 'team', 'player'),
-        allowNull: false
-    }
-}, {
-    timestamps: true,
-    sequelize: sequelizeConnection,
-    paranoid: true
-});
+export type CalendarCreationAttributes = Optional<CalendarAttributes, 'id'>
 
-export default Calendar;
+@Table({ timestamps: true })
+export class Calendar extends Model<CalendarAttributes, CalendarCreationAttributes> implements CalendarAttributes {
+
+  @PrimaryKey
+  @AutoIncrement
+  @Unique
+  @Column
+  override id!: number;
+
+  @Column
+  @AllowNull(false)
+  public type!: CalendarTypes;
+
+  // declare addOccurrence: HasManyAddAssociationMixin<Occurrence, Occurrence['id']>;
+}

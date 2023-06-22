@@ -23,6 +23,34 @@ teamRouter.get('/:id', asyncHandler( async (req: Request, res: Response) => {
     res.status(200).json(result);
 }));
 
+teamRouter.get('/:id/players', asyncHandler( async (req: Request, res: Response) => {
+    const query = req.params as GetByIdDTO;
+    const includes = { includeByName: 'Player' };
+    const result = await teamService.getById(query.id!, includes);
+    res.status(200).json(result);
+}));
+
+teamRouter.get('/:id/players/skills', asyncHandler( async (req: Request, res: Response) => {
+    const query = req.params as GetByIdDTO;
+    const includes = { 
+        includeNestedByName: [{
+            name: 'Player',
+            includes: [{
+                name: 'Skill'
+            }]
+        }]
+    };
+    const result = await teamService.getById(query.id!, includes);
+    res.status(200).json(result);
+}));
+
+teamRouter.get('/:id/calendars', asyncHandler( async (req: Request, res: Response) => {
+    const query = req.params as GetByIdDTO;
+    const includes = { includeByName: 'Calendar' };
+    const result = await teamService.getById(query.id!, includes);
+    res.status(200).json(result);
+}));
+
 teamRouter.post('/formation', asyncHandler( async (req: Request, res: Response) => {
     const payload:UpdateTeamFormationDTO = req.body;
     const team = await teamService.getById(payload.teamId, { includeByName: 'Formation' });

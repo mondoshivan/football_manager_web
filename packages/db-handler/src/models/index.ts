@@ -1,8 +1,8 @@
-import Calendar from './calendar';
-import Championship from './championship';
+import { Calendar } from './calendar';
+import { Championship } from './championship';
 import Occurrence from './occurrence';
-import Formation from './formation';
-import Game from './game';
+import { Formation } from './formation';
+import { App } from './app';
 import Team from './team';
 import Player from './player';
 import Skill from './skill';
@@ -45,11 +45,11 @@ Team.belongsToMany(Championship, {
 });
 
 export {
+  App,
   Calendar,
   Championship,
   Occurrence,
   Formation,
-  Game,
   Player,
   PlayerSkill,
   Token,

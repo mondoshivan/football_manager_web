@@ -1,7 +1,7 @@
 import "reflect-metadata"; // needed for ts-convict
 
 import { mkdirSync, writeFileSync } from "fs";
-import sequelizeConnection from './config';
+import sequelizeConnection from './connection';
 import config from "./config/config";
 import sequelizeErd from 'sequelize-erd';
 import { dbInit } from "./index";

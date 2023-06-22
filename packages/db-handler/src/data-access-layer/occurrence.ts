@@ -2,15 +2,15 @@ import {Op} from 'sequelize'
 
 import { Occurrence } from '../models/index'
 import { GetAllOccurrenceFilters, IncludesFilters } from './types'
-import { OccurrenceInput } from '../models/occurrence'
+import { OccurrenceCreationAttributes } from '../models/occurrence'
 import { GetAllNotFoundError, IdNotFoundError, NameNotFoundError } from '../error/error'
 import { getIncludes } from './data-access-layer'
 
-export const create = async (payload: OccurrenceInput): Promise<Occurrence> => {
+export const create = async (payload: OccurrenceCreationAttributes): Promise<Occurrence> => {
     return await Occurrence.create(payload);
 }
 
-export const update = async (id: number, payload: Partial<OccurrenceInput>): Promise<Occurrence> => {
+export const update = async (id: number, payload: Partial<OccurrenceCreationAttributes>): Promise<Occurrence> => {
     const player = await Occurrence.findByPk(id);
 
     if (!player) {

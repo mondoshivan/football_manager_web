@@ -1,63 +1,43 @@
-import { DataTypes, HasManyAddAssociationMixin, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import { Optional } from 'sequelize';
+import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
-interface FormationAttributes {
+type FormationAttributes = {
   id: number;
   name: string;
   description: string;
   defender: number;
   midfielder: number;
   forward: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
 }
-export interface FormationInput extends Optional<FormationAttributes, 'id'> {}
 
-class Formation extends Model<FormationAttributes, FormationInput> implements FormationAttributes {
-    public id!: number
-    public name!: string
-    public description!: string;
-    public defender!: number;
-    public midfielder!: number;
-    public forward!: number;
+export type FormationCreationAttributes = Optional<FormationAttributes, 'id'>
+
+@Table({ timestamps: true })
+export class Formation extends Model<FormationAttributes, FormationCreationAttributes> implements FormationAttributes {
   
-    // timestamps!
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-    public readonly deletedAt!: Date;
-  }
+  @PrimaryKey
+  @AutoIncrement
+  @Unique
+  @Column
+  override id!: number
   
-  Formation.init({
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    description: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      defender: {
-        type: DataTypes.TINYINT,
-        allowNull: false,
-      },
-      midfielder: {
-        type: DataTypes.TINYINT,
-        allowNull: false,
-      },
-      forward: {
-        type: DataTypes.TINYINT,
-        allowNull: false,
-      },
-  }, {
-    timestamps: true,
-    sequelize: sequelizeConnection,
-    paranoid: true
-  });
-  
-  export default Formation
+  @Column
+  @AllowNull(false)
+  public name!: string
+
+  @Column
+  @AllowNull(false)
+  public description!: string;
+
+  @Column
+  @AllowNull(false)
+  public defender!: number;
+
+  @Column
+  @AllowNull(false)
+  public midfielder!: number;
+
+  @Column
+  @AllowNull(false)
+  public forward!: number;
+}
