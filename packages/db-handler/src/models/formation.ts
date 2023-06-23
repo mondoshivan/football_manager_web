@@ -2,7 +2,6 @@ import { Optional } from 'sequelize';
 import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
 type FormationAttributes = {
-  id: number;
   name: string;
   description: string;
   defender: number;
@@ -10,7 +9,7 @@ type FormationAttributes = {
   forward: number;
 }
 
-export type FormationCreationAttributes = Optional<FormationAttributes, 'id'>
+export type FormationCreationAttributes = FormationAttributes;
 
 @Table({ timestamps: true })
 export class Formation extends Model<FormationAttributes, FormationCreationAttributes> implements FormationAttributes {

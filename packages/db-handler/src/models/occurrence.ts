@@ -1,17 +1,19 @@
-import { Optional } from 'sequelize';
-import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { AllowNull, AutoIncrement, BelongsTo, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { Calendar } from '.';
 
 export type OccurrenceTypes = 'game' | 'training' | 'payday';
 
 type OccurrenceAttributes = {
-  id: number
   type: OccurrenceTypes
   date: Date
 }
-export type OccurrenceCreationAttributes = Optional<OccurrenceAttributes, 'id'>
+export type OccurrenceCreationAttributes = OccurrenceAttributes
 
 @Table({ timestamps: true })
 export class Occurrence extends Model<OccurrenceAttributes, OccurrenceCreationAttributes> implements OccurrenceAttributes {
+
+  @BelongsTo(() => Calendar)
+  calendar!: Calendar;
 
   @PrimaryKey
   @AutoIncrement

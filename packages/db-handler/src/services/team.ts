@@ -1,16 +1,16 @@
 import * as teamDal from '../data-access-layer/team'
 import {GetAllTeamsFilters, IncludesFilters} from '../data-access-layer/types'
-import Team, {TeamInput} from '../models/team'
+import Team, {TeamCreationAttributes} from '../models/team'
 
-export const create = async (payload: TeamInput): Promise<Team> => {
+export const create = async (payload: TeamCreationAttributes): Promise<Team> => {
     return teamDal.create(payload);
 }
 
-export const findOrCreate = async (payload: TeamInput, includes?: IncludesFilters): Promise<Team> => {
+export const findOrCreate = async (payload: TeamCreationAttributes, includes?: IncludesFilters): Promise<Team> => {
     return teamDal.findOrCreate(payload, includes);
 }
 
-export const update = async (id: number, payload: Partial<TeamInput>): Promise<Team> => {    
+export const update = async (id: number, payload: Partial<TeamCreationAttributes>): Promise<Team> => {    
     return teamDal.update(id, payload);
 }
 

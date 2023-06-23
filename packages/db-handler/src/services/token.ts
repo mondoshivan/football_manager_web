@@ -1,13 +1,13 @@
 import * as dal from '../data-access-layer/token'
 import {GetAllTokensFilters, IncludesFilters} from '../data-access-layer/types'
-import {TokenInput} from '../models/token'
+import {TokenCreationAttributes} from '../models/token'
 import {Token} from '../models/index'
 
-export const create = async (payload: TokenInput): Promise<Token> => {
+export const create = async (payload: TokenCreationAttributes): Promise<Token> => {
     return dal.create(payload);
 }
 
-export const update = async (id: number, payload: Partial<TokenInput>): Promise<Token> => {    
+export const update = async (id: number, payload: Partial<TokenCreationAttributes>): Promise<Token> => {    
     return dal.update(id, payload);
 }
 

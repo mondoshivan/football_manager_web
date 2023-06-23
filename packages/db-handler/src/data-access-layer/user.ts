@@ -1,17 +1,17 @@
 import { Op } from 'sequelize';
 import { User } from '../models';
 import { GetAllUsersFilters, IncludesFilters } from './types';
-import { UserInput } from '../models/user';
+import { UserCreationAttributes } from '../models/user';
 import { GetAllNotFoundError, IdNotFoundError, NameNotFoundError } from '../error/error';
 import { getIncludes } from './data-access-layer';
 import { isEmpty } from 'lodash';
 import Utils from "@football-manager/utils";
 
-export const create = async (payload: UserInput): Promise<User> => {
+export const create = async (payload: UserCreationAttributes): Promise<User> => {
     return await User.create(payload);
 }
 
-export const findOrCreate = async (payload: UserInput, includes?: IncludesFilters): Promise<User> => {
+export const findOrCreate = async (payload: UserCreationAttributes, includes?: IncludesFilters): Promise<User> => {
     const [player] = await User.findOrCreate({
         include: getIncludes(includes),
         where: {
@@ -24,7 +24,7 @@ export const findOrCreate = async (payload: UserInput, includes?: IncludesFilter
     return player;
 }
 
-export const update = async (id: number, payload: Partial<UserInput>): Promise<User> => {
+export const update = async (id: number, payload: Partial<UserCreationAttributes>): Promise<User> => {
     const player = await User.findByPk(id);
 
     if (!player) {

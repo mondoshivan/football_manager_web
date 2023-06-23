@@ -2,18 +2,18 @@ import {isNil, kebabCase} from 'lodash'
 
 import * as skillDal from '../data-access-layer/skill'
 import {GetAllSkillsFilters, IncludesFilters} from '../data-access-layer/types'
-import {SkillInput} from '../models/skill'
+import {SkillCreationAttribute} from '../models/skill'
 import {Skill} from '../models'
 
-export const create = async (payload: SkillInput): Promise<Skill> => {
+export const create = async (payload: SkillCreationAttribute): Promise<Skill> => {
     return skillDal.create(payload);
 }
 
-export const findOrCreate = async (payload: SkillInput, includes?: IncludesFilters): Promise<Skill> => {    
+export const findOrCreate = async (payload: SkillCreationAttribute, includes?: IncludesFilters): Promise<Skill> => {    
     return await skillDal.findOrCreate(payload, includes);
 }
 
-export const update = async (id: number, payload: Partial<SkillInput>): Promise<Skill> => {    
+export const update = async (id: number, payload: Partial<SkillCreationAttribute>): Promise<Skill> => {    
     return skillDal.update(id, payload);
 }
 

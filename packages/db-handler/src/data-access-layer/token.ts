@@ -1,15 +1,15 @@
 import { Op } from 'sequelize';
 import { Token } from '../models/index';
 import { GetAllTokensFilters, IncludesFilters } from './types';
-import { TokenInput } from '../models/token';
+import { TokenCreationAttributes } from '../models/token';
 import { GetAllNotFoundError, IdNotFoundError, NameNotFoundError } from '../error/error';
 import { getIncludes } from './data-access-layer';
 
-export const create = async (payload: TokenInput): Promise<Token> => {
+export const create = async (payload: TokenCreationAttributes): Promise<Token> => {
     return await Token.create(payload);
 }
 
-export const update = async (id: number, payload: Partial<TokenInput>): Promise<Token> => {
+export const update = async (id: number, payload: Partial<TokenCreationAttributes>): Promise<Token> => {
     const player = await Token.findByPk(id);
 
     if (!player) {

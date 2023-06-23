@@ -3,15 +3,15 @@ import {isEmpty} from 'lodash'
 
 import {Team} from '../models'
 import {GetAllTeamsFilters, IncludesFilters} from './types'
-import {TeamInput} from '../models/team'
+import {TeamCreationAttributes} from '../models/team'
 import { GetAllNotFoundError, IdNotFoundError, NameNotFoundError } from '../error/error'
 import { getIncludes } from './data-access-layer'
 
-export const create = async (payload: TeamInput): Promise<Team> => {
+export const create = async (payload: TeamCreationAttributes): Promise<Team> => {
     return await Team.create(payload);
 }
 
-export const findOrCreate = async (payload: TeamInput, includes?: IncludesFilters): Promise<Team> => {
+export const findOrCreate = async (payload: TeamCreationAttributes, includes?: IncludesFilters): Promise<Team> => {
     const [team] = await Team.findOrCreate({
         include: getIncludes(includes),
         where: {
@@ -23,7 +23,7 @@ export const findOrCreate = async (payload: TeamInput, includes?: IncludesFilter
     return team;
 }
 
-export const update = async (id: number, payload: Partial<TeamInput>): Promise<Team> => {
+export const update = async (id: number, payload: Partial<TeamCreationAttributes>): Promise<Team> => {
     const team = await Team.findByPk(id);
 
     if (!team) {

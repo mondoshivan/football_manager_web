@@ -2,18 +2,18 @@ import {isNil, kebabCase} from 'lodash'
 
 import * as dal from '../data-access-layer/user'
 import {GetAllUsersFilters, IncludesFilters} from '../data-access-layer/types'
-import {UserInput} from '../models/user'
+import {UserCreationAttributes} from '../models/user'
 import {User} from '../models'
 
-export const create = async (payload: UserInput): Promise<User> => {
+export const create = async (payload: UserCreationAttributes): Promise<User> => {
     return dal.create(payload);
 }
 
-export const findOrCreate = async (payload: UserInput, includes?: IncludesFilters): Promise<User> => {    
+export const findOrCreate = async (payload: UserCreationAttributes, includes?: IncludesFilters): Promise<User> => {    
     return await dal.findOrCreate(payload, includes);
 }
 
-export const update = async (id: number, payload: Partial<UserInput>): Promise<User> => {    
+export const update = async (id: number, payload: Partial<UserCreationAttributes>): Promise<User> => {    
     return dal.update(id, payload);
 }
 

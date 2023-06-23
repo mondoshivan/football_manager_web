@@ -2,15 +2,15 @@ import {Op} from 'sequelize'
 
 import {Player} from '../models'
 import {GetAllPlayersFilters, IncludesFilters} from './types'
-import {PlayerInput} from '../models/player'
+import {PlayerCreationAttributes} from '../models/player'
 import { GetAllNotFoundError, IdNotFoundError } from '../error/error'
 import { getIncludes } from './data-access-layer'
 
-export const create = async (payload: PlayerInput): Promise<Player> => {
+export const create = async (payload: PlayerCreationAttributes): Promise<Player> => {
     return await Player.create(payload);
 }
 
-export const findOrCreate = async (payload: PlayerInput, includes?: IncludesFilters): Promise<Player> => {
+export const findOrCreate = async (payload: PlayerCreationAttributes, includes?: IncludesFilters): Promise<Player> => {
     const [player] = await Player.findOrCreate({
         include: getIncludes(includes),
         where: {
@@ -23,7 +23,7 @@ export const findOrCreate = async (payload: PlayerInput, includes?: IncludesFilt
     return player;
 }
 
-export const update = async (id: number, payload: Partial<PlayerInput>): Promise<Player> => {
+export const update = async (id: number, payload: Partial<PlayerCreationAttributes>): Promise<Player> => {
     const player = await Player.findByPk(id);
 
     if (!player) {

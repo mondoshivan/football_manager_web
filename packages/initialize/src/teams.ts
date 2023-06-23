@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 
 import { playerService, teamService, skillService, formationService } from "@football-manager/db-handler";
-import { TeamInput } from "@football-manager/db-handler/src/models/team";
+import { TeamCreationAttributes } from "@football-manager/db-handler/src/models/team";
 import { nameService } from "@football-manager/names";
 import config from "./config/config";
 import Utils from "@football-manager/utils";
@@ -10,7 +10,7 @@ import { Country } from "@football-manager/names/src/services/name-service";
 export const initTeams = async (resource: string) => {
 
     const raw = readFileSync(resource);
-    const list : TeamInput[] = JSON.parse(raw.toString());
+    const list : TeamCreationAttributes[] = JSON.parse(raw.toString());
     let countryNames : Country[] = [];
     countryNames.push('de');
     countryNames.push('gb');

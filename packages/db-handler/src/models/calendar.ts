@@ -1,5 +1,6 @@
 import { Optional } from 'sequelize'
-import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { AllowNull, AutoIncrement, Column, HasMany, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { Occurrence } from '.';
 
 export type CalendarTypes = 'championship' | 'team' | 'player';
 
@@ -8,10 +9,13 @@ type CalendarAttributes = {
   type: CalendarTypes
 }
 
-export type CalendarCreationAttributes = Optional<CalendarAttributes, 'id'>
+export type CalendarCreationAttributes = CalendarAttributes;
 
 @Table({ timestamps: true })
 export class Calendar extends Model<CalendarAttributes, CalendarCreationAttributes> implements CalendarAttributes {
+
+  @HasMany(() => Occurrence)
+  occurrences!: Occurrence[];
 
   @PrimaryKey
   @AutoIncrement

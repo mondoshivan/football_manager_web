@@ -1,67 +1,51 @@
-import { Association, BelongsToManyAddAssociationMixin, DataTypes, HasManyAddAssociationMixin, HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManySetAssociationsMixin, Model, NonAttribute, Optional } from 'sequelize'
-import sequelizeConnection from '../connection'
-import { PlayerSkillAttributes } from './player_skill';
-import Skill from './skill';
-import Team, { TeamInput } from './team';
+import { Optional } from 'sequelize';
+import { AllowNull, AutoIncrement, BelongsToMany, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { PlayerSkill, Skill, Team } from '.';
 
-interface PlayerAttributes {
-  id: number;
-  firstName: string;
-  secondName: string;
-  birthday: Date;
-  height: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
+type PlayerAttributes = {
+  firstName: string
+  secondName: string
+  birthday: Date
+  height: number
 }
-export interface PlayerInput extends Optional<PlayerAttributes, 'id'> {
-  // teams?: TeamInput[];
+export type PlayerCreationAttributes = PlayerAttributes
+
+@Table({ timestamps: true })
+export class Player extends Model<PlayerAttributes, PlayerCreationAttributes> implements PlayerAttributes {
+
+  /**
+   * Associations
+   */
+
+  @BelongsToMany(() => Skill, () => PlayerSkill)
+  skills!: Array<Skill & {PlayerSkill: PlayerSkill}>;
+
+  @BelongsToMany(() => Team, 'PlayerTeam')
+  teams!: Array<Team & {PlayerTeam: 'PlayerTeam'}>;
+
+  /**
+   * Columns
+   */
+
+  @PrimaryKey
+  @AutoIncrement
+  @Unique
+  @Column
+  override id!: number
+
+  @Column
+  @AllowNull(false)
+  public firstName!: string
+
+  @Column
+  @AllowNull(false)
+  public secondName!: string
+
+  @Column
+  @AllowNull(false)
+  public birthday!: Date;
+
+  @Column
+  @AllowNull(false)
+  public height!: number;
 }
-
-class Player extends Model<PlayerAttributes, PlayerInput> implements PlayerAttributes {
-    public id!: number
-    public firstName!: string
-    public secondName!: string
-    public birthday!: Date;
-    public height!: number;
-  
-    // timestamps!
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-    public readonly deletedAt!: Date;
-
-    declare setTeams: HasManySetAssociationsMixin<Team, number>;
-    declare addSkill: BelongsToManyAddAssociationMixin<Skill, Skill['id']>;
-
-    declare teams: NonAttribute<Team[]>;
-  }
-  
-  Player.init({
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    secondName: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    birthday: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    height: {
-      type: DataTypes.TINYINT.UNSIGNED,
-      allowNull: false
-    }
-  }, {
-    timestamps: true,
-    sequelize: sequelizeConnection,
-    paranoid: true
-  })
-  
-  export default Player

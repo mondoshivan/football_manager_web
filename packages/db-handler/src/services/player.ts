@@ -3,18 +3,18 @@ import {isNil, kebabCase} from 'lodash'
 import * as playerDal from '../data-access-layer/player'
 import * as teamDal from '../data-access-layer/team'
 import {GetAllPlayersFilters, IncludesFilters} from '../data-access-layer/types'
-import {PlayerInput} from '../models/player'
+import {PlayerCreationAttributes} from '../models/player'
 import {Player} from '../models'
 
-export const create = async (payload: PlayerInput): Promise<Player> => {
+export const create = async (payload: PlayerCreationAttributes): Promise<Player> => {
     return playerDal.create(payload);
 }
 
-export const findOrCreate = async (payload: PlayerInput, includes?: IncludesFilters): Promise<Player> => {    
+export const findOrCreate = async (payload: PlayerCreationAttributes, includes?: IncludesFilters): Promise<Player> => {    
     return await playerDal.findOrCreate(payload, includes);
 }
 
-export const update = async (id: number, payload: Partial<PlayerInput>): Promise<Player> => {    
+export const update = async (id: number, payload: Partial<PlayerCreationAttributes>): Promise<Player> => {    
     return playerDal.update(id, payload);
 }
 

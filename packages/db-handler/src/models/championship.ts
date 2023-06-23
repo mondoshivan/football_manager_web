@@ -4,12 +4,11 @@ import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table, Unique } fr
 export type ChampionshipTypes = 'league' | 'cup';
 
 type ChampionshipAttributes = {
-  id: number
   name: string
   type: ChampionshipTypes
 }
 
-export type ChampionshipCreationAttributes = Optional<ChampionshipAttributes, 'id'>
+export type ChampionshipCreationAttributes = ChampionshipAttributes;
 
 @Table({ timestamps: true })
 export class Championship extends Model<ChampionshipAttributes, ChampionshipCreationAttributes> implements ChampionshipAttributes {

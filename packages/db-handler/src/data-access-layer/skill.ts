@@ -3,15 +3,15 @@ import {isEmpty} from 'lodash'
 
 import {Skill} from '../models'
 import {GetAllSkillsFilters, IncludesFilters} from './types'
-import {SkillInput} from '../models/skill'
+import {SkillCreationAttribute} from '../models/skill'
 import { GetAllNotFoundError, IdNotFoundError } from '../error/error'
 import { getIncludes } from './data-access-layer'
 
-export const create = async (payload: SkillInput): Promise<Skill> => {
+export const create = async (payload: SkillCreationAttribute): Promise<Skill> => {
     return await Skill.create(payload);
 }
 
-export const findOrCreate = async (payload: SkillInput, includes?: IncludesFilters): Promise<Skill> => {
+export const findOrCreate = async (payload: SkillCreationAttribute, includes?: IncludesFilters): Promise<Skill> => {
     const [skill] = await Skill.findOrCreate({
         include: getIncludes(includes),
         where: {
@@ -24,7 +24,7 @@ export const findOrCreate = async (payload: SkillInput, includes?: IncludesFilte
     return skill;
 }
 
-export const update = async (id: number, payload: Partial<SkillInput>): Promise<Skill> => {
+export const update = async (id: number, payload: Partial<SkillCreationAttribute>): Promise<Skill> => {
     const skill = await Skill.findByPk(id);
 
     if (!skill) {

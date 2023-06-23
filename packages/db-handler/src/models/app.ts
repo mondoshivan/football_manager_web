@@ -2,12 +2,11 @@ import { Optional } from 'sequelize';
 import { Table, Column, Model, Unique, PrimaryKey, AutoIncrement, AllowNull} from 'sequelize-typescript';
 
 export type AppAttributes = {
-    id: number;
     start: Date;
     day: Date;
 }
 
-export type AppCreationAttributes = Optional<AppAttributes, 'id'>
+export type AppCreationAttributes = AppAttributes;
 
 @Table({ timestamps: true })
 export class App extends Model<AppAttributes, AppCreationAttributes> implements AppAttributes {

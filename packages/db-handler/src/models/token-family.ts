@@ -1,34 +1,15 @@
-import { DataTypes, HasManyGetAssociationsMixin, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../connection'
-import Token from './token';
+import { AutoIncrement, Column, HasMany, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { Token } from '.';
 
-interface TokenFamilyAttributes {
-  id: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+@Table({ timestamps: true })
+export class TokenFamily extends Model {
+
+  @HasMany(() => Token)
+  tokens!: Token[];
+
+  @PrimaryKey
+  @AutoIncrement
+  @Unique
+  @Column
+  override id!: number
 }
-export interface TokenFamilyInput extends Optional<TokenFamilyAttributes, 'id'> {}
-
-class TokenFamily extends Model<TokenFamilyAttributes, TokenFamilyInput> implements TokenFamilyAttributes {
-    public id!: number
-  
-    // timestamps!
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-
-    declare getTokens: HasManyGetAssociationsMixin<Token>;
-  }
-  
-  TokenFamily.init({
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-  }, {
-    timestamps: true,
-    sequelize: sequelizeConnection,
-    paranoid: false
-  });
-  
-  export default TokenFamily

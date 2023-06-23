@@ -1,56 +1,40 @@
-import { BelongsToGetAssociationMixin, BelongsToSetAssociationMixin, DataTypes, HasManyAddAssociationMixin, HasManyGetAssociationsMixin, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../connection'
-import TokenFamily from './token-family';
+import { AllowNull, AutoIncrement, BelongsTo, Column, Default, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { TokenFamily } from '.';
 
 export type TokenTypes = 'access' | 'refresh';
 
-interface TokenAttributes {
-  id: number;
-  signature: string;
-  type: TokenTypes;
-  valid: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
+type TokenAttributes = {
+  signature: string
+  type: TokenTypes
+  valid: boolean
 }
-export interface TokenInput extends Optional<TokenAttributes, 'id' | 'valid'> { }
+export type TokenCreationAttributes = TokenAttributes;
 
-class Token extends Model<TokenAttributes, TokenInput> implements TokenAttributes {
-  public id!: number
+@Table({ timestamps: true })
+export class Token extends Model<TokenAttributes, TokenCreationAttributes> implements TokenAttributes {
+
+  @BelongsTo(() => TokenFamily)
+  tokenFamily!: TokenFamily;
+
+  @PrimaryKey
+  @AutoIncrement
+  @Unique
+  @Column
+  override id!: number
+
+  @Column
+  @AllowNull(false)
   public signature!: string
+
+  @Column
+  @AllowNull(false)
   public type!: TokenTypes
-  public valid!: boolean;
 
-  // timestamps!
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @Column
+  @AllowNull(false)
+  @Default(true)
+  public valid!: boolean
 
-  declare setTokenFamily: BelongsToSetAssociationMixin<TokenFamily, TokenFamily['id']>;
-  declare getTokenFamily: BelongsToGetAssociationMixin<TokenFamily>;
+  // declare setTokenFamily: BelongsToSetAssociationMixin<TokenFamily, TokenFamily['id']>;
+  // declare getTokenFamily: BelongsToGetAssociationMixin<TokenFamily>;
 }
-
-Token.init({
-  id: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  signature: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  type: {
-    type: DataTypes.ENUM('access', 'refresh'),
-    allowNull: false
-  },
-  valid: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: true
-  },
-}, {
-  timestamps: true,
-  sequelize: sequelizeConnection,
-  paranoid: false
-});
-
-export default Token
