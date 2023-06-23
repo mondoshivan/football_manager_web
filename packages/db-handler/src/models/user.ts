@@ -46,6 +46,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
 
   @Column
   @AllowNull(false)
+  @Default(false)
   public confirmed!: boolean
 
   @Column

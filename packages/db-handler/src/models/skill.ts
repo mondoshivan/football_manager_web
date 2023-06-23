@@ -1,4 +1,4 @@
-import { AllowNull, AutoIncrement, BelongsToMany, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { AllowNull, AutoIncrement, BelongsToMany, Column, Default, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 import { Player } from './player';
 import { PlayerSkill } from './player_skill';
 
@@ -47,5 +47,6 @@ export class Skill extends Model<SkillAttributes, SkillCreationAttribute> implem
 
   @Column
   @AllowNull(false)
+  @Default(false)
   public required!: boolean
 }
