@@ -1,7 +1,7 @@
 import CryptoJS from 'crypto-js';
 import { v4 as uuidv4 } from "uuid";
 
-class Utils {
+export class Utils {
 
   static uuid(): string {
     return uuidv4();
@@ -33,5 +33,3 @@ class Utils {
     return checkTimestamp <= to.getTime() && checkTimestamp >= from.getTime();
   }
 }
-
-export default Utils;

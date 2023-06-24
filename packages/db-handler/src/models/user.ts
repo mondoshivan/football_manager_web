@@ -1,4 +1,4 @@
-import Utils from '@football-manager/utils';
+import { Utils } from '@football-manager/utils';
 import { AllowNull, AutoIncrement, BeforeValidate, Column, Default, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
 export type RoleTypes = 'user' | 'admin';

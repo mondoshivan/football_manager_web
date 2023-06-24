@@ -1,5 +1,5 @@
 import { PlayerDTO } from "@football-manager/data-transfer";
-import Utils from "@football-manager/utils";
+import { Utils } from "@football-manager/utils";
 
 export const getAge = (player: PlayerDTO, now: number) => {
     return Utils.ageBetweenDates(new Date(player.birthday), new Date(now));
