@@ -8,22 +8,28 @@
     "version": "0.0.1"
   },
   "scripts": {
+    "build": "npm-run-all lerna-bootstrap build-tsc",
+    "build:clean": "npm-run-all clean lerna-bootstrap build-tsc",
     "build-tsc": "npx tsc --build",
+    "clean": "npm-run-all lerna-clean remove:tsc",
     "erm": "npx lerna run erm",
     "lint": "npx eslint -c .eslintrc.js --ext .ts --fix",
     "lerna-bootstrap": "npx lerna bootstrap",
+    "lerna-clean": "npx lerna clean --yes",
     "lerna-start-front-end-dev": "npx lerna run start-front-end-dev",
     "lerna-start-server-dev": "npx lerna run start-server-dev",
     "lerna-build": "npm-run-all build-tsc lerna-build-front-end",
     "lerna-build-dev": "npm-run-all build-tsc lerna-build-front-end-dev",
     "lerna-build-front-end": "npx lerna run build-front-end",
     "lerna-build-front-end-dev": "npx lerna run build-front-end-dev",
+    "remove:tsc": "npx rimraf -g \"packages/*/dist\"",
     "tsc-watch": "npx tsc --build --watch"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.28.0",
     "eslint": "^8.17.0",
     "lerna": "^3.20.2",
+    "rimraf": "^5.0.1",
     "typescript": "^4.7.3"
   },
   "dependencies": {
