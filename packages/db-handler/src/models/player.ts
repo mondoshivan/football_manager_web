@@ -1,4 +1,3 @@
-import { Optional } from 'sequelize';
 import { AllowNull, AutoIncrement, BelongsToMany, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 import { PlayerSkill, Skill, Team } from '.';
 

@@ -1,4 +1,3 @@
-import { Optional } from 'sequelize'
 import { AllowNull, AutoIncrement, Column, HasMany, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 import { Occurrence } from '.';
 

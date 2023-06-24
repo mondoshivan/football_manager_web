@@ -1,4 +1,3 @@
-import { Optional } from 'sequelize';
 import { Table, Column, Model, Unique, PrimaryKey, AutoIncrement, AllowNull} from 'sequelize-typescript';
 
 export type AppAttributes = {

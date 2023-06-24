@@ -1,4 +1,3 @@
-import { Optional } from 'sequelize';
 import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
 type FormationAttributes = {
