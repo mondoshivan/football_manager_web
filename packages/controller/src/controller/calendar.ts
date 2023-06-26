@@ -1,8 +1,8 @@
-import { Calendar, Championship } from "@football-manager/db-handler/src/models/index";
+import { Calendar, Championship } from "@football-manager/db-handler/src/models/index.js";
 import { calendarHelper } from "@football-manager/helper";
 import { occurrenceService, appService } from "@football-manager/db-handler";
 import { isEmpty } from "lodash";
-import { OccurrenceTypes } from "@football-manager/db-handler/src/models/occurrence";
+import { OccurrenceTypes } from "@football-manager/db-handler/src/models/occurrence.js";
 
 const initOccurrence = async (type : OccurrenceTypes, weekDate : Date, weekCounter : number, calendar : Calendar) => {
     const occurrence = await occurrenceService.create({ type: type, date: weekDate});
