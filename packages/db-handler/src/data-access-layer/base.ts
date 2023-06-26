@@ -1,8 +1,8 @@
 import { Model } from 'sequelize-typescript';
 import { Attributes, CreateOptions, CreationAttributes, DestroyOptions, Includeable, ModelStatic, WhereOptions } from 'sequelize';
-import { IncludesFilters, NestedByName } from "./types";
-import sequelizeConnection from "../connection";
-import { GetAllNotFoundError, IdNotFoundError } from '../error/error';
+import { IncludesFilters, NestedByName } from "./types.js";
+import sequelizeConnection from "../connection.js";
+import { GetAllNotFoundError, IdNotFoundError } from '../error/error.js';
 
 
 export class BaseDal<T extends Model> {

@@ -1,15 +1,15 @@
-import { Calendar } from './calendar';
-import { Championship } from './championship';
-import { Occurrence } from './occurrence';
-import { Formation } from './formation';
-import { App } from './app';
-import { Team } from './team';
-import { Player } from './player';
-import { Skill } from './skill';
-import { PlayerSkill } from './player_skill';
-import { User } from './user'
-import { TokenFamily } from './token-family';
-import { Token } from './token';
+import { Calendar } from './calendar.js';
+import { Championship } from './championship.js';
+import { Occurrence } from './occurrence.js';
+import { Formation } from './formation.js';
+import { App } from './app.js';
+import { Team } from './team.js';
+import { Player } from './player.js';
+import { Skill } from './skill.js';
+import { PlayerSkill } from './player_skill.js';
+import { User } from './user.js'
+import { TokenFamily } from './token-family.js';
+import { Token } from './token.js';
 
 Team.belongsToMany(Calendar, {
   through: 'TeamCalandar'

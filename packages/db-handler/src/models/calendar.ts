@@ -1,5 +1,5 @@
 import { AllowNull, AutoIncrement, Column, HasMany, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { Occurrence } from '.';
+import { Occurrence } from './occurrence.js';
 
 export type CalendarTypes = 'championship' | 'team' | 'player';
 

@@ -1,5 +1,5 @@
 import { AllowNull, AutoIncrement, BelongsTo, Column, Default, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { TokenFamily } from '.';
+import { TokenFamily } from './index.js';
 
 export type TokenTypes = 'access' | 'refresh';
 

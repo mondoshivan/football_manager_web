@@ -1,10 +1,10 @@
 import "reflect-metadata"; // needed for ts-convict
 
 import { mkdirSync, writeFileSync } from "fs";
-import sequelizeConnection from './connection';
-import config from "./config/config";
+import sequelizeConnection from './connection.js';
+import { config } from "./config/config.js";
 import sequelizeErd from 'sequelize-erd';
-import { dbInit } from "./index";
+import { dbInit } from "./index.js";
 import path from "path";
 
 (async function () {

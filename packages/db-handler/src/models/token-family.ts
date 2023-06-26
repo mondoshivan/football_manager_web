@@ -1,5 +1,5 @@
 import { AutoIncrement, Column, HasMany, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { Token } from '.';
+import { Token } from './index.js';
 
 @Table({ timestamps: true })
 export class TokenFamily extends Model {

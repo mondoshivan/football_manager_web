@@ -1,6 +1,6 @@
 import { config } from 'process';
 import { Property, Config, TSConvict } from 'ts-convict';
-import { DBConfig } from './config_db';
+import { DBConfig } from './config_db.js';
 
 @Config({
     
@@ -32,4 +32,6 @@ class PackageConfig implements config.PackageConfig {
 }
 
 const configLoader = new TSConvict<PackageConfig>(PackageConfig);
-export = configLoader.load();
+const configObj = configLoader.load();
+
+export { configObj as config };

@@ -6,6 +6,7 @@
     "dist/**/*"
   ],
   "main": "dist/src/index.js",
+  "type": "module",
   "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "npx tsc -p tsconfig.json",
@@ -19,7 +20,7 @@
     "@football-manager/utils": "^0.0.1"
   },
   "devDependencies": {
-    "@types/node": "^14.18.21"
+    "@types/node": "^14.18.42"
   },
   "repository": {
     "type": "git",

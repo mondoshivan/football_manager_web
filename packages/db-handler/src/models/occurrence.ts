@@ -1,5 +1,5 @@
 import { AllowNull, AutoIncrement, BelongsTo, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { Calendar } from '.';
+import { Calendar } from './calendar.js';
 
 export type OccurrenceTypes = 'game' | 'training' | 'payday';
 

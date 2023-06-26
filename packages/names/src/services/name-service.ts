@@ -1,4 +1,4 @@
-import Utils from "@football-manager/utils";
+import { Utils } from "@football-manager/utils";
 
 export type Country = 'gb' | 'de' | 'dk' | 'nl' | 'it' | 'fr' | 'es';
 

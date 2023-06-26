@@ -1,6 +1,6 @@
 import { AllowNull, AutoIncrement, Column, ForeignKey, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
-import { Player, Skill } from '.';
+import { Player, Skill } from './index.js';
 
 export type PlayerSkillAttributes = {
   PlayerId: number

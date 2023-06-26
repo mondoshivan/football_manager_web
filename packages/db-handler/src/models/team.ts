@@ -1,5 +1,5 @@
 import { AllowNull, AutoIncrement, BelongsToMany, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { Player } from './player';
+import { Player } from './player.js';
 
 type TeamAttributes = {
   name: string;

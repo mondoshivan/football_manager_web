@@ -1,8 +1,8 @@
 import { Table, Column, Model, Unique, PrimaryKey, AutoIncrement, AllowNull} from 'sequelize-typescript';
 
 export type AppAttributes = {
-    start: Date;
-    day: Date;
+    start: Date
+    day: Date
 }
 
 export type AppCreationAttributes = AppAttributes;

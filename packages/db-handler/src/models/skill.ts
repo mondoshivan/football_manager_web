@@ -1,6 +1,6 @@
 import { AllowNull, AutoIncrement, BelongsToMany, Column, Default, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { Player } from './player';
-import { PlayerSkill } from './player_skill';
+import { Player } from './player.js';
+import { PlayerSkill } from './player_skill.js';
 
 export type SkillTypes = 'physical' | 'mental';
 
