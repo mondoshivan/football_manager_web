@@ -8,9 +8,9 @@
     "version": "0.0.1"
   },
   "scripts": {
-    "build": "npm-run-all lerna-bootstrap build-tsc",
-    "build:clean": "npm-run-all clean lerna-bootstrap build-tsc",
-    "build-tsc": "npx tsc --build",
+    "build": "npm-run-all lerna-bootstrap build:tsc",
+    "build:clean": "npm-run-all clean lerna-bootstrap build:tsc",
+    "build:tsc": "npx tsc --build",
     "clean": "npm-run-all lerna-clean remove:tsc",
     "erm": "npx lerna run erm",
     "lint": "npx eslint -c .eslintrc.js --ext .ts --fix",
@@ -18,7 +18,7 @@
     "lerna-clean": "npx lerna clean --yes",
     "lerna-start-front-end-dev": "npx lerna run start-front-end-dev",
     "lerna-start-server-dev": "npx lerna run start-server-dev",
-    "lerna-build": "npm-run-all build-tsc lerna-build-front-end",
+    "lerna-build": "npm-run-all build:tsc lerna-build-front-end",
     "lerna-build-dev": "npm-run-all build-tsc lerna-build-front-end-dev",
     "lerna-build-front-end": "npx lerna run build-front-end",
     "lerna-build-front-end-dev": "npx lerna run build-front-end-dev",
