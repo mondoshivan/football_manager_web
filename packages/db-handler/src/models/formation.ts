@@ -1,4 +1,5 @@
-import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { AllowNull, AutoIncrement, Column, HasMany, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { Team } from './team.js';
 
 type FormationAttributes = {
   name: string;
@@ -13,6 +14,9 @@ export type FormationCreationAttributes = FormationAttributes;
 @Table({ timestamps: true })
 export class Formation extends Model<FormationAttributes, FormationCreationAttributes> implements FormationAttributes {
   
+  @HasMany(() => Team)
+  teams!: Team[];
+
   @PrimaryKey
   @AutoIncrement
   @Unique

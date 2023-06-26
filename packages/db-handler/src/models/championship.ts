@@ -1,4 +1,6 @@
-import { AllowNull, AutoIncrement, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { AllowNull, AutoIncrement, BelongsToMany, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { Calendar } from './calendar.js';
+import { Team } from './index.js';
 
 export type ChampionshipTypes = 'league' | 'cup';
 
@@ -11,6 +13,12 @@ export type ChampionshipCreationAttributes = ChampionshipAttributes;
 
 @Table({ timestamps: true })
 export class Championship extends Model<ChampionshipAttributes, ChampionshipCreationAttributes> implements ChampionshipAttributes {
+
+  @BelongsToMany(() => Calendar, 'ChampionshipCalendar')
+  calendars!: Array<Calendar & {ChampionshipCalendar: 'ChampionshipCalendar'}>;
+
+  @BelongsToMany(() => Team, 'ChampionshipTeam')
+  teams!: Array<Team & {ChampionshipTeam: 'ChampionshipTeam'}>;
 
   @PrimaryKey
   @AutoIncrement

@@ -1,5 +1,7 @@
-import { AllowNull, AutoIncrement, Column, HasMany, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { AllowNull, AutoIncrement, BelongsToMany, Column, HasMany, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 import { Occurrence } from './occurrence.js';
+import { Team } from './team.js';
+import { Championship } from './index.js';
 
 export type CalendarTypes = 'championship' | 'team' | 'player';
 
@@ -15,6 +17,12 @@ export class Calendar extends Model<CalendarAttributes, CalendarCreationAttribut
 
   @HasMany(() => Occurrence)
   occurrences!: Occurrence[];
+
+  @BelongsToMany(() => Championship, 'ChampionshipCalendar')
+  championships!: Array<Championship & {ChampionshipCalendar: 'ChampionshipCalendar'}>;
+
+  @BelongsToMany(() => Team, 'TeamCalendar')
+  teams!: Array<Team & {TeamCalendar: 'TeamCalendar'}>;
 
   @PrimaryKey
   @AutoIncrement
