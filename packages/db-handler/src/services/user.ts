@@ -1,38 +1,29 @@
-import {isNil, kebabCase} from 'lodash'
+import { User } from '../models/user.js'
+import { BaseService } from './base.js'
+import { NameNotFoundError } from '../error/error.js';
+import { Utils } from "@football-manager/utils";
 
-import * as dal from '../data-access-layer/user'
-import {GetAllUsersFilters, IncludesFilters} from '../data-access-layer/types'
-import {UserCreationAttributes} from '../models/user'
-import {User} from '../models'
+export class UserService extends BaseService<User> {
 
-export const create = async (payload: UserCreationAttributes): Promise<User> => {
-    return dal.create(payload);
-}
+  public async getByEmail(email: string) {
+    const entities = await this.dataAccessLayer.getAll({ email });
 
-export const findOrCreate = async (payload: UserCreationAttributes, includes?: IncludesFilters): Promise<User> => {    
-    return await dal.findOrCreate(payload, includes);
-}
+    if (!entities) {
+      throw new NameNotFoundError(`entity with email '${email}' does not exist`);
+    }
 
-export const update = async (id: number, payload: Partial<UserCreationAttributes>): Promise<User> => {    
-    return dal.update(id, payload);
-}
+    return entities;
+  }
 
-export const getById = (id: number, includes?: IncludesFilters): Promise<User> => {
-    return dal.getById(id, includes);
-}
 
-export const deleteById = (id: number): Promise<boolean> => {
-    return dal.deleteById(id);
-}
+  public async getByEmailAndPassword(email: string, password: string) {
+    const [user] = await this.getByEmail(email);
+    if (!user) return;
 
-export const getAll = (filters?: GetAllUsersFilters, includes?: IncludesFilters): Promise<User[]> => {
-    return dal.getAll(filters, includes);
-}
+    password = Utils.passwordHash(password, user.salt);
+    if (password === user.password) return user;
 
-export const checkExists = (email: string): Promise<boolean> => {
-    return dal.checkExists(email);
-}
+    return undefined;
+  }
 
-export const getByEmailAndPassword = (email: string, password: string): Promise<User | undefined> => {
-    return dal.getByEmailAndPassword(email, password);
 }

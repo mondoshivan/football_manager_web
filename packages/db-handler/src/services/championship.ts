@@ -1,16 +1,13 @@
-import {isEmpty, kebabCase} from 'lodash'
-
-import * as championshipDal from '../data-access-layer/championship'
-import {GetAllChampionshipsFilters, IncludesFilters} from '../data-access-layer/types'
-import { Championship} from '../models/championship'
-import { BaseService } from './base'
+import { isEmpty } from 'lodash'
+import { Championship} from '../models/championship.js'
+import { BaseService } from './base.js'
 
 export class ChampionshipService extends BaseService<Championship> {
 
   public async championshipNameExists(name: string) {
-    const championshipWithName = this.dataAccessLayer.findOne({ name });
+    const withName = this.dataAccessLayer.findOne({ name });
 
-    return !isEmpty(championshipWithName);
+    return !isEmpty(withName);
   }
 
 }
