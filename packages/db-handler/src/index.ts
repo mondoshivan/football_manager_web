@@ -1,7 +1,7 @@
 import log from '@football-manager/log';
 
 import { config } from "./config/config.js";
-import sequelizeConnection from './connection.js';
+import { sequelize } from './connection.js';
 
 import { BaseService } from './services/base.js';
 import { App } from './models/app.js';
@@ -17,11 +17,11 @@ import { UserService } from './services/user.js';
 export const dbInit = async () => {
 
   try {
-    await sequelizeConnection.sync({ 
+    await sequelize.sync({ 
       force: config.db.force, 
       alter: false 
     });
-    const models = sequelizeConnection.models;
+
   } catch (error) {
     log.fatal(error);
   }

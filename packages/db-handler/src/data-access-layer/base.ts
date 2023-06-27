@@ -1,7 +1,7 @@
 import { Model } from 'sequelize-typescript';
 import { Attributes, CreateOptions, CreationAttributes, DestroyOptions, Includeable, ModelStatic, WhereOptions } from 'sequelize';
 import { IncludesFilters, NestedByName } from "./types.js";
-import sequelizeConnection from "../connection.js";
+import { sequelize } from "../connection.js";
 import { GetAllNotFoundError, IdNotFoundError } from '../error/error.js';
 
 
@@ -14,7 +14,7 @@ export class BaseDal<T extends Model> {
   nestedIncludes(includes: NestedByName[] | undefined): Includeable[] {
     return (includes || []).map(i => {
       return {
-        model: sequelizeConnection.model(i.name),
+        model: sequelize.model(i.name),
         include: this.nestedIncludes(i.includes)
       }
     });
@@ -22,7 +22,7 @@ export class BaseDal<T extends Model> {
 
   getIncludes(includes?: IncludesFilters): Includeable | Includeable[] | undefined {
     if (includes?.includeNestedByName) return this.nestedIncludes(includes.includeNestedByName);
-    if (includes?.includeByName) return sequelizeConnection.model(includes.includeByName);
+    if (includes?.includeByName) return sequelize.model(includes.includeByName);
     if (includes?.includeNested) return { all: true, nested: true };
     if (includes?.includeAll) return { all: true };
 
