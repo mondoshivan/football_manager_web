@@ -1,23 +1,24 @@
-import { Calendar, Championship } from "@football-manager/db-handler/src/models/index.js";
+import { Calendar } from "@football-manager/db-handler/src/models/calendar.model.js";
+import { Championship } from "@football-manager/db-handler/src/models/championship.model.js";
 import { calendarHelper } from "@football-manager/helper";
 import { occurrenceService, appService } from "@football-manager/db-handler";
-import { isEmpty } from "lodash";
-import { OccurrenceTypes } from "@football-manager/db-handler/src/models/occurrence.js";
+import lodash from "lodash";
+import { OccurrenceTypes } from "@football-manager/db-handler/src/models/occurrence.model.js";
 
 const initOccurrence = async (type : OccurrenceTypes, weekDate : Date, weekCounter : number, calendar : Calendar) => {
     const occurrence = await occurrenceService.create({ type: type, date: weekDate});
     
-    await calendar.addOccurrence(occurrence);
+    await calendar.$add('occurrence', occurrence);
 }
 
 export const initLeague = async (championship: Championship) => {
-    const teams = await championship.getTeams();
-    const [calendar] = await championship.getCalendars();
+    const teams = championship.teams;
+    const [calendar] = championship.calendars;
     const [game] = await appService.getAll();
 
     if (!calendar) throw new Error('no calendar');
     if (!game) throw new Error('no game');
-    if (isEmpty(teams)) throw new Error('no teams');
+    if (lodash.isEmpty(teams)) throw new Error('no teams');
 
     const gamesTotal = teams.length * 2 - 2;
     const weeksPerYear = 52;

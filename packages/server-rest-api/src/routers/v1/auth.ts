@@ -2,16 +2,16 @@ import { NextFunction, Request, Response, Router } from "express";
 import asyncHandler from "express-async-handler"
 import { LoginAuthDTO, RefreshTokenDTO, RegisterAuthDTO, TokensDTO } from "@football-manager/data-transfer";
 import { tokenService, tokenFamilyService, userService } from "@football-manager/db-handler";
-import AppHelper from "../../helpers/app";
+import AppHelper from "../../helpers/app.js";
 import log from "@football-manager/log";
-import { IRefreshTokenPayload } from "../../interfaces/refresh-token";
+import { IRefreshTokenPayload } from "../../interfaces/refresh-token.js";
 import { sign } from "crypto";
 
 const authRouter = Router();
 
 authRouter.post('/register', asyncHandler( async (req: Request, res: Response) => {
     const payload = req.body as RegisterAuthDTO;
-    const exists = await userService.checkExists(payload.email);
+    const exists = await userService.emailExists(payload.email);
     if (exists) {
         res.status(400).json( AppHelper.jwtAuthResponse('This email address already exists.'));
     } else {
@@ -91,7 +91,7 @@ authRouter.post('/refresh', asyncHandler( async (req: Request, res: Response) =>
 
     // generate new set of tokens
     const user = await userService.getById(tokenPayload.userId);
-    const tokenFamily = await dbRefreshToken.getTokenFamily();
+    const tokenFamily = dbRefreshToken.tokenFamily;
     await AppHelper.jwtInvalidateFamily(dbRefreshToken);
     const data = await AppHelper.jwtGenerateTokens(user, tokenFamily);
     res.status(200).json(data);

@@ -1,12 +1,12 @@
 import { tokenFamilyService, tokenService } from '@football-manager/db-handler';
 import jwt from "jsonwebtoken";
-import User from '@football-manager/db-handler/src/models/user';
-import config from "../config/config";
-import { IRefreshTokenPayload } from '../interfaces/refresh-token';
+import { User } from '@football-manager/db-handler/src/models/user.model.js';
+import { config } from "../config/config.js";
+import { IRefreshTokenPayload } from '../interfaces/refresh-token.js';
 import { Request } from 'express';
-import Token from '@football-manager/db-handler/src/models/token';
+import { Token } from '@football-manager/db-handler/src/models/token.model.js';
 import { AuthResponseDTO, TokensDTO } from '@football-manager/data-transfer';
-import TokenFamily from '@football-manager/db-handler/src/models/token-family';
+import { TokenFamily } from '@football-manager/db-handler/src/models/token-family.model.js';
 
 export type JWTInvalidateFamilyOptions = {
     delete: boolean       
@@ -41,13 +41,13 @@ class AppHelper {
     }
 
     static async jwtInvalidateFamily(dbToken: Token, options?: JWTInvalidateFamilyOptions): Promise<void> {
-        const tokenFamily = await dbToken.getTokenFamily();
-        const tokens = await tokenFamily.getTokens();
+        const tokenFamily = dbToken.tokenFamily;
+        const tokens = tokenFamily.tokens;
 
         if (tokens) {
             for (const token of tokens) {
                 if (options?.delete) {
-                    await tokenService.deleteById(token.id);
+                    await tokenService.destroy({ where: { id: token.id }});
                 } else {
                     token.valid = false;
                     token.save();
@@ -55,7 +55,7 @@ class AppHelper {
             }
 
             if (options?.delete) {
-                tokenFamilyService.deleteById(tokenFamily.id);
+                tokenFamilyService.destroy( { where: { id: tokenFamily.id } });
             }
         }
     }
@@ -76,8 +76,8 @@ class AppHelper {
         const dbAccessToken = await tokenService.create({ signature: accessTokenSignature!, type: 'access' });
 
         // add the tokens to the family
-        dbRefreshToken.setTokenFamily(tokenFamily);
-        dbAccessToken.setTokenFamily(tokenFamily);
+        dbRefreshToken.$set('tokenFamily', tokenFamily);
+        dbAccessToken.$set('tokenFamily', tokenFamily);
 
         return data;
     }

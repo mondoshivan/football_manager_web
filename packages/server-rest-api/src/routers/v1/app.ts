@@ -2,7 +2,7 @@ import { FilterAppDTO, GetByIdDTO, IncludesDTO } from "@football-manager/data-tr
 import asyncHandler from "express-async-handler"
 import { appService } from "@football-manager/db-handler";
 import { Request, Response, Router } from "express";
-import { jwtValidation } from "../../middlewares/jwt-validation";
+import { jwtValidation } from "../../middlewares/jwt-validation.js";
 
 const appRouter = Router();
 

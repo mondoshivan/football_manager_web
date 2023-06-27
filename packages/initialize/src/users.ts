@@ -1,5 +1,5 @@
 import { userService } from "@football-manager/db-handler";
-import { UserCreationAttributes } from "@football-manager/db-handler/src/models/user";
+import { UserCreationAttributes } from "@football-manager/db-handler/src/models/user.model.js";
 import { readFileSync } from "fs";
 
 export const initUsers = async (resource: string) => {

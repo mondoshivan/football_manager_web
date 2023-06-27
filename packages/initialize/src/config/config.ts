@@ -1,7 +1,7 @@
 import { config } from 'process';
 import { Property, Config, TSConvict } from 'ts-convict';
-import { TeamsConfig } from './config_teams';
-import { GameConfig } from './config_game';
+import { TeamsConfig } from './config_teams.js';
+import { GameConfig } from './config_game.js';
 
 @Config({
     
@@ -36,4 +36,5 @@ class PackageConfig implements config.PackageConfig {
 }
 
 const configLoader = new TSConvict<PackageConfig>(PackageConfig);
-export = configLoader.load();
+const configObj = configLoader.load();
+export { configObj as config }

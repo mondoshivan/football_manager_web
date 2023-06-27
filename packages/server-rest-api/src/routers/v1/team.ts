@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler"
 import { formationService, teamService } from "@football-manager/db-handler"
 
 import { FilterTeamsDTO, GetByIdDTO, IncludesDTO, UpdateTeamFormationDTO } from "@football-manager/data-transfer";
-import { jwtValidation } from "../../middlewares/jwt-validation";
+import { jwtValidation } from "../../middlewares/jwt-validation.js";
 
 const teamRouter = Router();
 
@@ -54,8 +54,8 @@ teamRouter.get('/:id/calendars', asyncHandler( async (req: Request, res: Respons
 teamRouter.post('/formation', asyncHandler( async (req: Request, res: Response) => {
     const payload:UpdateTeamFormationDTO = req.body;
     const team = await teamService.getById(payload.teamId, { includeByName: 'Formation' });
-    const [formation] = await formationService.getByName(payload.formation);
-    await team.setFormation(formation);
+    const [formation] = await formationService.getAll( { name: payload.formation });
+    await team.$set('formation', formation);
     await team.reload();
     res.status(200).send(team);
 }));

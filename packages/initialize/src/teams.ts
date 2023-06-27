@@ -1,11 +1,11 @@
 import { readFileSync } from "fs";
 
 import { playerService, teamService, skillService, formationService } from "@football-manager/db-handler";
-import { TeamCreationAttributes } from "@football-manager/db-handler/src/models/team";
+import { TeamCreationAttributes } from "@football-manager/db-handler/src/models/team.model.js";
 import { nameService } from "@football-manager/names";
-import config from "./config/config";
-import Utils from "@football-manager/utils";
-import { Country } from "@football-manager/names/src/services/name-service";
+import { config } from "./config/config.js";
+import { Utils } from "@football-manager/utils";
+import { Country } from "@football-manager/names/src/services/name-service.js";
 
 export const initTeams = async (resource: string) => {
 
@@ -24,7 +24,7 @@ export const initTeams = async (resource: string) => {
         const team = await teamService.create(teamConfig);
 
         const defaultFormation = await formationService.getById(1);
-        await team.setFormation(defaultFormation);
+        await team.$set('formation', defaultFormation);
 
         for (let i=0; i<config.teams.initPlayerCount; i++) {
             const firstName = nameService().firstName({ 
@@ -50,7 +50,7 @@ export const initTeams = async (resource: string) => {
                 skills.filter( skill => 
                     skill.required 
                 ).map( skill => 
-                    player.addSkill(skill, { 
+                    player.$add('skill', skill, {
                         through: { 
                             value: Utils.randomIntFromInterval(0, 100)
                         } 
@@ -58,7 +58,7 @@ export const initTeams = async (resource: string) => {
                 ) 
             );
 
-            await team.addPlayer(player);
+            await team.$add('player', player);
         }
     }
 };

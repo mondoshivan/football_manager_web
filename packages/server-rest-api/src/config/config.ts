@@ -1,5 +1,5 @@
 import { Property, Config, TSConvict } from 'ts-convict';
-import { ServiceConfig } from './config_service';
+import { ServiceConfig } from './config_service.js';
 
 @Config({
     
@@ -30,4 +30,6 @@ class PackageConfig implements config.PackageConfig {
 }
 
 const configLoader = new TSConvict<PackageConfig>(PackageConfig);
-export = configLoader.load();
+const configObj = configLoader.load();
+
+export { configObj as config}

@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler"
 import { playerService } from "@football-manager/db-handler"
 
 import { FilterPlayerDTO, GetByIdDTO, IncludesDTO } from "@football-manager/data-transfer";
-import { jwtValidation } from "../../middlewares/jwt-validation";
+import { jwtValidation } from "../../middlewares/jwt-validation.js";
 
 const playerRouter = Router();
 
