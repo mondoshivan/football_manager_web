@@ -41,7 +41,7 @@ export class BaseDal<T extends Model> {
     return this.model.findOne({ where: options });
   }
 
-  public async getById(id: number, includes: IncludesFilters) {
+  public async getById(id: number, includes?: IncludesFilters) {
     const one = await this.model.findByPk(id, {
       include: this.getIncludes(includes),
     });

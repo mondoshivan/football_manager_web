@@ -18,7 +18,7 @@ export class BaseService<T extends Model> {
     return this.dataAccessLayer.findOrCreate(payload);
   }
 
-  public async getById(id: number, includes: IncludesFilters) {
+  public async getById(id: number, includes?: IncludesFilters) {
     return this.dataAccessLayer.getById(id, includes);
   }
 
