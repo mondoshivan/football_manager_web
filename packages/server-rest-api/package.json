@@ -6,7 +6,6 @@
     "dist/**/*"
   ],
   "main": "dist/src/index.js",
-  "type": "module",
   "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "npx tsc -p tsconfig.json",
