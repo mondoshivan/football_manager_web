@@ -21,7 +21,7 @@
     "@football-manager/utils": "^0.0.1"
   },
   "devDependencies": {
-    "@types/node": "^14.18.42"
+    "@types/node": "^14.18.51"
   },
   "repository": {
     "type": "git",
