@@ -1,4 +1,6 @@
 import CryptoJS from 'crypto-js';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from "uuid";
 
 export class Utils {
@@ -31,5 +33,15 @@ export class Utils {
   static isDateBetween(from: Date, to: Date, check: Date) {
     const checkTimestamp = check.getTime();
     return checkTimestamp <= to.getTime() && checkTimestamp >= from.getTime();
+  }
+
+  /**
+   * Returns the directory of the file where this method is called.
+   * @param url call it like this: Utils.__dirname(import.meta.url)
+   * @returns directory of the file, where this method is called.
+   */
+  static __dirname(url: string): string {
+    const __filename = fileURLToPath(url);
+    return dirname(__filename);
   }
 }
