@@ -1,6 +1,6 @@
-import { Token } from '../models/token.model.js'
-import { BaseService } from './base.js'
-import { NameNotFoundError } from '../error/error.js';
+import { Token } from '../models/token.model'
+import { BaseService } from './base'
+import { NameNotFoundError } from '../error/error';
 
 export class TokenService extends BaseService<Token> {
 

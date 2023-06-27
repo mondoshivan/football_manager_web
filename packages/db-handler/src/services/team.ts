@@ -1,6 +1,6 @@
 import lodash from 'lodash'
-import { Team } from '../models/team.model.js'
-import { BaseService } from './base.js'
+import { Team } from '../models/team.model'
+import { BaseService } from './base'
 
 export class TeamService extends BaseService<Team> {
 

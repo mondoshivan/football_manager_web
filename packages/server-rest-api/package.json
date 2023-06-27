@@ -9,7 +9,7 @@
   "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "npx tsc -p tsconfig.json",
-    "start": "node .",
+    "start": "ts-node ./src/index.ts",
     "start-server-dev": "nodemon --ignore sessions/ .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -42,7 +42,8 @@
     "@types/node": "^14.18.51",
     "@types/uuid": "^8.3.4",
     "nodemon": "^2.0.20",
-    "source-map-support": "^0.5.21"
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1"
   },
   "repository": {
     "type": "git",

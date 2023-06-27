@@ -1,6 +1,6 @@
 import { Dialect } from 'sequelize'
 import { Sequelize } from 'sequelize-typescript';
-import { config } from "./config/config.js";
+import { config } from "./config/config";
 import path from 'path';
 import { Utils } from '@football-manager/utils';
 
@@ -15,7 +15,8 @@ import { Utils } from '@football-manager/utils';
 //   }
 // )
 
-const models = [path.join(Utils.__dirname(import.meta.url), 'models/*.model.js')];
+// const models = [path.join(Utils.__dirname(import.meta.url), 'models/*.model.ts')];
+const models = ['/Users/oschmidt/Checkouts/football_manager_web/packages/db-handler/src/models/*.model.ts'];
 
 const sequelize = new Sequelize({
   database: config.db.name,
@@ -25,7 +26,7 @@ const sequelize = new Sequelize({
   storage: ':memory:',
   models,
   modelMatch: (filename, member) => {
-    return filename.substring(0, filename.indexOf('.model')) === member.toLowerCase();
+    return filename.substring(0, filename.indexOf('.model')).replace('-', '') === member.toLowerCase();
   },
 });
 

@@ -1,26 +1,26 @@
 import log from '@football-manager/log';
 
-import { config } from "./config/config.js";
-import { sequelize } from './connection.js';
+import { config } from "./config/config";
+import { sequelize } from './connection';
 
-import { BaseService } from './services/base.js';
-import { App } from './models/app.model.js';
-import { BaseDal } from './data-access-layer/base.js';
-import { Championship } from './models/championship.model.js';
-import { ChampionshipService } from './services/championship.js';
-import { Calendar } from './models/calendar.model.js';
-import { Formation } from './models/formation.model.js';
-import { Occurrence } from './models/occurrence.model.js';
-import { Player } from './models/player.model.js';
-import { Skill } from './models/skill.model.js';
-import { Team } from './models/team.model.js';
-import { Token } from './models/token.model.js';
-import { TokenFamily } from './models/token-family.model.js';
-import { User } from './models/user.model.js';
-import { OccurrenceService } from './services/occurrence.js';
-import { TeamService } from './services/team.js';
-import { TokenService } from './services/token.js';
-import { UserService } from './services/user.js';
+import { BaseService } from './services/base';
+import { App } from './models/app.model';
+import { BaseDal } from './data-access-layer/base';
+import { Championship } from './models/championship.model';
+import { ChampionshipService } from './services/championship';
+import { Calendar } from './models/calendar.model';
+import { Formation } from './models/formation.model';
+import { Occurrence } from './models/occurrence.model';
+import { Player } from './models/player.model';
+import { Skill } from './models/skill.model';
+import { Team } from './models/team.model';
+import { Token } from './models/token.model';
+import { TokenFamily } from './models/token-family.model';
+import { User } from './models/user.model';
+import { OccurrenceService } from './services/occurrence';
+import { TeamService } from './services/team';
+import { TokenService } from './services/token';
+import { UserService } from './services/user';
 
 export const dbInit = async () => {
 

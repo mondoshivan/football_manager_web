@@ -1,11 +1,11 @@
 import { readFileSync } from "fs";
 
 import { playerService, teamService, skillService, formationService } from "@football-manager/db-handler";
-import { TeamCreationAttributes } from "@football-manager/db-handler/src/models/team.model.js";
+import { TeamCreationAttributes } from "@football-manager/db-handler/src/models/team.model";
 import { nameService } from "@football-manager/names";
-import { config } from "./config/config.js";
+import { config } from "./config/config";
 import { Utils } from "@football-manager/utils";
-import { Country } from "@football-manager/names/src/services/name-service.js";
+import { Country } from "@football-manager/names/src/services/name-service";
 
 export const initTeams = async (resource: string) => {
 

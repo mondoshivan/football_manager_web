@@ -1,5 +1,5 @@
-import * as calendarHelper from './helper/calendar.js';
-import * as playerHelper from './helper/player.js';
+import * as calendarHelper from './helper/calendar';
+import * as playerHelper from './helper/player';
 
 export {
     calendarHelper,

@@ -1,7 +1,7 @@
 import { Attributes, CreationAttributes, DestroyOptions, FindOptions, WhereOptions } from "sequelize";
 import { Model, ModelStatic } from "sequelize-typescript";
-import { BaseDal } from "../data-access-layer/base.js";
-import { IncludesFilters } from "../data-access-layer/types.js";
+import { BaseDal } from "../data-access-layer/base";
+import { IncludesFilters } from "../data-access-layer/types";
 
 
 export class BaseService<T extends Model> {

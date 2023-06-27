@@ -1,12 +1,12 @@
 import { tokenFamilyService, tokenService } from '@football-manager/db-handler';
 import jwt from "jsonwebtoken";
-import { User } from '@football-manager/db-handler/src/models/user.model.js';
-import { config } from "../config/config.js";
-import { IRefreshTokenPayload } from '../interfaces/refresh-token.js';
+import { User } from '@football-manager/db-handler/src/models/user.model';
+import { config } from "../config/config";
+import { IRefreshTokenPayload } from '../interfaces/refresh-token';
 import { Request } from 'express';
-import { Token } from '@football-manager/db-handler/src/models/token.model.js';
+import { Token } from '@football-manager/db-handler/src/models/token.model';
 import { AuthResponseDTO, TokensDTO } from '@football-manager/data-transfer';
-import { TokenFamily } from '@football-manager/db-handler/src/models/token-family.model.js';
+import { TokenFamily } from '@football-manager/db-handler/src/models/token-family.model';
 
 export type JWTInvalidateFamilyOptions = {
     delete: boolean       

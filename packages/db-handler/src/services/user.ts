@@ -1,6 +1,6 @@
-import { User } from '../models/user.model.js'
-import { BaseService } from './base.js'
-import { NameNotFoundError } from '../error/error.js';
+import { User } from '../models/user.model'
+import { BaseService } from './base'
+import { NameNotFoundError } from '../error/error';
 import { Utils } from "@football-manager/utils";
 import lodash from 'lodash';
 

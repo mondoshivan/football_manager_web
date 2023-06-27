@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import path from "path";
-import NameService, { FirstName, SecondName } from "./services/name-service.js";
+import NameService, { FirstName, SecondName } from "./services/name-service";
 
 export const nameService = () : NameService => {
     const firstNameJson = path.join(__dirname, '../../resources/first-names.json');

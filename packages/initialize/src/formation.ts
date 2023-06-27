@@ -1,5 +1,5 @@
 import { formationService } from "@football-manager/db-handler";
-import { FormationCreationAttributes } from "@football-manager/db-handler/src/models/formation.model.js";
+import { FormationCreationAttributes } from "@football-manager/db-handler/src/models/formation.model";
 import { readFileSync } from "fs";
 
 export const initFormations = async (resource: string) => {
