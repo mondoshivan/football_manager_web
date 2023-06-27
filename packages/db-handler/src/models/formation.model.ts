@@ -1,5 +1,5 @@
 import { AllowNull, AutoIncrement, Column, HasMany, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { Team } from './team.model.js';
+import { Team } from './team.model';
 
 type FormationAttributes = {
   name: string;
@@ -17,23 +17,23 @@ export class Formation extends Model<FormationAttributes, FormationCreationAttri
   @HasMany(() => Team)
   teams!: Team[];
   
-  @Column
   @AllowNull(false)
+  @Column
   public name!: string
 
-  @Column
   @AllowNull(false)
+  @Column
   public description!: string;
 
-  @Column
   @AllowNull(false)
+  @Column
   public defender!: number;
 
-  @Column
   @AllowNull(false)
+  @Column
   public midfielder!: number;
 
-  @Column
   @AllowNull(false)
+  @Column
   public forward!: number;
 }

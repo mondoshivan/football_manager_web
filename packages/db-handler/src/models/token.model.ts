@@ -1,5 +1,5 @@
-import { AllowNull, AutoIncrement, BelongsTo, Column, Default, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { TokenFamily } from './token-family.model.js';
+import { AllowNull, AutoIncrement, BelongsTo, Column, Default, ForeignKey, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { TokenFamily } from './token-family.model';
 import { Optional } from 'sequelize';
 
 export type TokenTypes = 'access' | 'refresh';
@@ -7,19 +7,23 @@ export type TokenTypes = 'access' | 'refresh';
 @Table({ timestamps: true })
 export class Token extends Model {
 
+  @ForeignKey(() => TokenFamily)
+  @Column
+  tokenFamilyId!: number;
+
   @BelongsTo(() => TokenFamily)
   tokenFamily!: TokenFamily;
 
-  @Column
   @AllowNull(false)
+  @Column
   public signature!: string
 
-  @Column
   @AllowNull(false)
+  @Column
   public type!: TokenTypes
 
-  @Column
   @AllowNull(false)
   @Default(true)
+  @Column
   public valid!: boolean
 }

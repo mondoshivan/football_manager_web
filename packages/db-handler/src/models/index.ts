@@ -1,15 +1,15 @@
-// import { Occurrence } from './occurrence.model.js';
-// import { Calendar } from './calendar.model.js';
-// import { Championship } from './championship.model.js';
-// import { Formation } from './formation.model.js';
-// import { App } from './app.model.js';
-// import { Team } from './team.model.js';
-// import { Player } from './player.model.js';
-// import { Skill } from './skill.model.js';
-// import { PlayerSkill } from './player_skill.model.js';
-// import { User } from './user.model.js'
-// import { TokenFamily } from './token-family.model.js';
-// import { Token } from './token.model.js';
+// import { Occurrence } from './occurrence.model';
+// import { Calendar } from './calendar.model';
+// import { Championship } from './championship.model';
+// import { Formation } from './formation.model';
+// import { App } from './app.model';
+// import { Team } from './team.model';
+// import { Player } from './player.model';
+// import { Skill } from './skill.model';
+// import { PlayerSkill } from './player_skill.model';
+// import { User } from './user.model'
+// import { TokenFamily } from './token-family.model';
+// import { Token } from './token.model';
 
 // export {
 //   App,

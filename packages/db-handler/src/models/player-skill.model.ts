@@ -1,7 +1,7 @@
 import { AllowNull, AutoIncrement, Column, ForeignKey, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
-import { Player } from './player.model.js';
-import { Skill } from './skill.model.js';
+import { Player } from './player.model';
+import { Skill } from './skill.model';
 
 export type PlayerSkillAttributes = {
   PlayerId: number
@@ -22,7 +22,7 @@ export class PlayerSkill extends Model<PlayerSkillAttributes, PlayerSkillCreatio
   @Column
   public SkillId!: number;
 
-  @Column
   @AllowNull(false)
+  @Column
   public value!: number;
 }
