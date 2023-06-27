@@ -1,6 +1,6 @@
 import { AllowNull, AutoIncrement, BelongsToMany, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { Calendar } from './calendar.js';
-import { Team } from './index.js';
+import { Calendar } from './calendar.model.js';
+import { Team } from './team.model.js';
 
 export type ChampionshipTypes = 'league' | 'cup';
 
@@ -20,12 +20,6 @@ export class Championship extends Model<ChampionshipAttributes, ChampionshipCrea
   @BelongsToMany(() => Team, 'ChampionshipTeam')
   teams!: Array<Team & {ChampionshipTeam: 'ChampionshipTeam'}>;
 
-  @PrimaryKey
-  @AutoIncrement
-  @Unique
-  @Column
-  override id!: number;
-
   @Column
   @AllowNull(false)
   public name!: string;
@@ -33,9 +27,5 @@ export class Championship extends Model<ChampionshipAttributes, ChampionshipCrea
   @Column
   @AllowNull(false)
   public type!: ChampionshipTypes;
-
-  // declare getTeams: HasManyGetAssociationsMixin<Team>;
-  // declare getCalendars: BelongsToManyGetAssociationsMixin<Calendar>;
-  // declare addCalendar: BelongsToManyAddAssociationMixin<Calendar, Calendar['id']>;
 
 }

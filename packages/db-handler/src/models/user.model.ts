@@ -1,5 +1,5 @@
 import { Utils } from '@football-manager/utils';
-import { AllowNull, AutoIncrement, BeforeValidate, Column, Default, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
+import { AllowNull, BeforeValidate, Column, Default, Model, Table } from 'sequelize-typescript';
 
 export type RoleTypes = 'user' | 'admin';
 
@@ -10,7 +10,6 @@ export type UserCreationAttributes = {
 }
 
 type UserAttributes = UserCreationAttributes & {
-  id: number;
   salt: string;
   confirmed: boolean;
   role: RoleTypes;
@@ -21,12 +20,6 @@ type UserAttributes = UserCreationAttributes & {
 
 @Table({ timestamps: true })
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-
-  @PrimaryKey
-  @AutoIncrement
-  @Unique
-  @Column
-  override id!: number
 
   @Column
   @AllowNull(false)

@@ -1,13 +1,13 @@
-import { isEmpty } from 'lodash'
-import { Championship} from '../models/championship.js'
+import lodash from 'lodash'
+import { Championship} from '../models/championship.model.js'
 import { BaseService } from './base.js'
 
 export class ChampionshipService extends BaseService<Championship> {
 
   public async championshipNameExists(name: string) {
-    const withName = this.dataAccessLayer.findOne({ name });
+    const withName = await this.dataAccessLayer.findOne({ name });
 
-    return !isEmpty(withName);
+    return !lodash.isEmpty(withName);
   }
 
 }

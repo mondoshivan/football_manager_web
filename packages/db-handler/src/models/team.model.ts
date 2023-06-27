@@ -1,8 +1,8 @@
 import { AllowNull, AutoIncrement, BelongsTo, BelongsToMany, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { Player } from './player.js';
-import { Calendar } from './calendar.js';
-import { Formation } from './formation.js';
-import { Championship } from './index.js';
+import { Player } from './player.model.js';
+import { Calendar } from './calendar.model.js';
+import { Formation } from './formation.model.js';
+import { Championship } from './championship.model.js';
 
 type TeamAttributes = {
   name: string;
@@ -25,18 +25,7 @@ export class Team extends Model<TeamAttributes, TeamCreationAttributes> implemen
   @BelongsTo(() => Formation)
   formation!: Formation;
 
-  @PrimaryKey
-  @AutoIncrement
-  @Unique
-  @Column
-  override id!: number
-
   @Column
   @AllowNull(false)
   public name!: string
-
-  // declare addChampionship: HasManyAddAssociationMixin<Championship, Championship['id']>;
-  // declare addPlayer: HasManyAddAssociationMixin<Player, Player['id']>;
-  // declare setFormation: HasManyAddAssociationMixin<Formation, Formation['id']>;
-  // declare addCalendar: BelongsToManyAddAssociationMixin<Calendar, Calendar['id']>;
 }

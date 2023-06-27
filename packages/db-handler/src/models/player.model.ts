@@ -1,5 +1,7 @@
 import { AllowNull, AutoIncrement, BelongsToMany, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { PlayerSkill, Skill, Team } from './index.js';
+import { PlayerSkill } from './player_skill.model.js';
+import { Skill } from './skill.model.js';
+import { Team } from './team.model.js';
 
 type PlayerAttributes = {
   firstName: string
@@ -25,12 +27,6 @@ export class Player extends Model<PlayerAttributes, PlayerCreationAttributes> im
   /**
    * Columns
    */
-
-  @PrimaryKey
-  @AutoIncrement
-  @Unique
-  @Column
-  override id!: number
 
   @Column
   @AllowNull(false)

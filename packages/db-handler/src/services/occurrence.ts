@@ -1,13 +1,17 @@
-import { isEmpty } from 'lodash'
-import { Occurrence } from '../models/occurrence.js';
+import { Occurrence } from '../models/occurrence.model.js';
 import { BaseService } from './base.js'
+import { NameNotFoundError } from '../error/error.js';
 
 export class OccurrenceService extends BaseService<Occurrence> {
 
   public async getByType(type: string) {
-    const entity = this.dataAccessLayer.findOne({ type });
+    const entities = await this.dataAccessLayer.getAll({ type });
 
-    return !isEmpty(entity);
+    if (entities.length === 0) {
+      throw new NameNotFoundError(`entity with type '${type}' does not exist`);
+    }
+
+    return entities;
   }
 
 }

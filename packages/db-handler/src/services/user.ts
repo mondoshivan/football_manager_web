@@ -1,9 +1,16 @@
-import { User } from '../models/user.js'
+import { User } from '../models/user.model.js'
 import { BaseService } from './base.js'
 import { NameNotFoundError } from '../error/error.js';
 import { Utils } from "@football-manager/utils";
+import lodash from 'lodash';
 
 export class UserService extends BaseService<User> {
+
+  public async emailExists(email: string) {
+    const entity = await this.dataAccessLayer.findOne({ email });
+
+    return !lodash.isEmpty(entity);
+  }
 
   public async getByEmail(email: string) {
     const entities = await this.dataAccessLayer.getAll({ email });

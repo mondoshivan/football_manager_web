@@ -1,6 +1,6 @@
 import { AllowNull, AutoIncrement, BelongsToMany, Column, Default, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { Player } from './player.js';
-import { PlayerSkill } from './player_skill.js';
+import { Player } from './player.model.js';
+import { PlayerSkill } from './player_skill.model.js';
 
 export type SkillTypes = 'physical' | 'mental';
 
@@ -26,12 +26,6 @@ export class Skill extends Model<SkillAttributes, SkillCreationAttribute> implem
   /**
    * Columns
    */
-
-  @PrimaryKey
-  @AutoIncrement
-  @Unique
-  @Column
-  override id!: number
 
   @Column
   @AllowNull(false)

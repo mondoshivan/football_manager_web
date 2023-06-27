@@ -1,6 +1,7 @@
 import { AllowNull, AutoIncrement, Column, ForeignKey, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
 
-import { Player, Skill } from './index.js';
+import { Player } from './player.model.js';
+import { Skill } from './skill.model.js';
 
 export type PlayerSkillAttributes = {
   PlayerId: number
@@ -12,12 +13,6 @@ export type PlayerSkillCreationAttributes = PlayerSkillAttributes;
 
 @Table({ timestamps: true })
 export class PlayerSkill extends Model<PlayerSkillAttributes, PlayerSkillCreationAttributes> implements PlayerSkillAttributes {
-
-  @PrimaryKey
-  @AutoIncrement
-  @Unique
-  @Column
-  override id!: number;
 
   @ForeignKey(() => Player)
   @Column
