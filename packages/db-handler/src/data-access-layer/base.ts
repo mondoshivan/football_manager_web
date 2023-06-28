@@ -7,9 +7,7 @@ import { GetAllNotFoundError, IdNotFoundError } from '../error/error';
 
 export class BaseDal<T extends Model> {
 
-  constructor(protected model: ModelStatic<T>) {
-
-  }
+  constructor(protected model: ModelStatic<T>) {}
 
   nestedIncludes(includes: NestedByName[] | undefined): Includeable[] {
     return (includes || []).map(i => {
