@@ -21,7 +21,7 @@ export class Skill extends Model<SkillAttributes, SkillCreationAttribute> implem
    */
   
   @BelongsToMany(() => Player, () => PlayerSkill)
-
+  players!: Array<Player & {PlayerSkill: 'PlayerSkill'}>;
 
   /**
    * Columns
