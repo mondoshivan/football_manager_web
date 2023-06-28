@@ -16,16 +16,16 @@ export const start = async () => {
     try {
         await dbInit();
 
-        // if (! config.teams.initEnabled) return;
+        if (! config.teams.initEnabled) return;
 
-        // await game.initGame();
-        // await users.initUsers(path.join(__dirname, '../../resources/users.json'));
-        // await formation.initFormations(path.join(__dirname, '../../resources/formations.json'));
-        // await skills.initSkills(path.join(__dirname, '../../resources/skills.json'));
-        // await championships.initChampionships(path.join(__dirname, '../../resources/championships.json'));
-        // await teams.initTeams(path.join(__dirname, '../../resources/teams.json'));
-        // await championshipTeams.initChampionchipTeams(path.join(__dirname, '../../resources/championship-teams.json'));
-        // await calendar.initCalendars();
+        await game.initGame();
+        await users.initUsers(path.join(__dirname, '../../resources/users.json'));
+        await formation.initFormations(path.join(__dirname, '../../resources/formations.json'));
+        await skills.initSkills(path.join(__dirname, '../../resources/skills.json'));
+        await championships.initChampionships(path.join(__dirname, '../../resources/championships.json'));
+        await teams.initTeams(path.join(__dirname, '../../resources/teams.json'));
+        await championshipTeams.initChampionchipTeams(path.join(__dirname, '../../resources/championship-teams.json'));
+        await calendar.initCalendars();
 
     } catch (error) {
         log.fatal(error);
