@@ -25,10 +25,28 @@ import { UserService } from './services/user';
 export const dbInit = async () => {
 
   try {
-    await sequelize.sync({ 
-      force: config.db.force, 
-      alter: false 
+    await sequelize.sync({
+      force: config.db.force,
+      alter: true
     });
+
+    // this needs to be done even though
+    // the models are loaded in the connection.
+    // otherwise the models are not available
+    // in the sequelize instance.
+    sequelize.addModels([
+      App,
+      Calendar,
+      Championship,
+      Formation,
+      Occurrence,
+      Player,
+      Skill,
+      Team,
+      Token,
+      TokenFamily,
+      User
+    ]);
 
   } catch (error) {
     log.fatal(error);
@@ -68,7 +86,7 @@ const tokenFamilyService = new BaseService<TokenFamily>(tokenFamilyDal);
 const userDal = new BaseDal<User>(User);
 const userService = new UserService(userDal);
 
-export { 
+export {
   appService,
   calendarService,
   championshipService,
