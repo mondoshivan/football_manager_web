@@ -23,8 +23,6 @@
     "lerna-build-front-end": "npx lerna run build-front-end",
     "lerna-build-front-end-dev": "npx lerna run build-front-end-dev",
     "remove:tsc": "npx rimraf -g \"packages/*/dist\"",
-    "remove:initialize-tsc": "npx rimraf -g \"packages/initialize/dist\"",
-    "remove:server-rest-api-tsc": "npx rimraf -g \"packages/server-rest-api/dist\"",
     "tsc-watch": "npx tsc --build --watch"
   },
   "devDependencies": {
