@@ -11,6 +11,7 @@ import * as teams from './teams';
 import * as users from './users';
 import path from "path";
 import { config } from "./config/config";
+import { Utils } from "@football-manager/utils";
 
 export const start = async () => {
     try {
@@ -18,13 +19,15 @@ export const start = async () => {
 
         if (! config.teams.initEnabled) return;
 
+        const packagesDir = Utils.getPackagesDir() || '..';
+
         await game.initGame();
-        await users.initUsers(path.join(__dirname, '../../resources/users.json'));
-        await formation.initFormations(path.join(__dirname, '../../resources/formations.json'));
-        await skills.initSkills(path.join(__dirname, '../../resources/skills.json'));
-        await championships.initChampionships(path.join(__dirname, '../../resources/championships.json'));
-        await teams.initTeams(path.join(__dirname, '../../resources/teams.json'));
-        await championshipTeams.initChampionchipTeams(path.join(__dirname, '../../resources/championship-teams.json'));
+        await users.initUsers(path.join(packagesDir, 'initialize', 'resources/users.json'));
+        await formation.initFormations(path.join(packagesDir, 'initialize', 'resources/formations.json'));
+        await skills.initSkills(path.join(packagesDir, 'initialize', 'resources/skills.json'));
+        await championships.initChampionships(path.join(packagesDir, 'initialize', 'resources/championships.json'));
+        await teams.initTeams(path.join(packagesDir, 'initialize', 'resources/teams.json'));
+        await championshipTeams.initChampionchipTeams(path.join(packagesDir, 'initialize', 'resources/championship-teams.json'));
         await calendar.initCalendars();
 
     } catch (error) {
