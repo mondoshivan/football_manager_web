@@ -8,6 +8,50 @@ $ npm run lerna-bootstrap
 $ npm run lerna-build-dev
 ```
 
+# Build Configuration
+
+## ts-node
+
+ts-node works by registering hooks for .ts, .tsx, .js, and/or .jsx extensions.
+Vanilla node loads .js by reading code from disk and executing it. 
+ts-node runs in the middle, transforming code from TypeScript to JavaScript and 
+passing the result to node for execution.
+This transformation will respect the tsconfig.json as if you compiled via tsc.
+
+*Note: In case of a monorepo ts-node will only compile the local package. All dependencies
+(external or local scope) needs to be pre compiled by tsc.*
+
+*Note: When launching a debugging process with VSCode (e.g. for the initialize package) 
+by using the following launch config,
+ts-node was not compiling and instead the pre compiled files from the dist folder were executed.*
+
+```json
+{
+  "type": "node",
+  "request": "launch",
+  "name": "initialize (ts-node)",
+  "cwd": "${workspaceRoot}/packages/initialize",
+  "runtimeArgs": [
+      "-r",
+      "ts-node/register"
+  ],
+  "program": "${workspaceRoot}/packages/initialize/src/start.ts",
+  "args": []
+},
+```
+
+The solution was to prepare an npm script and to use it with the launch configuration:
+```json
+{
+  "name": "initialize (ts-node)",
+  "type": "node",
+  "request": "launch",
+  "cwd": "${workspaceRoot}/packages/initialize",
+  "runtimeExecutable": "npm",
+  "runtimeArgs": ["run-script", "start:dev"]
+},
+```
+
 # Authentication and Authorization
 
 - Email and Password
