@@ -52,6 +52,7 @@
             "FM_SERVICE_SESSION_SECURE": "false",
             "TS_NODE_PROJECT": "${workspaceRoot}/packages/server-rest-api/tsconfig.json"
           },
+          "preLaunchTask": "npm: remove:server-rest-api-tsc",
           "internalConsoleOptions": "openOnSessionStart",
           "skipFiles": ["<node_internals>/**", "node_modules/**"]
         },
@@ -90,8 +91,11 @@
             "FM_DB_DIALECT": "mariadb",
             "FM_DB_PORT": "3307",
             "FM_DB_FORCE": "true",
-            "TS_NODE_PROJECT": "${workspaceRoot}/packages/initialize/tsconfig.json"
+            "TS_NODE_PROJECT": "${workspaceRoot}/packages/initialize/tsconfig.json",
           },
+          // if a build folder with compiled js files exist,
+          // ts-node will use them instead of compiling the ts files.
+          "preLaunchTask": "npm: remove:initialize-tsc",
           "internalConsoleOptions": "openOnSessionStart",
           "skipFiles": ["<node_internals>/**", "node_modules/**"]
         },
