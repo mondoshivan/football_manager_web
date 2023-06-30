@@ -1,5 +1,5 @@
-import { Attributes, CreationAttributes, DestroyOptions, FindOptions, WhereOptions } from "sequelize";
-import { Model, ModelStatic } from "sequelize-typescript";
+import { Attributes, CreateOptions, CreationAttributes, DestroyOptions, WhereOptions } from "sequelize";
+import { Model } from "sequelize-typescript";
 import { BaseDal } from "../data-access-layer/base";
 import { IncludesFilters } from "../data-access-layer/types";
 
