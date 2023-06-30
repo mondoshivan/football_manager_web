@@ -35,24 +35,19 @@
               ],
         },
         {
+          "name": "server-rest-api (ts-node)",
           "type": "node",
           "request": "launch",
-          "name": "server-rest-api (ts-node)",
           "cwd": "${workspaceRoot}/packages/server-rest-api",
-          "runtimeArgs": [
-              "-r",
-              "ts-node/register"
-          ],
-          "program": "${workspaceRoot}/packages/server-rest-api/src/index.ts",
-          "args": [],
+          "runtimeExecutable": "npm",
+          "runtimeArgs": ["run-script", "start:dev"],
           "env": {
-            "FM_DB_PORT": "3307",
-            "FM_DB_FORCE": "false",
-            "FM_INIT_ENABLED": "false",
-            "FM_SERVICE_SESSION_SECURE": "false",
-            "TS_NODE_PROJECT": "${workspaceRoot}/packages/server-rest-api/tsconfig.json"
+            "FM_DB_DIALECT": "mariadb",
+                "FM_DB_PORT": "3307",
+                "FM_DB_FORCE": "false",
+                "FM_INIT_ENABLED": "false",
+                "FM_SERVICE_SESSION_SECURE": "false"
           },
-          "preLaunchTask": "npm: remove:server-rest-api-tsc",
           "internalConsoleOptions": "openOnSessionStart",
           "skipFiles": ["<node_internals>/**", "node_modules/**"]
         },
@@ -77,25 +72,18 @@
           "skipFiles": ["<node_internals>/**", "node_modules/**"]
         },
         {
+          "name": "initialize (ts-node)",
           "type": "node",
           "request": "launch",
-          "name": "initialize (ts-node)",
           "cwd": "${workspaceRoot}/packages/initialize",
-          "runtimeArgs": [
-              "-r",
-              "ts-node/register"
-          ],
-          "program": "${workspaceRoot}/packages/initialize/src/start.ts",
-          "args": [],
+          "runtimeExecutable": "npm",
+          "runtimeArgs": ["run-script", "start:dev"],
           "env": {
             "FM_DB_DIALECT": "mariadb",
             "FM_DB_PORT": "3307",
             "FM_DB_FORCE": "true",
             "TS_NODE_PROJECT": "${workspaceRoot}/packages/initialize/tsconfig.json",
           },
-          // if a build folder with compiled js files exist,
-          // ts-node will use them instead of compiling the ts files.
-          "preLaunchTask": "npm: remove:initialize-tsc",
           "internalConsoleOptions": "openOnSessionStart",
           "skipFiles": ["<node_internals>/**", "node_modules/**"]
         },
