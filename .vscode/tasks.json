@@ -1,0 +1,128 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "options": {
+    "env": {}
+  },
+  "tasks": [
+    {
+      "type": "npm",
+      "label": "build:clean",
+      "detail": "Removes node_modules + dist folders and builds the server afterwards (without frontend)",
+      "script": "build:clean",
+      "path": "./",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "docker dev db",
+      "type": "shell",
+      "command": "./scripts/docker_dev_db.sh",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "label": "lerna-bootstrap",
+      "detail": "lerna-bootstrap",
+      "script": "lerna-bootstrap",
+      "path": "./",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "label": "lerna clean",
+      "detail": "Removes all packages/*/node_modules folders.",
+      "script": "lerna-clean",
+      "path": "./",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "label": "lint",
+      "detail": "lint",
+      "script": "lint",
+      "path": "./",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "label": "lerna-build-dev",
+      "detail": "lerna-build-dev",
+      "script": "lerna-build-dev",
+      "path": "./",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "label": "remove:tsc",
+      "detail": "Removes the dist folder for each package.",
+      "script": "remove:tsc",
+      "path": "./",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "label": "tsc-watch",
+      "detail": "tsc-watch",
+      "script": "tsc-watch",
+      "path": "./",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "label": "build:tsc",
+      "detail": "build:tsc",
+      "script": "build:tsc",
+      "path": "./",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "label": "generate ERM",
+      "detail": "generate ERM",
+      "script": "erm",
+      "path": "./",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}
