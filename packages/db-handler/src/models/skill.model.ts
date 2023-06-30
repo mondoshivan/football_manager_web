@@ -20,8 +20,8 @@ export class Skill extends Model<SkillAttributes, SkillCreationAttribute> implem
    * Associations
    */
   
-  @BelongsToMany(() => Player, () => PlayerSkill)
-  players!: Array<Player & {PlayerSkill: 'PlayerSkill'}>;
+  @BelongsToMany(() => Player, () => PlayerSkill, 'skillId', 'playerId')
+  players?: Array<Player & {PlayerSkill: 'PlayerSkill'}>;
 
   /**
    * Columns

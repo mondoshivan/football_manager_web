@@ -19,11 +19,11 @@ export class Player extends Model<PlayerAttributes, PlayerCreationAttributes> im
    * Associations
    */
 
-  @BelongsToMany(() => Skill, () => PlayerSkill)
-  skills!: Array<Skill & {PlayerSkill: PlayerSkill}>;
+  @BelongsToMany(() => Skill, () => PlayerSkill, 'playerId', 'skillId')
+  skills?: Array<Skill & {PlayerSkill: PlayerSkill}>;
 
-  @BelongsToMany(() => Team, () => PlayerTeam)
-  teams!: Array<Team & {PlayerTeam: 'PlayerTeam'}>;
+  @BelongsToMany(() => Team, () => PlayerTeam, 'playerId', 'teamId')
+  teams?: Array<Team & {PlayerTeam: 'PlayerTeam'}>;
 
   /**
    * Columns

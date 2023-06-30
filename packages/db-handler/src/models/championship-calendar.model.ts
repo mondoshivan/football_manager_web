@@ -7,9 +7,9 @@ export class ChampionshipCalendar extends Model {
 
   @ForeignKey(() => Championship)
   @Column
-  public ChampionshipId!: number;
+  public championshipId!: number;
 
   @ForeignKey(() => Calendar)
   @Column
-  public CalendarId!: number;
+  public calendarId!: number;
 }

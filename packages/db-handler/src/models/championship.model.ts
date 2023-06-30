@@ -16,11 +16,11 @@ export type ChampionshipCreationAttributes = ChampionshipAttributes;
 @Table({ timestamps: true })
 export class Championship extends Model<ChampionshipAttributes, ChampionshipCreationAttributes> implements ChampionshipAttributes {
 
-  @BelongsToMany(() => Calendar, () => ChampionshipCalendar)
-  calendars!: Array<Calendar & {ChampionshipCalendar: 'ChampionshipCalendar'}>;
+  @BelongsToMany(() => Calendar, () => ChampionshipCalendar, 'championshipId', 'calendarId')
+  calendars?: Array<Calendar & {ChampionshipCalendar: 'ChampionshipCalendar'}>;
 
-  @BelongsToMany(() => Team, () => ChampionshipTeam)
-  teams!: Array<Team & {ChampionshipTeam: 'ChampionshipTeam'}>;
+  @BelongsToMany(() => Team, () => ChampionshipTeam, 'championshipId', 'teamId')
+  teams?: Array<Team & {ChampionshipTeam: 'ChampionshipTeam'}>;
 
   @AllowNull(false)
   @Column

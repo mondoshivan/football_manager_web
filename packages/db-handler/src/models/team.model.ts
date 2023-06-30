@@ -16,14 +16,14 @@ export type TeamCreationAttributes = TeamAttributes;
 @Table({ timestamps: true })
 export class Team extends Model<TeamAttributes, TeamCreationAttributes> implements TeamAttributes {
 
-  @BelongsToMany(() => Player, () => PlayerTeam)
-  players!: Array<Player & {PlayerTeam: 'PlayerTeam'}>;
+  @BelongsToMany(() => Player, () => PlayerTeam, 'teamId', 'playerId')
+  players?: Array<Player & {PlayerTeam: 'PlayerTeam'}>;
 
-  @BelongsToMany(() => Calendar, () => TeamCalendar)
-  calendars!: Array<Calendar & {TeamCalendar: 'TeamCalendar'}>;
+  @BelongsToMany(() => Calendar, () => TeamCalendar, 'teamId', 'calendarId')
+  calendars?: Array<Calendar & {TeamCalendar: 'TeamCalendar'}>;
 
-  @BelongsToMany(() => Championship, () => ChampionshipTeam)
-  championships!: Array<Championship & {ChampionshipTeam: 'ChampionshipTeam'}>;
+  @BelongsToMany(() => Championship, () => ChampionshipTeam, 'teamId', 'championshipId')
+  championships?: Array<Championship & {ChampionshipTeam: 'ChampionshipTeam'}>;
 
   @ForeignKey(() => Formation)
   @Column

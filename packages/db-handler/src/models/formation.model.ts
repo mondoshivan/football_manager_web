@@ -15,7 +15,7 @@ export type FormationCreationAttributes = FormationAttributes;
 export class Formation extends Model<FormationAttributes, FormationCreationAttributes> implements FormationAttributes {
   
   @HasMany(() => Team)
-  teams!: Team[];
+  teams?: Team[];
   
   @AllowNull(false)
   @Column

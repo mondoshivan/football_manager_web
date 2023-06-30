@@ -11,13 +11,13 @@ export type CalendarTypes = 'championship' | 'team' | 'player';
 export class Calendar extends Model {
 
   @HasMany(() => Occurrence)
-  occurrences!: Occurrence[];
+  occurrences?: Occurrence[];
 
-  @BelongsToMany(() => Championship, () => ChampionshipCalendar)
-  championships!: Array<Championship & {ChampionshipCalendar: 'ChampionshipCalendar'}>;
+  @BelongsToMany(() => Championship, () => ChampionshipCalendar, 'calendarId', 'championshipId')
+  championships?: Array<Championship & {ChampionshipCalendar: 'ChampionshipCalendar'}>;
 
-  @BelongsToMany(() => Team, () => TeamCalendar)
-  teams!: Array<Team & {TeamCalendar: 'TeamCalendar'}>;
+  @BelongsToMany(() => Team, () => TeamCalendar, 'calendarId', 'teamId')
+  teams?: Array<Team & {TeamCalendar: 'TeamCalendar'}>;
 
   @AllowNull(false)
   @Column

@@ -4,8 +4,8 @@ import { Player } from './player.model';
 import { Skill } from './skill.model';
 
 export type PlayerSkillAttributes = {
-  PlayerId: number
-  SkillId: number
+  playerId: number
+  skillId: number
   value: number
 };
 
@@ -16,11 +16,11 @@ export class PlayerSkill extends Model<PlayerSkillAttributes, PlayerSkillCreatio
 
   @ForeignKey(() => Player)
   @Column
-  public PlayerId!: number;
+  public playerId!: number;
 
   @ForeignKey(() => Skill)
   @Column
-  public SkillId!: number;
+  public skillId!: number;
 
   @AllowNull(false)
   @Column

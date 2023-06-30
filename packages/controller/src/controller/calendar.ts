@@ -12,8 +12,8 @@ const initOccurrence = async (type : OccurrenceTypes, weekDate : Date, weekCount
 }
 
 export const initLeague = async (championship: Championship) => {
-    const teams = championship.teams;
-    const [calendar] = championship.calendars;
+    const teams = championship.teams || [];
+    const [calendar] = championship.calendars || [];
     const [game] = await appService.getAll();
 
     if (!calendar) throw new Error('no calendar');

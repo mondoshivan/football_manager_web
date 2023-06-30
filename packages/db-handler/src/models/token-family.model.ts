@@ -5,6 +5,6 @@ import { Token } from './token.model';
 export class TokenFamily extends Model {
 
   @HasMany(() => Token)
-  tokens!: Token[];
+  tokens?: Token[];
 
 }

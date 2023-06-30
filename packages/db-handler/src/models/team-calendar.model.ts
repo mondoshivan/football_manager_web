@@ -7,9 +7,9 @@ export class TeamCalendar extends Model {
 
   @ForeignKey(() => Calendar)
   @Column
-  public CalendarId!: number;
+  public calendarId!: number;
 
   @ForeignKey(() => Team)
   @Column
-  public TeamId!: number;
+  public teamId!: number;
 }
