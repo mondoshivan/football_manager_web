@@ -6,7 +6,7 @@ import { Utils } from '@football-manager/utils';
 
 // try ot the the packages dir, 
 // if it fails try relative path as fallback
-const packageDir = Utils.getPackagesDir() || '../';
+const packageDir = Utils.getPackagesDir() || '..';
 
 const sequelize = new Sequelize({
   database: config.db.name,
