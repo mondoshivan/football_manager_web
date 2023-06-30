@@ -14,5 +14,12 @@
     "sourceMap": true,
     "strict": true,
     "target": "es6"
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+    "compilerOptions": {
+      "noImplicitAny": true
+    }
   }
 }
