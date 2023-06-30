@@ -50,7 +50,7 @@
             "FM_DB_FORCE": "false",
             "FM_INIT_ENABLED": "false",
             "FM_SERVICE_SESSION_SECURE": "false",
-            "TS_NODE_PROJECT": "${workspaceRoot}/packages/initialize/tsconfig.json"
+            "TS_NODE_PROJECT": "${workspaceRoot}/packages/server-rest-api/tsconfig.json"
           },
           "internalConsoleOptions": "openOnSessionStart",
           "skipFiles": ["<node_internals>/**", "node_modules/**"]
