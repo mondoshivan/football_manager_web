@@ -1,5 +1,5 @@
 import { skillService } from "@football-manager/db-handler";
-import { SkillCreationAttribute } from "@football-manager/db-handler/src/models/skill.model.js";
+import { SkillCreationAttribute } from "@football-manager/db-handler/src/models/skill.model";
 import { readFileSync } from "fs";
 
 export const initSkills = async (resource: string) => {

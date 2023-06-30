@@ -1,5 +1,5 @@
 import { appService } from "@football-manager/db-handler";
-import { config } from "./config/config.js";
+import { config } from "./config/config";
 
 export const initGame = async () => {   
 

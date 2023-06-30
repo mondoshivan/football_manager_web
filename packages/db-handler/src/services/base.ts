@@ -1,7 +1,7 @@
-import { Attributes, CreationAttributes, DestroyOptions, FindOptions, WhereOptions } from "sequelize";
-import { Model, ModelStatic } from "sequelize-typescript";
-import { BaseDal } from "../data-access-layer/base.js";
-import { IncludesFilters } from "../data-access-layer/types.js";
+import { Attributes, CreateOptions, CreationAttributes, DestroyOptions, WhereOptions } from "sequelize";
+import { Model } from "sequelize-typescript";
+import { BaseDal } from "../data-access-layer/base";
+import { IncludesFilters } from "../data-access-layer/types";
 
 
 export class BaseService<T extends Model> {
@@ -10,8 +10,8 @@ export class BaseService<T extends Model> {
     protected dataAccessLayer: BaseDal<T>
   ) {}
 
-  public async create(payload: CreationAttributes<T>) {
-    return this.dataAccessLayer.create(payload);
+  public async create(payload: CreationAttributes<T>, options?: CreateOptions<T>) {
+    return this.dataAccessLayer.create(payload, options);
   }
 
   public async findOrCreate(payload: CreationAttributes<T>) {

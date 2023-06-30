@@ -1,5 +1,5 @@
 import { Property, Config, TSConvict } from 'ts-convict';
-import { ServiceConfig } from './config_service.js';
+import { ServiceConfig } from './config_service';
 
 @Config({
     

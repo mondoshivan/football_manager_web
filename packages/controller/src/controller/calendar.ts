@@ -1,9 +1,9 @@
-import { Calendar } from "@football-manager/db-handler/src/models/calendar.model.js";
-import { Championship } from "@football-manager/db-handler/src/models/championship.model.js";
+import { Calendar } from "@football-manager/db-handler/src/models/calendar.model";
+import { Championship } from "@football-manager/db-handler/src/models/championship.model";
 import { calendarHelper } from "@football-manager/helper";
 import { occurrenceService, appService } from "@football-manager/db-handler";
 import lodash from "lodash";
-import { OccurrenceTypes } from "@football-manager/db-handler/src/models/occurrence.model.js";
+import { OccurrenceTypes } from "@football-manager/db-handler/src/models/occurrence.model";
 
 const initOccurrence = async (type : OccurrenceTypes, weekDate : Date, weekCounter : number, calendar : Calendar) => {
     const occurrence = await occurrenceService.create({ type: type, date: weekDate});
@@ -12,8 +12,8 @@ const initOccurrence = async (type : OccurrenceTypes, weekDate : Date, weekCount
 }
 
 export const initLeague = async (championship: Championship) => {
-    const teams = championship.teams;
-    const [calendar] = championship.calendars;
+    const teams = championship.teams || [];
+    const [calendar] = championship.calendars || [];
     const [game] = await appService.getAll();
 
     if (!calendar) throw new Error('no calendar');

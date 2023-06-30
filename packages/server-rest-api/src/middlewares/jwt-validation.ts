@@ -1,7 +1,7 @@
 import { tokenService } from '@football-manager/db-handler';
 import log from '@football-manager/log';
 import express, { Request, Response, NextFunction } from 'express';
-import AppHelper from '../helpers/app.js';
+import AppHelper from '../helpers/app';
 
 export const jwtValidation = async (req: express.Request, res: express.Response, next: NextFunction) => {
     

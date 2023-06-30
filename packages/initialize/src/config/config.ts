@@ -1,7 +1,7 @@
 import { config } from 'process';
 import { Property, Config, TSConvict } from 'ts-convict';
-import { TeamsConfig } from './config_teams.js';
-import { GameConfig } from './config_game.js';
+import { TeamsConfig } from './config_teams';
+import { GameConfig } from './config_game';
 
 @Config({
     

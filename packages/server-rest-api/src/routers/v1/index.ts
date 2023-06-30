@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import appRouter from './app.js';
-import authRouter from './auth.js';
-import calendarRouter from './calendar.js';
-import championshipRouter from './championship.js'
-import formationRouter from './formation.js';
-import playerRouter from './player.js';
-import teamRouter from './team.js';
+import appRouter from './app';
+import authRouter from './auth';
+import calendarRouter from './calendar';
+import championshipRouter from './championship'
+import formationRouter from './formation';
+import playerRouter from './player';
+import teamRouter from './team';
 
 const router = Router();
 

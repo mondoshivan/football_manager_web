@@ -1,4 +1,4 @@
-import * as calendarController from './controller/calendar.js';
+import * as calendarController from './controller/calendar';
 
 export {
     calendarController

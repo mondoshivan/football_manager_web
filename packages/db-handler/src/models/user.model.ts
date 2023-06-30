@@ -21,30 +21,30 @@ type UserAttributes = UserCreationAttributes & {
 @Table({ timestamps: true })
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
 
-  @Column
   @AllowNull(false)
+  @Column
   public name!: string
 
-  @Column
   @AllowNull(false)
+  @Column
   public email!: string
 
-  @Column
   @AllowNull(false)
+  @Column
   public password!: string
 
-  @Column
   @AllowNull(false)
+  @Column
   public salt!: string
 
-  @Column
   @AllowNull(false)
   @Default(false)
+  @Column
   public confirmed!: boolean
 
-  @Column
   @AllowNull(false)
   @Default('user')
+  @Column
   public role!: RoleTypes
 
   /**

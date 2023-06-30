@@ -1,7 +1,8 @@
 import { AllowNull, AutoIncrement, BelongsToMany, Column, Model, PrimaryKey, Table, Unique } from 'sequelize-typescript';
-import { PlayerSkill } from './player_skill.model.js';
-import { Skill } from './skill.model.js';
-import { Team } from './team.model.js';
+import { PlayerSkill } from './player-skill.model';
+import { Skill } from './skill.model';
+import { Team } from './team.model';
+import { PlayerTeam } from './player-team.model';
 
 type PlayerAttributes = {
   firstName: string
@@ -18,29 +19,29 @@ export class Player extends Model<PlayerAttributes, PlayerCreationAttributes> im
    * Associations
    */
 
-  @BelongsToMany(() => Skill, () => PlayerSkill)
-  skills!: Array<Skill & {PlayerSkill: PlayerSkill}>;
+  @BelongsToMany(() => Skill, () => PlayerSkill, 'playerId', 'skillId')
+  skills?: Array<Skill & {PlayerSkill: PlayerSkill}>;
 
-  @BelongsToMany(() => Team, 'PlayerTeam')
-  teams!: Array<Team & {PlayerTeam: 'PlayerTeam'}>;
+  @BelongsToMany(() => Team, () => PlayerTeam, 'playerId', 'teamId')
+  teams?: Array<Team & {PlayerTeam: 'PlayerTeam'}>;
 
   /**
    * Columns
    */
 
-  @Column
   @AllowNull(false)
+  @Column
   public firstName!: string
 
-  @Column
   @AllowNull(false)
+  @Column
   public secondName!: string
 
-  @Column
   @AllowNull(false)
+  @Column
   public birthday!: Date;
 
-  @Column
   @AllowNull(false)
+  @Column
   public height!: number;
 }

@@ -2,9 +2,9 @@ import { NextFunction, Request, Response, Router } from "express";
 import asyncHandler from "express-async-handler"
 import { LoginAuthDTO, RefreshTokenDTO, RegisterAuthDTO, TokensDTO } from "@football-manager/data-transfer";
 import { tokenService, tokenFamilyService, userService } from "@football-manager/db-handler";
-import AppHelper from "../../helpers/app.js";
+import AppHelper from "../../helpers/app";
 import log from "@football-manager/log";
-import { IRefreshTokenPayload } from "../../interfaces/refresh-token.js";
+import { IRefreshTokenPayload } from "../../interfaces/refresh-token";
 import { sign } from "crypto";
 
 const authRouter = Router();

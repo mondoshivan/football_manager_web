@@ -1,6 +1,6 @@
 import { config } from 'process';
 import { Property, Config, TSConvict } from 'ts-convict';
-import { DBConfig } from './config_db.js';
+import { DBConfig } from './config_db';
 
 @Config({
     

@@ -1,6 +1,6 @@
-import { Occurrence } from '../models/occurrence.model.js';
-import { BaseService } from './base.js'
-import { NameNotFoundError } from '../error/error.js';
+import { Occurrence } from '../models/occurrence.model';
+import { BaseService } from './base'
+import { NameNotFoundError } from '../error/error';
 
 export class OccurrenceService extends BaseService<Occurrence> {
 

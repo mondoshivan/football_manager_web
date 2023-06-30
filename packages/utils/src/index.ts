@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { dirname } from 'path';
+import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from "uuid";
 
@@ -43,5 +43,21 @@ export class Utils {
   static __dirname(url: string): string {
     const __filename = fileURLToPath(url);
     return dirname(__filename);
+  }
+
+  /**
+   * Returns the 'packages' dir as absolute path.
+   * @returns packages dir
+   */
+  static getPackagesDir() {
+    const cwd = process.cwd();
+    if (!cwd) return;
+
+    const components = cwd.split('/');
+    while(components.length > 0) {
+      if (components.pop() === 'packages') {
+        return join(components.join('/'), 'packages');
+      }
+    }
   }
 }
