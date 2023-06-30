@@ -16,10 +16,8 @@
     "target": "es6"
   },
   "ts-node": {
-    "transpileOnly": true,
+    "transpileOnly": false,
     "files": true,
-    "compilerOptions": {
-      "noImplicitAny": true
-    }
+    "compilerOptions": {}
   }
 }
