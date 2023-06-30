@@ -30,4 +30,6 @@ class PackageConfig implements config.PackageConfig {
 }
 
 const configLoader = new TSConvict<PackageConfig>(PackageConfig);
-export = configLoader.load();
+const configObj = configLoader.load();
+
+export { configObj as config}

@@ -2,7 +2,7 @@ import express, { Express, Router, Request, Response, NextFunction } from 'expre
 import boolParser from 'express-query-boolean';
 import path from 'path';
 import log from '@football-manager/log';
-import config from "./config/config";
+import { config } from "./config/config";
 
 type UserNew = {
   id: string

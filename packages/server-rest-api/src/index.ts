@@ -3,7 +3,7 @@ import log from '@football-manager/log';
 import * as initialize from '@football-manager/initialize';
 
 import { App } from "./app";
-import routers from "./routers/v1";
+import routers from "./routers/v1/index";
 
 export const get = () => {
     const apiVersion = 1;

@@ -11,5 +11,12 @@
     "outDir": "dist",
     "rootDir": "."
   },
-  "references": []
+  "references": [
+    {
+      "path": "../log"
+    },
+    {
+      "path": "../utils"
+    }
+  ]
 }

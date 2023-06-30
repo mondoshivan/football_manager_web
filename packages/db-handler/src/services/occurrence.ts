@@ -1,27 +1,17 @@
-import * as occurrenceDal from '../data-access-layer/occurrence'
-import {GetAllOccurrenceFilters, IncludesFilters} from '../data-access-layer/types'
-import Occurrence, {OccurrenceInput} from '../models/occurrence'
+import { Occurrence } from '../models/occurrence.model';
+import { BaseService } from './base'
+import { NameNotFoundError } from '../error/error';
 
-export const create = async (payload: OccurrenceInput): Promise<Occurrence> => {    
-    return occurrenceDal.create(payload);
-}
+export class OccurrenceService extends BaseService<Occurrence> {
 
-export const update = async (id: number, payload: Partial<OccurrenceInput>): Promise<Occurrence> => {    
-    return occurrenceDal.update(id, payload)
-}
+  public async getByType(type: string) {
+    const entities = await this.dataAccessLayer.getAll({ type });
 
-export const getById = (id: number, includes?: IncludesFilters): Promise<Occurrence> => {
-    return occurrenceDal.getById(id, includes)
-}
+    if (entities.length === 0) {
+      throw new NameNotFoundError(`entity with type '${type}' does not exist`);
+    }
 
-export const deleteById = (id: number): Promise<boolean> => {
-    return occurrenceDal.deleteById(id)
-}
+    return entities;
+  }
 
-export const getByType = (type: string, includes?: IncludesFilters): Promise<Occurrence[]> => {
-    return occurrenceDal.getByType(type, includes);
-}
-
-export const getAll = (filters?: GetAllOccurrenceFilters, includes?: IncludesFilters): Promise<Occurrence[]> => {
-    return occurrenceDal.getAll(filters, includes)
 }

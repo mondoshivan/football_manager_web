@@ -8,12 +8,16 @@
     "experimentalDecorators": true,
     "incremental": true,
     "module": "commonjs",
-    "moduleResolution": "nodenext",
     "noImplicitAny": true,
     "noImplicitOverride": true,
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
     "target": "es6"
+  },
+  "ts-node": {
+    "transpileOnly": false,
+    "files": true,
+    "compilerOptions": {}
   }
 }

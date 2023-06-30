@@ -11,7 +11,7 @@ const authRouter = Router();
 
 authRouter.post('/register', asyncHandler( async (req: Request, res: Response) => {
     const payload = req.body as RegisterAuthDTO;
-    const exists = await userService.checkExists(payload.email);
+    const exists = await userService.emailExists(payload.email);
     if (exists) {
         res.status(400).json( AppHelper.jwtAuthResponse('This email address already exists.'));
     } else {
@@ -56,7 +56,7 @@ authRouter.post('/refresh', asyncHandler( async (req: Request, res: Response) =>
     const signature = AppHelper.jwtSignature(payload.refreshToken);
 
     if (!signature) {
-        log.debug('/refresh: could not find refresh token via signature');
+        log.debug('/refresh: could not extract signature from refresh troken');
         res.status(401).json( AppHelper.jwtAuthResponse('refresh token is invalid'));
         return;
     }
@@ -91,7 +91,7 @@ authRouter.post('/refresh', asyncHandler( async (req: Request, res: Response) =>
 
     // generate new set of tokens
     const user = await userService.getById(tokenPayload.userId);
-    const tokenFamily = await dbRefreshToken.getTokenFamily();
+    const tokenFamily = dbRefreshToken.tokenFamily;
     await AppHelper.jwtInvalidateFamily(dbRefreshToken);
     const data = await AppHelper.jwtGenerateTokens(user, tokenFamily);
     res.status(200).json(data);

@@ -1,31 +1,13 @@
-import * as teamDal from '../data-access-layer/team'
-import {GetAllTeamsFilters, IncludesFilters} from '../data-access-layer/types'
-import Team, {TeamInput} from '../models/team'
+import lodash from 'lodash'
+import { Team } from '../models/team.model'
+import { BaseService } from './base'
 
-export const create = async (payload: TeamInput): Promise<Team> => {
-    return teamDal.create(payload);
-}
+export class TeamService extends BaseService<Team> {
 
-export const findOrCreate = async (payload: TeamInput, includes?: IncludesFilters): Promise<Team> => {
-    return teamDal.findOrCreate(payload, includes);
-}
+  public async teamNameExists(name: string) {
+    const withName = await this.dataAccessLayer.findOne({ name });
 
-export const update = async (id: number, payload: Partial<TeamInput>): Promise<Team> => {    
-    return teamDal.update(id, payload);
-}
+    return !lodash.isEmpty(withName);
+  }
 
-export const getById = (id: number, includes?: IncludesFilters): Promise<Team> => {
-    return teamDal.getById(id, includes);
-}
-
-export const getByName = (name: string, includes?: IncludesFilters): Promise<Team[]> => {
-    return teamDal.getByName(name, includes);
-}
-
-export const deleteById = (id: number): Promise<boolean> => {
-    return teamDal.deleteById(id);
-}
-
-export const getAll = (filters?: GetAllTeamsFilters, includes?: IncludesFilters): Promise<Team[]> => {
-    return teamDal.getAll(filters, includes);
 }

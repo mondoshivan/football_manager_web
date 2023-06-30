@@ -1,28 +1,16 @@
-import * as dal from '../data-access-layer/token'
-import {GetAllTokensFilters, IncludesFilters} from '../data-access-layer/types'
-import {TokenInput} from '../models/token'
-import {Token} from '../models/index'
+import { Token } from '../models/token.model'
+import { BaseService } from './base'
+import { NameNotFoundError } from '../error/error';
 
-export const create = async (payload: TokenInput): Promise<Token> => {
-    return dal.create(payload);
-}
+export class TokenService extends BaseService<Token> {
 
-export const update = async (id: number, payload: Partial<TokenInput>): Promise<Token> => {    
-    return dal.update(id, payload);
-}
+  public async getBySignature(signature: string) {
+    const entities = await this.dataAccessLayer.getAll({ signature });
 
-export const getById = (id: number, includes?: IncludesFilters): Promise<Token> => {
-    return dal.getById(id, includes);
-}
+    if (!entities) {
+      throw new NameNotFoundError(`entity with signature '${signature}' does not exist`);
+    }
 
-export const getBySignature = (signature: string, includes?: IncludesFilters): Promise<Token[]> => {
-    return dal.getBySignature(signature, includes);
-}
-
-export const deleteById = (id: number): Promise<boolean> => {
-    return dal.deleteById(id);
-}
-
-export const getAll = (filters?: GetAllTokensFilters, includes?: IncludesFilters): Promise<Token[]> => {
-    return dal.getAll(filters, includes);
+    return entities;
+  }
 }

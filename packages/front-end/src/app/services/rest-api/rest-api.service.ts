@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { ChampionshipDTO, FilterDTO, FormationDTO, IncludesDTO, PlayerDTO, TeamDTO, UserDTO } from '@football-manager/data-transfer';
+import { AppDTO, ChampionshipDTO, FilterDTO, FormationDTO, IncludesDTO, PlayerDTO, TeamDTO, UserDTO } from '@football-manager/data-transfer';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { apiConfig } from 'src/app/core/routeConfig';
 
@@ -49,10 +49,51 @@ export class RestApiService {
       );
   }
 
+  app(id : number, includes? : IncludesDTO) : Observable<AppDTO> {
+    const url = apiConfig.apiUrl + '/app/' + id.toString();
+    let httpParams = new HttpParams();
+    if (includes) httpParams = httpParams.appendAll(includes);
+    return this.http.get<AppDTO>(url, { params: httpParams })
+      .pipe(
+        retry(this.retryAmount), // retry a failed request
+        catchError(this.handleError)
+      );
+  }
+
   team(id : number, includes? : IncludesDTO) : Observable<TeamDTO> {
     const url = apiConfig.apiUrl + '/teams/' + id.toString();
     let httpParams = new HttpParams();
     if (includes) httpParams = httpParams.appendAll(includes);
+    return this.http.get<TeamDTO>(url, { params: httpParams })
+      .pipe(
+        retry(this.retryAmount), // retry a failed request
+        catchError(this.handleError)
+      );
+  }
+
+  teamPlayersSkills(id: number): Observable<TeamDTO> {
+    const url = apiConfig.apiUrl + '/teams/' + id.toString() + '/players/skills';
+    let httpParams = new HttpParams();
+    return this.http.get<TeamDTO>(url, { params: httpParams })
+      .pipe(
+        retry(this.retryAmount), // retry a failed request
+        catchError(this.handleError)
+      );
+  }
+
+  teamPlayers(id: number): Observable<TeamDTO> {
+    const url = apiConfig.apiUrl + '/teams/' + id.toString() + '/players';
+    let httpParams = new HttpParams();
+    return this.http.get<TeamDTO>(url, { params: httpParams })
+      .pipe(
+        retry(this.retryAmount), // retry a failed request
+        catchError(this.handleError)
+      );
+  }
+
+  teamCalendars(id: number): Observable<TeamDTO> {
+    const url = apiConfig.apiUrl + '/teams/' + id.toString() + '/calendars';
+    let httpParams = new HttpParams();
     return this.http.get<TeamDTO>(url, { params: httpParams })
       .pipe(
         retry(this.retryAmount), // retry a failed request

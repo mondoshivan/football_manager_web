@@ -36,7 +36,9 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IndexComponent } from './components/index/index.component';
-
+import { CalandarComponent } from './components/calandar/calendar.component';
+import { RechenschieberComponent } from './components/rechenschieber/rechenschieber.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { IndexComponent } from './components/index/index.component';
     TeamMenuComponent,
     PlayerMenuComponent,
     AccountComponent,
-    IndexComponent
+    IndexComponent,
+    CalandarComponent,
+    RechenschieberComponent
   ],
   imports: [
     AuthModule,
@@ -78,7 +82,8 @@ import { IndexComponent } from './components/index/index.component';
     MdbTabsModule,
     MdbTooltipModule,
     MdbValidationModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

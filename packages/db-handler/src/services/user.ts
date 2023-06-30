@@ -1,38 +1,36 @@
-import {isNil, kebabCase} from 'lodash'
+import { User } from '../models/user.model'
+import { BaseService } from './base'
+import { NameNotFoundError } from '../error/error';
+import { Utils } from "@football-manager/utils";
+import lodash from 'lodash';
 
-import * as dal from '../data-access-layer/user'
-import {GetAllUsersFilters, IncludesFilters} from '../data-access-layer/types'
-import {UserInput} from '../models/user'
-import {User} from '../models'
+export class UserService extends BaseService<User> {
 
-export const create = async (payload: UserInput): Promise<User> => {
-    return dal.create(payload);
-}
+  public async emailExists(email: string) {
+    const entity = await this.dataAccessLayer.findOne({ email });
 
-export const findOrCreate = async (payload: UserInput, includes?: IncludesFilters): Promise<User> => {    
-    return await dal.findOrCreate(payload, includes);
-}
+    return !lodash.isEmpty(entity);
+  }
 
-export const update = async (id: number, payload: Partial<UserInput>): Promise<User> => {    
-    return dal.update(id, payload);
-}
+  public async getByEmail(email: string) {
+    const entities = await this.dataAccessLayer.getAll({ email });
 
-export const getById = (id: number, includes?: IncludesFilters): Promise<User> => {
-    return dal.getById(id, includes);
-}
+    if (!entities) {
+      throw new NameNotFoundError(`entity with email '${email}' does not exist`);
+    }
 
-export const deleteById = (id: number): Promise<boolean> => {
-    return dal.deleteById(id);
-}
+    return entities;
+  }
 
-export const getAll = (filters?: GetAllUsersFilters, includes?: IncludesFilters): Promise<User[]> => {
-    return dal.getAll(filters, includes);
-}
 
-export const checkExists = (email: string): Promise<boolean> => {
-    return dal.checkExists(email);
-}
+  public async getByEmailAndPassword(email: string, password: string) {
+    const [user] = await this.getByEmail(email);
+    if (!user) return;
 
-export const getByEmailAndPassword = (email: string, password: string): Promise<User | undefined> => {
-    return dal.getByEmailAndPassword(email, password);
+    password = Utils.passwordHash(password, user.salt);
+    if (password === user.password) return user;
+
+    return undefined;
+  }
+
 }

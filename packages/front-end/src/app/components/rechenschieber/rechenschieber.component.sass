@@ -1,0 +1,31 @@
+
+.line
+    position: relative
+    top: 50%
+    z-index: -1
+    background-color: #4f4f4f
+    height: 5px
+    width: 100%
+
+.red
+    background-color: red
+    width: 40px
+    height: 40px
+    border-radius: 50%
+
+.blue
+    background-color: blue
+    width: 40px
+    height: 40px
+    border-radius: 50%
+
+/* On screens that are 992px or less, set the background color to blue */
+@media screen and (max-width: 768px)
+    .red
+        width: 30px
+        height: 30px
+
+    .blue
+        width: 30px
+        height: 30px
+

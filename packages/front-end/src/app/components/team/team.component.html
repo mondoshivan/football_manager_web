@@ -1,29 +1,43 @@
-<div class="row">
-    <div class="col">
-        <app-team-menu [name]="team?.name"></app-team-menu>
-    </div>
-</div>
-
-<div class="row my-3">
-
-	<div class="col text-end">
-		<div ngbDropdown class="d-inline-block">
-			<button type="button" class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>{{team?.Formation?.name}}</button>
-			<div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-                <button *ngFor="let formation of formations" ngbDropdownItem (click)="updateFormation($event)">{{formation.name}}</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row my-3">
-    <div class="col">
-
-        <div>
-            <ng2-smart-table #table [settings]="tableSettings" [source]="tableDataSource"
-                (userRowSelect)="onUserRowSelect($event)" (rowSelect)="onSelectRow($event)"
-                (mouseover)="onMouseOver($event)">
-            </ng2-smart-table>
+<div *ngIf="loaded">
+    <div class="row">
+        <div class="col">
+            <app-team-menu [name]="team?.name" (selected)="onMenuSelection($event)"></app-team-menu>
         </div>
     </div>
+
+    <div *ngIf="menuSelection === 'players'">
+        <div class="row my-3">
+
+            <div class="col text-end">
+                <div ngbDropdown class="d-inline-block">
+                    <button type="button" class="btn btn-outline-primary" id="dropdownBasic2"
+                        ngbDropdownToggle>{{team?.Formation?.name}}</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                        <button *ngFor="let formation of formations" ngbDropdownItem
+                            (click)="updateFormation($event)">{{formation.name}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col">
+                <div>
+                    <ng2-smart-table #table [settings]="tableSettings" [source]="tableDataSource"
+                        (userRowSelect)="onUserRowSelect($event)" (rowSelect)="onSelectRow($event)"
+                        (mouseover)="onMouseOver($event)">
+                    </ng2-smart-table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="menuSelection === 'calendar'">
+        <div class="row my-3">
+            <div class="col">
+                <app-calendar [calendarList]="calendarList"></app-calendar>
+            </div>
+        </div>
+    </div>
+    
 </div>
