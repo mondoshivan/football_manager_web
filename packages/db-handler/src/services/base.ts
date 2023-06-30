@@ -10,8 +10,8 @@ export class BaseService<T extends Model> {
     protected dataAccessLayer: BaseDal<T>
   ) {}
 
-  public async create(payload: CreationAttributes<T>) {
-    return this.dataAccessLayer.create(payload);
+  public async create(payload: CreationAttributes<T>, options?: CreateOptions<T>) {
+    return this.dataAccessLayer.create(payload, options);
   }
 
   public async findOrCreate(payload: CreationAttributes<T>) {
